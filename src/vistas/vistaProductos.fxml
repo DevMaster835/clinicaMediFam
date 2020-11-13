@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaProductosController">
+   <children>
+      <VBox prefHeight="587.0" prefWidth="69.0" style="-fx-background-color: #30ACE2;">
+         <children>
+            <ImageView fitHeight="61.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/logo-de-medifan.png" />
+               </image>
+            </ImageView>
+            <Pane prefHeight="54.0" prefWidth="69.0">
+               <children>
+                  <Button alignment="BOTTOM_CENTER" layoutX="-1.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="69.0" style="-fx-background-color: #CDCECD;" textAlignment="CENTER" />
+                  <ImageView fitHeight="54.0" fitWidth="69.0" layoutX="8.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../Downloads/387544-medical/387544-medical/png/101-patient-1.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+      <VBox layoutX="69.0" prefHeight="42.0" prefWidth="869.0" style="-fx-background-color: #30ACE2;">
+         <children>
+            <Label contentDisplay="CENTER" text="Productos" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <padding>
+                  <Insets left="25.0" right="15.0" top="7.0" />
+               </padding>
+            </Label>
+         </children>
+      </VBox>
+      <Label layoutX="144.0" layoutY="162.0" text="Codigo:" />
+      <Label layoutX="142.0" layoutY="218.0" text="Nombre:" />
+      <Label layoutX="138.0" layoutY="448.0" text="Precio:" />
+      <Label layoutX="138.0" layoutY="385.0" text="Existencia:" />
+      <Label layoutX="140.0" layoutY="326.0" text="Fecha &#10;Vencimiento:" textAlignment="JUSTIFY" />
+      <Label layoutX="140.0" layoutY="260.0" text="Contenido &#10;Neto:" textAlignment="JUSTIFY" />
+      <Label layoutX="574.0" layoutY="226.0" text="Codigo &#10;Fabricante:" textAlignment="JUSTIFY" />
+      <Label layoutX="574.0" layoutY="284.0" text="Fabricante:" />
+      <TextField layoutX="216.0" layoutY="157.0" prefHeight="27.0" prefWidth="110.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <TextField layoutX="216.0" layoutY="213.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <TextField layoutX="216.0" layoutY="443.0" prefHeight="27.0" prefWidth="64.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <TextField layoutX="216.0" layoutY="380.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <TextField layoutX="216.0" layoutY="264.0" prefHeight="27.0" prefWidth="64.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <TextField layoutX="677.0" layoutY="222.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <TextField layoutX="639.0" layoutY="280.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <Label layoutX="404.0" layoutY="83.0" text="DATOS GENERALES DEL PRODUCTO">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtfechaVen" layoutX="216.0" layoutY="330.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+   </children>
+</AnchorPane>
