@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaFacturacionController">
+   <children>
+      <VBox prefHeight="602.0" prefWidth="69.0" style="-fx-background-color: #30ACE2;">
+         <children>
+            <ImageView fitHeight="61.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/logo-de-medifan.png" />
+               </image>
+            </ImageView>
+            <Pane prefHeight="54.0" prefWidth="69.0">
+               <children>
+                  <Button alignment="BOTTOM_CENTER" layoutX="-1.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="69.0" style="-fx-background-color: #CDCECD;" textAlignment="CENTER" />
+                  <ImageView fitHeight="54.0" fitWidth="69.0" layoutX="8.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../Downloads/387544-medical/387544-medical/png/101-patient-1.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+      <VBox layoutX="69.0" prefHeight="42.0" prefWidth="869.0" style="-fx-background-color: #30ACE2;">
+         <children>
+            <Label contentDisplay="CENTER" text="Facturacion" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <padding>
+                  <Insets left="25.0" right="15.0" top="7.0" />
+               </padding>
+            </Label>
+         </children>
+      </VBox>
+      <Label layoutX="404.0" layoutY="83.0" text="DATOS DE LA FACTURA">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="138.0" layoutY="142.0" text="Factura No:" />
+      <Label layoutX="138.0" layoutY="184.0" text="Fecha:" />
+      <Pane layoutX="138.0" layoutY="234.0" prefHeight="124.0" prefWidth="344.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos" stylesheets="@../css/estilos.css">
+         <children>
+            <Label layoutX="83.0" layoutY="14.0" text="DATOS DEL EMPLEADO">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="26.0" layoutY="48.0" text="Identidad:" />
+            <Label layoutX="26.0" layoutY="83.0" text="Empleado:" />
+            <TextField fx:id="txtidEmp" layoutX="96.0" layoutY="44.0" prefHeight="25.0" prefWidth="132.0" />
+            <TextField fx:id="txtempleado" layoutX="96.0" layoutY="79.0" prefHeight="25.0" prefWidth="206.0" />
+            <Button fx:id="btnbuscarEmp" layoutX="250.0" layoutY="44.0" mnemonicParsing="false" onAction="#buscarEmpleado" text="Buscar" />
+         </children>
+      </Pane>
+      <TextField fx:id="txtFactura" layoutX="209.0" layoutY="138.0" />
+      <DatePicker fx:id="txtfechaFactura" layoutX="209.0" layoutY="180.0" prefHeight="25.0" prefWidth="149.0" />
+      <Pane layoutX="138.0" layoutY="383.0" prefHeight="171.0" prefWidth="344.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos" stylesheets="@../css/estilos.css">
+         <children>
+            <Label layoutX="83.0" layoutY="14.0" text="DATOS DEL PRODUCTO">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="26.0" layoutY="48.0" text="Codigo:" />
+            <Label layoutX="26.0" layoutY="83.0" text="Producto:" />
+            <TextField fx:id="txtcodigoProd" layoutX="85.0" layoutY="44.0" prefHeight="25.0" prefWidth="76.0" />
+            <TextField fx:id="txtproducto" layoutX="85.0" layoutY="79.0" prefHeight="25.0" prefWidth="134.0" />
+            <Button fx:id="btnbuscarProd" layoutX="179.0" layoutY="44.0" mnemonicParsing="false" onAction="#buscarProducto" text="Buscar" />
+            <Label layoutX="26.0" layoutY="119.0" text="Contenido&#10;Neto:" />
+            <Label layoutX="205.0" layoutY="128.0" text="Precio:" />
+            <TextField layoutX="87.0" layoutY="124.0" prefHeight="25.0" prefWidth="61.0" />
+            <Label layoutX="309.0" layoutY="127.0" text="Lps.">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField layoutX="246.0" layoutY="124.0" prefHeight="25.0" prefWidth="61.0" />
+         </children>
+      </Pane>
+      <Pane layoutX="538.0" layoutY="234.0" prefHeight="124.0" prefWidth="344.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos" stylesheets="@../css/estilos.css">
+         <children>
+            <Label layoutX="83.0" layoutY="14.0" text="DATOS DEL PACIENTE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="26.0" layoutY="48.0" text="Identidad:" />
+            <Label layoutX="26.0" layoutY="83.0" text="Paciente:" />
+            <TextField fx:id="txtidPac" layoutX="96.0" layoutY="44.0" prefHeight="25.0" prefWidth="132.0" />
+            <TextField fx:id="txtpaciente" layoutX="96.0" layoutY="79.0" prefHeight="25.0" prefWidth="206.0" />
+            <Button fx:id="btnbuscarPac" layoutX="250.0" layoutY="44.0" mnemonicParsing="false" onAction="#buscarPaciente" text="Buscar" />
+         </children>
+      </Pane>
+      <TableView layoutX="538.0" layoutY="394.0" prefHeight="164.0" prefWidth="344.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="CODIGO" />
+          <TableColumn prefWidth="128.0" text="PRODUCTO" />
+            <TableColumn prefWidth="74.0" text="CON. NETO" />
+            <TableColumn prefWidth="66.0" text="PRECIO" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
