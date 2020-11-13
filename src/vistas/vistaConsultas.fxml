@@ -12,10 +12,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F3F3F3;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controladores.VistaConsultasController">
+<AnchorPane id="AnchorPane" prefHeight="628.0" prefWidth="938.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaConsultasController">
    <children>
-      <VBox prefHeight="587.0" prefWidth="69.0" style="-fx-background-color: #30ACE2;">
+      <VBox prefHeight="628.0" prefWidth="69.0" style="-fx-background-color: #30ACE2;">
          <children>
             <ImageView fitHeight="61.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -46,25 +45,81 @@
             </Label>
          </children>
       </VBox>
-      <Label layoutX="130.0" layoutY="92.0" text="N° Consulta:" />
-      <Label layoutX="130.0" layoutY="155.0" text="Fecha creacion:" />
-      <Label layoutX="130.0" layoutY="200.0" text="Fecha cita:" />
-      <Label layoutX="357.0" layoutY="200.0" text="Hora:" />
-      <Label layoutX="130.0" layoutY="294.0" text="Identidad:" />
-      <Label layoutX="130.0" layoutY="338.0" text="Nombre:" />
-      <Label layoutX="130.0" layoutY="382.0" text="Edad:" />
-      <Label layoutX="131.0" layoutY="454.0" text="Estado consulta:" />
-      <Label layoutX="408.0" layoutY="454.0" text="Medico:" />
-      <TextField fx:id="txtnoConsulta" layoutX="211.0" layoutY="88.0" prefHeight="25.0" prefWidth="127.0" />
-      <DatePicker fx:id="txtfechaCreacion" layoutX="220.0" layoutY="151.0" prefHeight="25.0" prefWidth="127.0" />
-      <DatePicker fx:id="txtfechaCita" layoutX="197.0" layoutY="196.0" prefHeight="25.0" prefWidth="127.0" />
-      <ComboBox fx:id="cmbhoraCita" layoutX="394.0" layoutY="196.0" prefHeight="25.0" prefWidth="113.0" />
-      <TextField fx:id="txtidPaciente" layoutX="186.0" layoutY="290.0" prefHeight="25.0" prefWidth="113.0" />
-      <TextField fx:id="txtnombrePac" layoutX="186.0" layoutY="334.0" />
-      <TextField fx:id="txtedadPaciente" layoutX="186.0" layoutY="378.0" prefHeight="25.0" prefWidth="54.0" />
-      <ComboBox fx:id="cmbestadoC" layoutX="224.0" layoutY="450.0" prefHeight="25.0" prefWidth="127.0" />
-      <ComboBox fx:id="cmbMedico" layoutX="463.0" layoutY="450.0" prefHeight="25.0" prefWidth="92.0" />
-      <Label layoutX="555.0" layoutY="326.0" text="Motivo:" />
-      <TextArea fx:id="txtmotivo" layoutX="607.0" layoutY="326.0" prefHeight="89.0" prefWidth="273.0" />
+      <Label layoutX="136.0" layoutY="145.0" text="N° Consulta:" />
+      <Label layoutX="136.0" layoutY="195.0" text="Fecha &#10;Creacion:" textAlignment="JUSTIFY" />
+      <Label layoutX="133.0" layoutY="271.0" text="Fecha Cita:" />
+      <Label layoutX="413.0" layoutY="271.0" text="Hora:" />
+      <Label layoutX="487.0" layoutY="498.0" text="Estado Consulta:" />
+      <TextField fx:id="txtnoConsulta" layoutX="217.0" layoutY="141.0" prefHeight="25.0" prefWidth="127.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <DatePicker fx:id="txtfechaCreacion" layoutX="217.0" layoutY="199.0" prefHeight="27.0" prefWidth="127.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <DatePicker fx:id="txtfechaCita" layoutX="217.0" layoutY="266.0" prefHeight="27.0" prefWidth="127.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <ComboBox fx:id="cmbestadoC" editable="true" layoutX="580.0" layoutY="494.0" prefHeight="25.0" prefWidth="127.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <Label layoutX="136.0" layoutY="498.0" text="Motivo:" />
+      <TextArea fx:id="txtmotivo" layoutX="185.0" layoutY="498.0" prefHeight="89.0" prefWidth="249.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <Label layoutX="394.0" layoutY="73.0" text="CREAR NUEVA CITA MEDICA">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Pane layoutX="136.0" layoutY="323.0" prefHeight="144.0" prefWidth="290.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos" stylesheets="@../css/estilos.css">
+         <children>
+            <Label layoutX="4.0" layoutY="48.0" text="Identidad:">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtidPaciente" layoutX="76.0" layoutY="44.0" prefHeight="25.0" prefWidth="113.0" styleClass="textos" stylesheets="@../css/estilos.css">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </TextField>
+            <Label layoutX="4.0" layoutY="101.0" text="Nombre:">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtnombrePac" layoutX="76.0" layoutY="96.0" prefHeight="27.0" prefWidth="184.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <Label layoutX="91.0" layoutY="14.0" text="DATOS DEL PACIENTE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnbuscarPac" layoutX="208.0" layoutY="44.0" mnemonicParsing="false" onAction="#buscarPaciente" text="Buscar" />
+         </children>
+      </Pane>
+      <Pane layoutX="486.0" layoutY="323.0" prefHeight="144.0" prefWidth="290.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos" stylesheets="@../css/estilos.css">
+         <children>
+            <Label layoutX="4.0" layoutY="48.0" text="Identidad:">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <Label layoutX="91.0" layoutY="14.0" text="DATOS DEL MEDICO">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="19.0" layoutY="93.0" text="Medico:" />
+            <TextField fx:id="txtidMedico" layoutX="74.0" layoutY="44.0" prefHeight="27.0" prefWidth="115.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <TextField fx:id="txtMedico" layoutX="74.0" layoutY="89.0" prefHeight="27.0" prefWidth="184.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <Button fx:id="btnbuscarMedico" layoutX="206.0" layoutY="45.0" mnemonicParsing="false" onAction="#buscarMedico" text="Buscar" />
+         </children>
+      </Pane>
+      <Button fx:id="btnEliminar" alignment="BOTTOM_CENTER" layoutX="705.0" layoutY="543.0" mnemonicParsing="false" onAction="#eliminarConsulta" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Eliminar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnCancelar" alignment="BOTTOM_CENTER" layoutX="800.0" layoutY="543.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Cancelar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnGuardar" alignment="BOTTOM_CENTER" layoutX="611.0" layoutY="543.0" mnemonicParsing="false" onAction="#agregarConsulta" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773; -fx-background-radius: 7px;" text="Agregar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <TextField fx:id="txthoraCita" layoutX="457.0" layoutY="267.0" prefHeight="27.0" prefWidth="88.0" styleClass="textos" stylesheets="@../css/estilos.css" />
    </children>
 </AnchorPane>
