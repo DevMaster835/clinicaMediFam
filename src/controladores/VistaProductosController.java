@@ -65,14 +65,14 @@ public class VistaProductosController implements Initializable {
     private void agregarProductos(ActionEvent event) {
         
         try{
-            pps=cone.prepareStatement("INSERT INTO productos(idProducto,nombre,idPrecioHis,fechaVencimiento,stock,contenidoNeto,idFabricante VALUES(?,?,?,?,?,?,?)");
+            pps=cone.prepareStatement("INSERT INTO productos(idProducto,nombre,idPrecioHis,fechaVencimiento,stock,contenidoNeto) VALUES(?,?,?,?,?,?)");
             pps.setString(1, txtcodigoProd.getText());
             pps.setString(2, txtnombreProd.getText());
             pps.setString(3, txtPrecio.getText());
             pps.setString(4, txtfechaVen.getText());
             pps.setString(5, txtExistencia.getText());
             pps.setString(6, txtconNeto.getText());
-            pps.setString(7, txtFabricante.getText());
+           // pps.setString(7, txtFabricante.getText());
             pps.executeUpdate();
             
             JOptionPane.showMessageDialog(null, "Se ha registrado los datos del producto", "Datos guardados", JOptionPane.PLAIN_MESSAGE);
