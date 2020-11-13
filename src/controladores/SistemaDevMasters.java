@@ -27,7 +27,7 @@ public class SistemaDevMasters extends Application {
         
         try {
             FXMLLoader loader= new FXMLLoader();
-            loader.setLocation(SistemaDevMasters.class.getResource("/vistas/vistaConsultas.fxml"));
+            loader.setLocation(SistemaDevMasters.class.getResource("/vistas/vistaHistorial.fxml"));
             Pane ventana = (Pane) loader.load();
             
             
