@@ -15,3 +15,11 @@ and open the template in the editor.
     -fx-border-radius: 5px;
 }
 
+#btn-buscar{
+    -fx-background-image: url("../imagenes/buscar.png");
+    
+    -fx-border-color: black;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
