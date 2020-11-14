@@ -135,6 +135,13 @@ public class VistaEmpleadosController implements Initializable {
             if(existeEmpleado()){
             return;
         }
+            if(!validarLongitudTelefono(txtTelEmp, 8)){
+            return;
+        }
+        
+           /* if(m.matches()) {
+            return
+            }*/
             pps= cone.prepareStatement("INSERT INTO empleados(idEmpleado,nombres,apellidos,fechaNacimiento,idGenero,idNacionalidad, direccion, tipoEmpleado) VALUES (?,?,?,?,?,?,?,?)");
             pps.setString(1, txtidEmpleado.getText());
             pps.setString(2, txtNombreEmp.getText());
@@ -173,6 +180,7 @@ public class VistaEmpleadosController implements Initializable {
 
     @FXML
     private void cancelar(ActionEvent event) {
+        
     }
  
     private boolean validarLongitud(TextField texto, int longitud){
@@ -221,22 +229,12 @@ public class VistaEmpleadosController implements Initializable {
     }
     
     
-    private boolean validarEmail(TextField texto, String txtCorreoEmp){
-        if(texto.getText() == txtCorreoEmp){
-                Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-                Matcher matcher=pattern.matcher(texto.getText().substring(0,1));
-                if(matcher.matches()){ 
-                        return true;
-                    }else{
-                        JOptionPane.showMessageDialog(null, "El correo no es valido");
-                        return false;
-                    } 
+    public static boolean isValidEmailId(String email) {
+           String emailPattern = "^[\\w!#$%&’+/=?`{|}~^-]+(?:\\.[\\w!#$%&’+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+           Pattern p = Pattern.compile(emailPattern);
+           Matcher m = p.matcher(email);
+           return m.matches();
        }
-        else{
-       }
-       JOptionPane.showMessageDialog(null, "El número de teléfono debe ser de 8 dígitos", "Longitud del número de telefono",JOptionPane.INFORMATION_MESSAGE);
-       return false;
-    }
 
 
     @FXML

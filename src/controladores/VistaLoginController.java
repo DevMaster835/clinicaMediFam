@@ -162,7 +162,7 @@ public class VistaLoginController implements Initializable {
 
     @FXML
     private void txtUsuarioKeyTyped(KeyEvent event) {
-        if(txtUsuario.getText().length() >=20){
+        if(txtUsuario.getText().length() >=15){
             event.consume();
             JOptionPane.showMessageDialog(null, "Número máximo de caracteres admitidos.");
         }
