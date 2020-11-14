@@ -61,7 +61,7 @@
       <TextField fx:id="txtidEmpleado" layoutX="202.0" layoutY="137.0" styleClass="textos" stylesheets="@../css/estilos.css" />
       <TextField fx:id="txtNombreEmp" layoutX="202.0" layoutY="190.0" styleClass="textos" stylesheets="@../css/estilos.css" />
       <TextField fx:id="txtApellidoEmp" layoutX="489.0" layoutY="190.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-      <TextField fx:id="txtTelEmp" layoutX="489.0" layoutY="298.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <TextField fx:id="txtTelEmp" layoutX="489.0" layoutY="298.0" onAction="#txtTelefonoKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
       <TextField fx:id="txtCorreoEmp" layoutX="205.0" layoutY="357.0" styleClass="textos" stylesheets="@../css/estilos.css" />
       <TextArea fx:id="txtDireccionEmp" layoutX="205.0" layoutY="419.0" prefHeight="86.0" prefWidth="438.0" styleClass="textos" stylesheets="@../css/estilos.css" />
       <ComboBox fx:id="cmbTipoEmp" editable="true" layoutX="228.0" layoutY="529.0" prefHeight="25.0" prefWidth="142.0" promptText="Seleccionar&#10;" styleClass="textos" stylesheets="@../css/estilos.css" />

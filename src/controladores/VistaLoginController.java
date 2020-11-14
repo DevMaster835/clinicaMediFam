@@ -37,7 +37,9 @@ import javax.swing.JOptionPane;
  */
 public class VistaLoginController implements Initializable {
     
-    Connection con;
+    conexion con= new conexion();
+    Connection cone= con.openConnection();
+
     
     PreparedStatement pps;
     ResultSet rs;
@@ -55,33 +57,48 @@ public class VistaLoginController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }   
+       
+    } 
+    
+    public void start(Stage primaryStage){
+        //cargarCombobox();
+    }
 
     @FXML
     private void iniciarSesion(ActionEvent event) throws IOException {
        try {
             String usuario = txtUsuario.getText();
             String contraseña = String.valueOf(txtContra.getText());
-            String sql = "SELECT * from usuarios where nombreUsuario ='" +usuario+ "' and contraseña='"+contraseña+"' COLLATE Latin1_General_CS_AS";
-            Statement st = (Statement) con.createStatement();
-            rs = st.executeQuery(sql);
+
+            pps=cone.prepareStatement("SELECT * FROM usuarios WHERE nombreUsuario=? and contraseña=?");
+            pps.setString(1, usuario);
+            pps.setString(2, contraseña);
+            
+            rs = pps.executeQuery();
             if(isEmpty()){
                 JOptionPane.showMessageDialog(null, "Por favor llene todos los campos.", "Ingrese sus datos", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
+            if(!validarContraseñas(contraseña)){
+            
+                return;
+            }
             if(rs.next()){
-                Parent root = FXMLLoader.load(getClass().getResource("vistaMedicos.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaPacientes.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
             }
+            
        }catch (SQLException ex) {
-                 Logger.getLogger(VistaEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
+                 Logger.getLogger(VistaLoginController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(VistaLoginController.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -144,8 +161,23 @@ public class VistaLoginController implements Initializable {
     }
 
     @FXML
-    private void txtUsuario(KeyEvent event) {
+    private void txtUsuarioKeyTyped(KeyEvent event) {
+        if(txtUsuario.getText().length() >=20){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Número máximo de caracteres admitidos.");
+        }
+       // char a=event.getKeyChar();
     }
+
+    @FXML
+    private void txtContraseñaKeyTyped(KeyEvent event) {
+        if(txtContra.getText().length() >=15){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Número máximo de caracteres admitidos.");
+        }
+    }
+
+
     
 
     }

@@ -9,10 +9,14 @@ import Conexion.conexion;
 import com.mysql.jdbc.Connection;
 import java.net.URL;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,6 +26,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
@@ -85,6 +90,24 @@ public class VistaEmpleadosController implements Initializable {
     public void start(Stage primaryStage){
         //cargarCombobox();
     }
+    
+    public boolean existeEmpleado(){
+        try {
+            Statement st = cone.createStatement();
+            String sql = "Select nombres from empleados where idEmpleado = '"+txtidEmpleado.getText()+"'";
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+                JOptionPane.showMessageDialog(null, " Ya existe "+" el número de identidad: "+txtidEmpleado.getText(), "Número de identidad ¡Ya existe!", JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            }
+            else{
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 
     
      @FXML
@@ -109,6 +132,9 @@ public class VistaEmpleadosController implements Initializable {
             JOptionPane.showMessageDialog(null, "El campo está vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }else{
         try{
+            if(existeEmpleado()){
+            return;
+        }
             pps= cone.prepareStatement("INSERT INTO empleados(idEmpleado,nombres,apellidos,fechaNacimiento,idGenero,idNacionalidad, direccion, tipoEmpleado) VALUES (?,?,?,?,?,?,?,?)");
             pps.setString(1, txtidEmpleado.getText());
             pps.setString(2, txtNombreEmp.getText());
@@ -148,34 +174,72 @@ public class VistaEmpleadosController implements Initializable {
     @FXML
     private void cancelar(ActionEvent event) {
     }
-    /*
-    private void cargarCombobox(){
-        try {
-            //  conexion con= new conexion();
-            // Connection cone= con.openConnection();
-
-            String query ="SELECT * FROM nacionalidades";
-            
-            PreparedStatement ps=cone.prepareCall(query);
-            ResultSet rs=ps.executeQuery();
-            
-          while(rs.next()){
-              cmbTipoEmp.setId(rs.getString("nacionalidad"));
-              
-          }
-            ps.close();
-            rs.close();
-            
-
  
-        } catch (SQLException ex) {
-            Logger.getLogger(VistaEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
+    private boolean validarLongitud(TextField texto, int longitud){
+       if(texto.getText().length() >= longitud){
+           return true;
+       }
+       else{
+           return false;
+       }
+    }
+ 
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {
+            char a=evt.getKeyChar();
+            if (evt.getKeyChar() == 8 || evt.getKeyChar() == 127 || 
+                 evt.getKeyChar() == 0 || evt.getKeyChar() == 3 || evt.getKeyChar() == 22 
+                 || evt.getKeyChar() == 26 || evt.getKeyChar() == 24) {
+        return;
         }
+        if(txtTelEmp.getText().length() >=8){
+            evt.consume();
+            
+            JOptionPane.showMessageDialog(null, "Número máximo de dígitos admitidos");
+        }
+     
+        if(Character.isLetter(a) || !Character.isLetterOrDigit(a)){
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Sólo números");
+        }
+    }
+    
+    private boolean validarLongitudTelefono(TextField texto, int longitud){
+       if(texto.getText().length() == longitud){
+                Pattern pattern = Pattern.compile("[23789]");
+                Matcher matcher=pattern.matcher(texto.getText().substring(0,1));
+                if(matcher.matches()){ 
+                        return true;
+                    }else{
+                        JOptionPane.showMessageDialog(null, "El número de teléfono debe comenzar con: 2,3,7,8 o 9");
+                        return false;
+                    } 
+       }
+        else{
+       }
+       JOptionPane.showMessageDialog(null, "El número de teléfono debe ser de 8 dígitos", "Longitud del número de telefono",JOptionPane.INFORMATION_MESSAGE);
+       return false;
+    }
     
     
+    private boolean validarEmail(TextField texto, String txtCorreoEmp){
+        if(texto.getText() == txtCorreoEmp){
+                Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+                Matcher matcher=pattern.matcher(texto.getText().substring(0,1));
+                if(matcher.matches()){ 
+                        return true;
+                    }else{
+                        JOptionPane.showMessageDialog(null, "El correo no es valido");
+                        return false;
+                    } 
+       }
+        else{
+       }
+       JOptionPane.showMessageDialog(null, "El número de teléfono debe ser de 8 dígitos", "Longitud del número de telefono",JOptionPane.INFORMATION_MESSAGE);
+       return false;
     }
 
-*/
 
-    
+    @FXML
+    private void txtTelefonoKeyTyped(ActionEvent event) {
+    }
 }
