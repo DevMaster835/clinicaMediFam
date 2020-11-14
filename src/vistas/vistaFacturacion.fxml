@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaFacturacionController">
+<AnchorPane id="AnchorPane" prefHeight="602.0" prefWidth="960.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaFacturacionController">
    <children>
       <VBox prefHeight="602.0" prefWidth="69.0" style="-fx-background-color: #30ACE2;">
          <children>
@@ -30,7 +30,7 @@
             </Pane>
          </children>
       </VBox>
-      <VBox layoutX="69.0" prefHeight="42.0" prefWidth="869.0" style="-fx-background-color: #30ACE2;">
+      <VBox layoutX="69.0" prefHeight="42.0" prefWidth="895.0" style="-fx-background-color: #30ACE2;">
          <children>
             <Label contentDisplay="CENTER" text="Facturacion" textFill="WHITE">
                <font>
@@ -58,13 +58,13 @@
             </Label>
             <Label layoutX="26.0" layoutY="48.0" text="Identidad:" />
             <Label layoutX="26.0" layoutY="83.0" text="Empleado:" />
-            <TextField fx:id="txtidEmp" layoutX="96.0" layoutY="44.0" prefHeight="25.0" prefWidth="132.0" />
-            <TextField fx:id="txtempleado" layoutX="96.0" layoutY="79.0" prefHeight="25.0" prefWidth="206.0" />
+            <TextField fx:id="txtidEmp" layoutX="96.0" layoutY="44.0" prefHeight="25.0" prefWidth="132.0" styleClass="textos" />
+            <TextField fx:id="txtempleado" layoutX="96.0" layoutY="79.0" prefHeight="25.0" prefWidth="206.0" styleClass="textos" />
             <Button fx:id="btnbuscarEmp" layoutX="250.0" layoutY="44.0" mnemonicParsing="false" onAction="#buscarEmpleado" text="Buscar" />
          </children>
       </Pane>
-      <TextField fx:id="txtFactura" layoutX="209.0" layoutY="138.0" />
-      <DatePicker fx:id="txtfechaFactura" layoutX="209.0" layoutY="180.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField fx:id="txtFactura" layoutX="209.0" layoutY="138.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <DatePicker fx:id="txtfechaFactura" layoutX="209.0" layoutY="180.0" prefHeight="25.0" prefWidth="149.0" styleClass="textos" stylesheets="@../css/estilos.css" />
       <Pane layoutX="138.0" layoutY="383.0" prefHeight="171.0" prefWidth="344.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos" stylesheets="@../css/estilos.css">
          <children>
             <Label layoutX="83.0" layoutY="14.0" text="DATOS DEL PRODUCTO">
@@ -74,18 +74,18 @@
             </Label>
             <Label layoutX="26.0" layoutY="48.0" text="Codigo:" />
             <Label layoutX="26.0" layoutY="83.0" text="Producto:" />
-            <TextField fx:id="txtcodigoProd" layoutX="85.0" layoutY="44.0" prefHeight="25.0" prefWidth="76.0" />
-            <TextField fx:id="txtproducto" layoutX="85.0" layoutY="79.0" prefHeight="25.0" prefWidth="134.0" />
+            <TextField fx:id="txtcodigoProd" layoutX="85.0" layoutY="44.0" prefHeight="25.0" prefWidth="76.0" styleClass="textos" />
+            <TextField fx:id="txtproducto" layoutX="85.0" layoutY="79.0" prefHeight="25.0" prefWidth="134.0" styleClass="textos" />
             <Button fx:id="btnbuscarProd" layoutX="179.0" layoutY="44.0" mnemonicParsing="false" onAction="#buscarProducto" text="Buscar" />
             <Label layoutX="26.0" layoutY="119.0" text="Contenido&#10;Neto:" />
             <Label layoutX="205.0" layoutY="128.0" text="Precio:" />
-            <TextField layoutX="87.0" layoutY="124.0" prefHeight="25.0" prefWidth="61.0" />
+            <TextField layoutX="87.0" layoutY="124.0" prefHeight="25.0" prefWidth="61.0" styleClass="textos" />
             <Label layoutX="309.0" layoutY="127.0" text="Lps.">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <TextField layoutX="246.0" layoutY="124.0" prefHeight="25.0" prefWidth="61.0" />
+            <TextField layoutX="246.0" layoutY="124.0" prefHeight="25.0" prefWidth="61.0" styleClass="textos" />
          </children>
       </Pane>
       <Pane layoutX="538.0" layoutY="234.0" prefHeight="124.0" prefWidth="344.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos" stylesheets="@../css/estilos.css">
@@ -97,8 +97,8 @@
             </Label>
             <Label layoutX="26.0" layoutY="48.0" text="Identidad:" />
             <Label layoutX="26.0" layoutY="83.0" text="Paciente:" />
-            <TextField fx:id="txtidPac" layoutX="96.0" layoutY="44.0" prefHeight="25.0" prefWidth="132.0" />
-            <TextField fx:id="txtpaciente" layoutX="96.0" layoutY="79.0" prefHeight="25.0" prefWidth="206.0" />
+            <TextField fx:id="txtidPac" layoutX="96.0" layoutY="44.0" prefHeight="25.0" prefWidth="132.0" styleClass="textos" />
+            <TextField fx:id="txtpaciente" layoutX="96.0" layoutY="79.0" prefHeight="25.0" prefWidth="206.0" styleClass="textos" />
             <Button fx:id="btnbuscarPac" layoutX="250.0" layoutY="44.0" mnemonicParsing="false" onAction="#buscarPaciente" text="Buscar" />
          </children>
       </Pane>

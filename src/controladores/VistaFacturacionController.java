@@ -43,6 +43,8 @@ public class VistaFacturacionController implements Initializable {
     private TextField txtpaciente;
     @FXML
     private Button btnbuscarPac;
+    @FXML
+    private TextField txtdyhdi;
 
     /**
      * Initializes the controller class.

@@ -64,6 +64,13 @@ public class VistaProductosController implements Initializable {
         @FXML
     private void agregarProductos(ActionEvent event) {
         
+        if (txtcodigoProd.getText().isEmpty() || txtnombreProd.getText().isEmpty() || txtPrecio.getText().isEmpty()
+                || txtfechaVen.getText().isEmpty() || txtExistencia.getText().isEmpty() || txtconNeto.getText().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "El campo esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+
+        } else{
+        
         try{
             pps=cone.prepareStatement("INSERT INTO productos(idProducto,nombre,idPrecioHis,fechaVencimiento,stock,contenidoNeto) VALUES(?,?,?,?,?,?)");
             pps.setString(1, txtcodigoProd.getText());
@@ -79,7 +86,7 @@ public class VistaProductosController implements Initializable {
         }catch(SQLException ex){
             Logger.getLogger(VistaPacientesController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+      }  
     }
 
     @FXML

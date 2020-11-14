@@ -83,18 +83,28 @@ public class VistaPacientesController implements Initializable {
 
     @FXML
     private void guardarPacientes(ActionEvent event) {
-        int genero;
+        int genero=0;
         
         if(rdbM.isSelected()==true){
             genero=1;
-        }else{
+        }else if(rdbF.isSelected()==true){
             genero=2;
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione el género del paciente", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }
+        
+        System.out.println(genero);
         
         String nacionalidad= (String) cmbNacionalidad.getValue();
         String tipoCorreo= (String) cmbCorreo.getValue();
         String tipoSangre=(String) cmbTipoSangre.getValue();
         
+        
+        if (txtidPaciente.getText().isEmpty() || txtNombrePaciente.getText().isEmpty() || txtApellidoPaciente.getText().isEmpty() || genero==0
+                || txtFechaPac.getText().isEmpty() || txtDireccionPaciente.getText().isEmpty() || txtPesoPac.getText().isEmpty()|| txtAlturaPac.getText().isEmpty() || cmbTipoSangre.getValue() == null || cmbNacionalidad.getValue() == null || cmbCorreo.getValue() == null ) {
+
+            JOptionPane.showMessageDialog(null, "El campo esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else{ 
         try{
             pps=cone.prepareStatement("INSERT INTO pacientes(idPaciente,nombres,apellidos,fechaNacimiento,idGenero,idNacionalidad,direccion,peso,altura,tipoSangre) VALUES(?,?,?,?,?,?,?,?,?,?)");
             pps.setString(1, txtidPaciente.getText());
@@ -123,6 +133,7 @@ public class VistaPacientesController implements Initializable {
             JOptionPane.showMessageDialog(null, "Se ha registrado los datos del paciente", "Datos guardados", JOptionPane.PLAIN_MESSAGE);
         }catch(SQLException ex){
             Logger.getLogger(VistaPacientesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
     }
 

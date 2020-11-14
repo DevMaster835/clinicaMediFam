@@ -65,6 +65,12 @@ public class VistaProveedoresController implements Initializable {
     @FXML
     private void agregarProveedores(ActionEvent event) {
         
+        if (txtidProv.getText().isEmpty() || txtRTN.getText().isEmpty() || txtnombreProv.getText().isEmpty()
+                || txtcontacto.getText().isEmpty() || txtdireccionProv.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "El campo esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+
+        } else{
         try{
             pps=cone.prepareStatement("INSERT INTO proveedores(idProveedor,RTN,nombreProveedor,nombreContacto,direccion) VALUES(?,?,?,?,?)");
             pps.setString(1, txtidProv.getText());
@@ -87,6 +93,7 @@ public class VistaProveedoresController implements Initializable {
             JOptionPane.showMessageDialog(null, "Se ha registrado los datos del proveedor", "Datos guardados", JOptionPane.PLAIN_MESSAGE);     
         }catch(SQLException ex){
             Logger.getLogger(VistaPacientesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
     }
 

@@ -37,7 +37,7 @@
          </font>
       </Label>
       <TextField fx:id="txtUsuario" layoutX="322.0" layoutY="149.0" promptText="Escriba su usuario" style="-fx-background-radius: 11px;" />
-      <Button defaultButton="true" layoutX="415.0" layoutY="309.0" mnemonicParsing="false" style="-fx-background-color: green; -fx-background-radius: 10px; -fx-font-family: 'Overpass'; -fx-font-size: 13px; -fx-font-weight: 700;" text="Iniciar" textFill="WHITE">
+      <Button fx:id="btnIniciar" defaultButton="true" layoutX="415.0" layoutY="309.0" mnemonicParsing="false" onAction="#iniciarSesion" style="-fx-background-color: green; -fx-background-radius: 10px; -fx-font-family: 'Overpass'; -fx-font-size: 13px; -fx-font-weight: 700;" text="Iniciar" textFill="WHITE">
          <font>
             <Font name="Franklin Gothic Demi" size="13.0" />
          </font>
@@ -45,7 +45,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button cancelButton="true" layoutX="328.0" layoutY="309.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: red; -fx-background-radius: 10px;" text="Salir" textFill="WHITE">
+      <Button fx:id="btnSalir" cancelButton="true" layoutX="328.0" layoutY="309.0" mnemonicParsing="false" onAction="#salirSistema" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: red; -fx-background-radius: 10px;" text="Salir" textFill="WHITE">
          <font>
             <Font name="Franklin Gothic Demi" size="13.0" />
          </font>

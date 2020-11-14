@@ -110,6 +110,15 @@ public class VistaHistorialController implements Initializable {
         @FXML
     private void crearHistorial(ActionEvent event) {
         LocalDate fechaCreacion= txtfecha.getValue();
+        
+        if (txtnoHistorial.getText().isEmpty() || txtfecha.getValue()==null || txtnoConsulta.getText().isEmpty() || txtananmesis.getText().isEmpty()
+                || txttratamiento.getText().isEmpty() || txtTemperatura.getText().isEmpty() || txtpresion.getText().isEmpty() || txtpulso.getText().isEmpty()|| txtrespiracion.getText().isEmpty()){
+           
+           JOptionPane.showMessageDialog(null, "El campo está vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+           
+       }else{
+            
+        
         try {
             pps=cone.prepareStatement("INSERT INTO historial_medico(idHistorial,fechaCreacion,noConsulta,anamnesis,diagnostico,tratamiento) VALUES(?,?,?,?,?,?)");
             pps.setString(1, txtnoHistorial.getText());
@@ -131,6 +140,7 @@ public class VistaHistorialController implements Initializable {
             JOptionPane.showMessageDialog(null, "Se ha registrado el Historial", "Datos guardados", JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException ex) {
             Logger.getLogger(VistaHistorialController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
         
     }

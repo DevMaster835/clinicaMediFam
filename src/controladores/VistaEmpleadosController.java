@@ -9,15 +9,10 @@ import Conexion.conexion;
 import com.mysql.jdbc.Connection;
 import java.net.URL;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -94,17 +89,25 @@ public class VistaEmpleadosController implements Initializable {
     
      @FXML
     private void guardarEmpleados(ActionEvent event) {
-        int genero;
+        int genero=0;
         
         if(rdbM.isSelected()==true){
             genero=1;
-        }else{
+        }else if(rdbF.isSelected()==true){
             genero=2;
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione el género del empleado", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }
         
         String tipoEmp= (String) cmbTipoEmp.getValue();
         String nacionalidad= (String) cmbNacionalidad.getValue();
         String tipoCorreo= (String) cmbtipoCorreo.getValue();
+        
+        if (txtidEmpleado.getText().isEmpty() || txtNombreEmp.getText().isEmpty() || txtApellidoEmp.getText().isEmpty() || txtFechaEmp.getText().isEmpty() || genero==0 || txtCorreoEmp.getText().isEmpty()|| cmbNacionalidad.getValue()==null 
+                || txtDireccionEmp.getText().isEmpty() || txtTelEmp.getText().isEmpty() || cmbTipoEmp.getValue()==null){
+            
+            JOptionPane.showMessageDialog(null, "El campo está vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else{
         try{
             pps= cone.prepareStatement("INSERT INTO empleados(idEmpleado,nombres,apellidos,fechaNacimiento,idGenero,idNacionalidad, direccion, tipoEmpleado) VALUES (?,?,?,?,?,?,?,?)");
             pps.setString(1, txtidEmpleado.getText());
@@ -128,9 +131,11 @@ public class VistaEmpleadosController implements Initializable {
             pps.setString(2, txtCorreoEmp.getText());
             pps.setString(3, tipoCorreo);
             pps.executeUpdate();
+            
             JOptionPane.showMessageDialog(null, "Se ha registrado los datos del Empleado", "Datos guardados", JOptionPane.PLAIN_MESSAGE);
         }catch (SQLException ex) {
             Logger.getLogger(VistaEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
         
         

@@ -106,8 +106,14 @@ public class VistaConsultasController implements Initializable {
         LocalDate fechaCreacion= txtfechaCreacion.getValue();
         LocalDate fechaCita=txtfechaCita.getValue();
         String estadoCita= (String) cmbestadoC.getValue();
-        
+       
         System.out.println(fechaCreacion);
+        
+         if (txtnoConsulta.getText().isEmpty() || txtfechaCreacion.getValue() == null || txtfechaCita.getValue() ==null || txthoraCita.getText().isEmpty() || txtidPaciente.getText().isEmpty() || txtnombrePac.getText().isEmpty() || 
+                 txtidMedico.getText().isEmpty() || txtMedico.getText().isEmpty() || txtmotivo.getText().isEmpty() || cmbestadoC.getValue()==null) {
+             JOptionPane.showMessageDialog(null, "El campo está vacío, por favor complete los datos del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+             
+         }else{
         
         try {
             pps=cone.prepareStatement("INSERT INTO consultas_medicas(fechaCreacion,fechaConsulta,horaConsulta,idPaciente,idMedico,motivo,idEstadoConsulta) VALUES(?,?,?,?,?,?,?)");
@@ -123,11 +129,13 @@ public class VistaConsultasController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(VistaConsultasController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }
         
     }
 
     @FXML
     private void buscarPaciente(ActionEvent event) {
+        
         try{
             pps=cone.prepareStatement("SELECT * FROM pacientes where idPaciente=?");
             pps.setString(1, txtidPaciente.getText());
