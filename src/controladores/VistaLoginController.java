@@ -25,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
@@ -36,8 +37,7 @@ import javax.swing.JOptionPane;
  */
 public class VistaLoginController implements Initializable {
     
-    conexion con= new conexion();
-    Connection cone= con.openConnection();
+    Connection con;
     
     PreparedStatement pps;
     ResultSet rs;
@@ -66,7 +66,7 @@ public class VistaLoginController implements Initializable {
        try {
             String usuario = txtUsuario.getText();
             String contraseña = String.valueOf(txtContra.getText());
-            String sql = "SELECT * from usuarios where nombre_usuario ='" +usuario+ "' and contraseña='"+contraseña+"' COLLATE Latin1_General_CS_AS";
+            String sql = "SELECT * from usuarios where nombreUsuario ='" +usuario+ "' and contraseña='"+contraseña+"' COLLATE Latin1_General_CS_AS";
             Statement st = (Statement) con.createStatement();
             rs = st.executeQuery(sql);
             if(isEmpty()){
@@ -141,6 +141,10 @@ public class VistaLoginController implements Initializable {
             }
         }
         return false;
+    }
+
+    @FXML
+    private void txtUsuario(KeyEvent event) {
     }
     
 

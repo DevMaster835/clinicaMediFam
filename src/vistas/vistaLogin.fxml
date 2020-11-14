@@ -36,7 +36,7 @@
             <Font name="Old English Text MT" size="55.0" />
          </font>
       </Label>
-      <TextField fx:id="txtUsuario" layoutX="322.0" layoutY="149.0" promptText="Escriba su usuario" style="-fx-background-radius: 11px;" />
+      <TextField fx:id="txtUsuario" layoutX="322.0" layoutY="149.0" onKeyTyped="#txtUsuario" promptText="Escriba su usuario" style="-fx-background-radius: 11px;" />
       <Button fx:id="btnIniciar" defaultButton="true" layoutX="415.0" layoutY="309.0" mnemonicParsing="false" onAction="#iniciarSesion" style="-fx-background-color: green; -fx-background-radius: 10px; -fx-font-family: 'Overpass'; -fx-font-size: 13px; -fx-font-weight: 700;" text="Iniciar" textFill="WHITE">
          <font>
             <Font name="Franklin Gothic Demi" size="13.0" />
