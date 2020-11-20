@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -111,14 +112,38 @@ public class VistaHistorialController implements Initializable {
     private void crearHistorial(ActionEvent event) {
         LocalDate fechaCreacion= txtfecha.getValue();
         
-        if (txtnoHistorial.getText().isEmpty() || txtfecha.getValue()==null || txtnoConsulta.getText().isEmpty() || txtananmesis.getText().isEmpty()
-                || txttratamiento.getText().isEmpty() || txtTemperatura.getText().isEmpty() || txtpresion.getText().isEmpty() || txtpulso.getText().isEmpty()|| txtrespiracion.getText().isEmpty()){
-           
-           JOptionPane.showMessageDialog(null, "El campo está vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-           
+        if (txtnoHistorial.getText().isEmpty() ){
+           JOptionPane.showMessageDialog(null, "El campo 'N° Historial' está vacío, por favor ingrese el número de historial    .", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       }else if(txtnoConsulta.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null, "El campo 'N° Consulta' está vacío, por favor ingrese el número de consulta.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       }else if(txtPaciente.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null, "El campo 'Paciente' está vacío, por favor ingrese el nombre del paciente.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       }else if(txtedad.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null, "El campo 'Edad' está vacío, por favor ingrese la edad del paciente.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       }else if(txtpeso.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null, "El campo 'Peso' está vacío, por favor ingrese el peso del paciente.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       }else if(txttipoSangre.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null, "El campo 'Tipo Sangre' está vacío, por favor ingrese el tipo de sangre del paciente.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       }else if(txtaltura.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null, "El campo 'Altura' está vacío, por favor ingrese la altura del paciente.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       }else if(txtananmesis.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null, "El campo 'Ananmesis' está vacío, por favor ingrese la ananmesis.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       }else if(txttratamiento.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null, "El campo 'Tratamiento' está vacío, por favor ingrese el tratamiento.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       }else if(txtTemperatura.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null, "El campo 'Temperatura' está vacío, por favor ingrese la temperatura del paciente.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       }else if(txtpresion.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null, "El campo 'Presión Arterial' está vacío, por favor ingrese la presión arterial del paciente.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       }else if(txtpulso.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null, "El campo 'Pulso' está vacío, por favor ingrese el pulso del paciente.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       }else if(txtrespiracion.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null, "El campo 'Respiración' está vacío, por favor ingrese la respiración del paciente.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       }else if(txtfecha.getValue() == null){
+           JOptionPane.showMessageDialog(null, "El campo 'Fecha' está vacío, por favor seleccione una fecha.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       }else if(txtmedico.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null, "El campo 'Médico' está vacío, por favor ingrese el nombre del médico.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
        }else{
             
-        
         try {
             pps=cone.prepareStatement("INSERT INTO historial_medico(idHistorial,fechaCreacion,noConsulta,anamnesis,diagnostico,tratamiento) VALUES(?,?,?,?,?,?)");
             pps.setString(1, txtnoHistorial.getText());
@@ -154,6 +179,67 @@ public class VistaHistorialController implements Initializable {
 
     @FXML
     private void eliminarHistorial(ActionEvent event) {
+    }
+
+    //EVENTOS KEY TYPED
+    @FXML
+    private void txtHistorialKeyTyped(KeyEvent event) {
+         char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
+    }
+
+    @FXML
+    private void txtConsultaKeyTyped(KeyEvent event) {
+         char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
+    }
+
+    @FXML
+    private void txtTempKeyTyped(KeyEvent event) {
+         char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car) && car>'.'){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
+    }
+
+    @FXML
+    private void txtpresionKeyTyped(KeyEvent event) {
+         char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car)&& car>'/'){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
+    }
+
+    @FXML
+    private void txtpulsoKeyTyped(KeyEvent event) {
+       char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car) && car>'.'){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
+    }
+
+    @FXML
+    private void txtrespKeyTyped(KeyEvent event) {
+         char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
     }
     
 }

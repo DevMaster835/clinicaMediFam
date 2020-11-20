@@ -13,12 +13,14 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -65,13 +67,23 @@ public class VistaProveedoresController implements Initializable {
     @FXML
     private void agregarProveedores(ActionEvent event) {
         
-        if (txtidProv.getText().isEmpty() || txtRTN.getText().isEmpty() || txtnombreProv.getText().isEmpty()
-                || txtcontacto.getText().isEmpty() || txtdireccionProv.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
-
-            JOptionPane.showMessageDialog(null, "El campo esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-
-        } else{
+        if (txtidProv.getText() == null ) {
+            JOptionPane.showMessageDialog(null, "El campo de Identidad del Proveedor esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (txtRTN.getText() == null ) {
+            JOptionPane.showMessageDialog(null, "El campo de RTN esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (txtnombreProv.getText() == null ) {
+            JOptionPane.showMessageDialog(null, "El campo de Nombre esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (txtcontacto.getText() == null ) {
+            JOptionPane.showMessageDialog(null, "El campo de Contacto esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (txtdireccionProv.getText() == null ) {
+            JOptionPane.showMessageDialog(null, "El campo de Direccion esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (txtTelefono.getText() == null ) {
+            JOptionPane.showMessageDialog(null, "El campo de Telefono neto esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else{
         try{
+            if(!isEmailValid(txtcorreoProv.getText())){
+            return;
+            }
             pps=cone.prepareStatement("INSERT INTO proveedores(idProveedor,RTN,nombreProveedor,nombreContacto,direccion) VALUES(?,?,?,?,?)");
             pps.setString(1, txtidProv.getText());
             pps.setString(2, txtRTN.getText());
@@ -103,6 +115,68 @@ public class VistaProveedoresController implements Initializable {
 
     @FXML
     private void eliminarProveedores(ActionEvent event) {
+    }
+    
+    public static boolean isEmailValid(String email) {
+        final Pattern EMAIL_REGEX = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Pattern.CASE_INSENSITIVE);
+        
+            if(EMAIL_REGEX.matcher(email).matches()) {
+                return true;
+            }else{
+                JOptionPane.showMessageDialog(null, "El correo no es valido");
+                   return false;
+            }
+    }
+
+    @FXML
+    private void txtcodigoKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
+    }
+
+    @FXML
+    private void txtrtnKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
+    }
+
+    @FXML
+    private void txtnombreKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
+        }
+    }
+
+    @FXML
+    private void txtcontactoKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
+        }
+    }
+
+    @FXML
+    private void txttelefonoKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
     }
     
 }

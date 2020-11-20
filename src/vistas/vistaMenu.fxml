@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="492.0" prefWidth="980.0" style="-fx-background-color: #F3F3F3;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controladores.VistaMenuController">
+   <children>
+      <VBox layoutY="-7.0" prefHeight="42.0" prefWidth="980.0" style="-fx-background-color: #30ACE2;">
+         <children>
+            <Label contentDisplay="CENTER" text="Menú" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <padding>
+                  <Insets left="25.0" right="15.0" top="7.0" />
+               </padding>
+            </Label>
+         </children>
+      </VBox>
+      <Label layoutX="389.0" layoutY="65.0" text="CLINICA MEDICA MEDIFAM">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="432.0" layoutY="92.0" text="¡Cuidando de tu familia!">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button alignment="BOTTOM_CENTER" layoutX="109.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnPacientes" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="PACIENTES" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="137.0" layoutY="143.0">
+         <image>
+            <Image url="@../imagenes/paciente.png" />
+         </image>
+      </ImageView>
+      <Button alignment="BOTTOM_CENTER" layoutX="290.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnEmpleados" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="EMPLEADOS" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="318.0" layoutY="143.0">
+         <image>
+            <Image url="@../imagenes/empleados.png" />
+         </image>
+      </ImageView>
+      <Button alignment="BOTTOM_CENTER" layoutX="475.0" layoutY="139.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="MEDICOS" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="503.0" layoutY="145.0">
+         <image>
+            <Image url="@../imagenes/doctor.png" />
+         </image>
+      </ImageView>
+      <Button alignment="BOTTOM_CENTER" layoutX="663.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnEnfermeras" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="ENFERMERAS" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="691.0" layoutY="145.0">
+         <image>
+            <Image url="@../imagenes/enfermera.png" />
+         </image>
+      </ImageView>
+      <Button alignment="BOTTOM_CENTER" layoutX="109.0" layoutY="324.0" mnemonicParsing="false" onAction="#btnProveedores" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="PROVEEDORES" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="137.0" layoutY="332.0">
+         <image>
+            <Image url="@../imagenes/proveedores.png" />
+         </image>
+      </ImageView>
+      <Button alignment="BOTTOM_CENTER" layoutX="290.0" layoutY="324.0" mnemonicParsing="false" onAction="#btnProductos" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="PRODUCTOS" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="318.0" layoutY="332.0">
+         <image>
+            <Image url="@../imagenes/medicamentos.png" />
+         </image>
+      </ImageView>
+      <Button alignment="BOTTOM_CENTER" layoutX="475.0" layoutY="324.0" mnemonicParsing="false" onAction="#btnConsultas" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="CONSULTA MEDICAS" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="503.0" layoutY="332.0">
+         <image>
+            <Image url="@../imagenes/cita.png" />
+         </image>
+      </ImageView>
+      <Button alignment="BOTTOM_CENTER" layoutX="663.0" layoutY="324.0" mnemonicParsing="false" onAction="#btnHistorial" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="HISTORIAL MEDICO" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="691.0" layoutY="332.0">
+         <image>
+            <Image url="@../imagenes/historial-medico.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

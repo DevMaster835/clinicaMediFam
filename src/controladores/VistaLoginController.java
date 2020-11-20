@@ -25,10 +25,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javax.print.attribute.AttributeSet;
 import javax.swing.JOptionPane;
+import javax.swing.text.BadLocationException;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * FXML Controller class
@@ -69,32 +73,63 @@ public class VistaLoginController implements Initializable {
     public void start(Stage primaryStage){
         //cargarCombobox();
     }
+    
+    private boolean validacionSimbolosContraseña(String texto){
+          for (int i = 0; i < texto.length(); i++) {
+              if(texto.contains(" ") || texto.contains("|"))
+                  return true;
+          }
+          return false;
+      }
 
     @FXML
     private void iniciarSesion(ActionEvent event) throws IOException {
        try {
             String usuario = txtUsuario.getText();
             String contraseña = String.valueOf(txtContra.getText());
+            String contraseñaEncriptada=DigestUtils.md5Hex(contraseña);
+            String sql = "SELECT * from usuarios where nombreUsuario ='" +usuario+ "' and contraseña='"+contraseñaEncriptada+"' ";
 
-            pps=cone.prepareStatement("SELECT * FROM usuarios WHERE nombreUsuario=? and contraseña=?");
-            pps.setString(1, usuario);
-            pps.setString(2, contraseña);
+            pps=cone.prepareStatement(sql);
+         //   pps.setString(1, usuario);
+          //  pps.setString(2, contraseña);
+            System.out.println(contraseñaEncriptada);
             
             rs = pps.executeQuery();
-            if(isEmpty()){
+          /*  if(isEmpty()){
                 JOptionPane.showMessageDialog(null, "Por favor llene todos los campos.", "Ingrese sus datos", JOptionPane.INFORMATION_MESSAGE);
                 return;
-            }
+            }*/
             if(!validarContraseñas(contraseña)){
             
                 return;
             }
+            if(validacionSimbolosContraseña(contraseña)){
+            JOptionPane.showMessageDialog(null, "La contraseña no puede contener espacios o barras largas (|) ");
+            return;
+            }
+            
+            if((txtUsuario.getText().equals(""))){
+            javax.swing.JOptionPane.showMessageDialog(null,"Debe ingresar el nombre de usuario del empleado.","Nombre  de usuario del empleado requerido",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            txtUsuario.requestFocus();
+            return;
+            }
+            if((txtContra.getText().equals(""))){
+            javax.swing.JOptionPane.showMessageDialog(null,"Debe ingresar la contraseña del usuario del empleado.","Contraseña de usuario del empleado requerido",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            txtContra.requestFocus();
+            return;
+            }
             if(rs.next()){
-                Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaPacientes.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaMenu.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
+                
+            }else{
+               JOptionPane.showMessageDialog(null, "La contraseña es incorrecta, intente nuevamente" //REVISAR PARA INDICAR SI USUARIO O CONTRASEÑA ES INCORRECTO
+                         , "Ingrese la contraseña correcta", JOptionPane.ERROR_MESSAGE);
+               txtContra.requestFocus();
             }
             
        }catch (SQLException ex) {
@@ -117,25 +152,91 @@ public class VistaLoginController implements Initializable {
 
     @FXML
     private void salirSistema(ActionEvent event) {
+        
     }
-    
+ 
     public boolean validarContraseñas(String contraseña){
         if(contraseña.length() > 7){
-             if(politicasContraseña(contraseña)){
-                 return true;
-             }
-             else{
+             if(!politicasContraseñaNumeros(contraseña) && !politicasContraseñaMayusculas(contraseña) && !politicasContraseñaMinusculas(contraseña)){
                  JOptionPane.showMessageDialog(null, "La contraseña no cumple con: \n 1. Debe contener al menos una letra minúscula (a-z)"
                          + "\n 2. Debe contener al menos una letra mayúscula (A-Z) \n 3. Debe contener al menos un número (0-9)", "¡Directrices de contraseña no cumplidas!", JOptionPane.ERROR_MESSAGE);
                  return false;
              }
+             else if(politicasContraseñaNumeros(contraseña) && !politicasContraseñaMayusculas(contraseña) && !politicasContraseñaMinusculas(contraseña)){
+                 JOptionPane.showMessageDialog(null, "La contraseña no cumple con: \n 1. Debe contener al menos una letra minúscula (a-z)"
+                         + "\n 2. Debe contener al menos una letra mayúscula (A-Z)", "¡Directrices de contraseña no cumplidas!", JOptionPane.ERROR_MESSAGE);
+                 return false;
+             }
+             else if(politicasContraseñaNumeros(contraseña) && politicasContraseñaMayusculas(contraseña) && !politicasContraseñaMinusculas(contraseña)){
+                 JOptionPane.showMessageDialog(null, "La contraseña no cumple con: \n 1. Debe contener al menos una letra minúscula (a-z)"
+                         , "¡Directrices de contraseña no cumplidas!", JOptionPane.ERROR_MESSAGE);
+                 return false;
+             } else if(politicasContraseñaNumeros(contraseña) && !politicasContraseñaMayusculas(contraseña) && politicasContraseñaMinusculas(contraseña)){
+                 JOptionPane.showMessageDialog(null, "La contraseña no cumple con: \n 1. Debe contener al menos una letra mayúscula (A-Z)"
+                         , "¡Directrices de contraseña no cumplidas!", JOptionPane.ERROR_MESSAGE);
+                 return false;
+             }
+             else if(politicasContraseñaNumeros(contraseña) && politicasContraseñaMayusculas(contraseña) && politicasContraseñaMinusculas(contraseña)){
+                 return true;
+             }       
         }
-        else{
-            JOptionPane.showMessageDialog(null, "La contraseña es muy corta debe ser de al menos 8 caracteres.", "Longitud de contraseña menor al requerido", JOptionPane.ERROR_MESSAGE); 
+        else if(contraseña.length() > 1){
+            JOptionPane.showMessageDialog(null, "La contraseña es muy corta debe ser de al menos 8 caracteres.", "Longitud de contraseña menor al requerido", JOptionPane.ERROR_MESSAGE);
+            txtContra.requestFocus();
            return false; 
         }    
+        return true;
     }
     
+    public boolean politicasContraseñaNumeros(String contraseña){
+        boolean tieneNumero = false; 
+        char c;
+        
+        for(int i=0; i<contraseña.length();i++){
+            c = contraseña.charAt(i);
+            if(Character.isDigit(c)){
+                tieneNumero = true;
+            }
+            if(tieneNumero){
+                return true;      
+            }
+        }
+        return false;      
+      }
+    
+      
+      public boolean politicasContraseñaMayusculas(String contraseña){ 
+        boolean tieneMayusculas = false; 
+        char c;
+        
+        for(int i=0; i<contraseña.length();i++){
+            c = contraseña.charAt(i);
+            if(Character.isUpperCase(c)){
+                tieneMayusculas = true;
+            }
+            if(tieneMayusculas){
+                return true;
+            }
+        }
+        return false;
+    }
+      
+      public boolean politicasContraseñaMinusculas(String contraseña){
+        boolean tieneMinusculas = false;
+        char c;
+        
+        for(int i=0; i<contraseña.length();i++){
+            c = contraseña.charAt(i);           
+            if(Character.isLowerCase(c)){
+                tieneMinusculas = true;
+            }
+            if(tieneMinusculas){
+                return true;
+            }
+        }
+        return false;
+    }
+      /*
       public boolean politicasContraseña(String contraseña){
         boolean tieneNumero = false; 
         boolean tieneMayusculas = false; 
@@ -159,7 +260,7 @@ public class VistaLoginController implements Initializable {
         }
         return false;
     }
-
+*/
     @FXML
     private void txtUsuarioKeyTyped(KeyEvent event) {
         if(txtUsuario.getText().length() >=15){
@@ -171,12 +272,17 @@ public class VistaLoginController implements Initializable {
 
     @FXML
     private void txtContraseñaKeyTyped(KeyEvent event) {
+       // txtContra.setText(txtContra.getText().trim());
         if(txtContra.getText().length() >=15){
             event.consume();
             JOptionPane.showMessageDialog(null, "Número máximo de caracteres admitidos.");
         }
     }
+    
+ 
+    
 
+    
 
     
 

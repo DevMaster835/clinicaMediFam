@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -64,12 +65,19 @@ public class VistaProductosController implements Initializable {
         @FXML
     private void agregarProductos(ActionEvent event) {
         
-        if (txtcodigoProd.getText().isEmpty() || txtnombreProd.getText().isEmpty() || txtPrecio.getText().isEmpty()
-                || txtfechaVen.getText().isEmpty() || txtExistencia.getText().isEmpty() || txtconNeto.getText().isEmpty()) {
-
-            JOptionPane.showMessageDialog(null, "El campo esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-
-        } else{
+        if (txtcodigoProd.getText() == null ) {
+            JOptionPane.showMessageDialog(null, "El campo de Codigo del Producto esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (txtnombreProd.getText() == null ) {
+            JOptionPane.showMessageDialog(null, "El campo de Nombre esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (txtPrecio.getText() == null ) {
+            JOptionPane.showMessageDialog(null, "El campo de Precio esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (txtfechaVen.getText() == null ) {
+            JOptionPane.showMessageDialog(null, "El campo de fecha esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (txtExistencia.getText() == null ) {
+            JOptionPane.showMessageDialog(null, "El campo de Existencia esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (txtconNeto.getText() == null ) {
+            JOptionPane.showMessageDialog(null, "El campo de Contenido neto esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else{   
         
         try{
             pps=cone.prepareStatement("INSERT INTO productos(idProducto,nombre,idPrecioHis,fechaVencimiento,stock,contenidoNeto) VALUES(?,?,?,?,?,?)");
@@ -95,6 +103,68 @@ public class VistaProductosController implements Initializable {
 
     @FXML
     private void cancelarProductos(ActionEvent event) {
+    }
+
+    //EVENTO KEY TYPED
+    @FXML
+    private void txtCodigoKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
+        
+    }
+
+    @FXML
+    private void txtNombreKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
+        }
+    }
+
+    @FXML
+    private void txtPrecioKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car) && car>'.'){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
+    }
+
+    @FXML
+    private void txtExistenciaKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
+    }
+
+    @FXML
+    private void txtConetidoKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
+    }
+
+    @FXML
+    private void txtFechaVenKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car) && car>'/'){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
     }
 
 

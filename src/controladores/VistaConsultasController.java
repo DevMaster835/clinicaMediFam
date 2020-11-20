@@ -23,6 +23,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -109,11 +110,28 @@ public class VistaConsultasController implements Initializable {
        
         System.out.println(fechaCreacion);
         
-         if (txtnoConsulta.getText().isEmpty() || txtfechaCreacion.getValue() == null || txtfechaCita.getValue() ==null || txthoraCita.getText().isEmpty() || txtidPaciente.getText().isEmpty() || txtnombrePac.getText().isEmpty() || 
-                 txtidMedico.getText().isEmpty() || txtMedico.getText().isEmpty() || txtmotivo.getText().isEmpty() || cmbestadoC.getValue()==null) {
-             JOptionPane.showMessageDialog(null, "El campo está vacío, por favor complete los datos del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-             
-         }else{
+         if (txtfechaCreacion.getValue() == null ) {
+
+            JOptionPane.showMessageDialog(null, "El campo 'Fecha de creación' está vacío, por favor seleccione una fecha.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+            
+        }else if(txtfechaCita.getValue() ==null){
+            JOptionPane.showMessageDialog(null, "El campo 'Fecha de cita' está vacío, por favor seleccione una fecha.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+        }else if(txthoraCita.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "El campo 'Hora' está vacío, por favor ingrese la hora de la cita.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+        }else if(txtidPaciente.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El campo 'Identidad' está vacío, por favor ingrese la identidad del paciente.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+        }else if(txtnombrePac.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El campo 'Nombre' está vacío, por favor ingrese el nombre del paciente.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+        }else if(txtidMedico.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El campo 'Identidad' está vacío, por favor ingrese la identidad del médico.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+        }else if(txtMedico.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El campo 'Médico' está vacío, por favor ingrese el nombre del médico.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+        }else if(txtmotivo.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El campo 'Motivo' está vacío, por favor ingrese el motivo.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+        }else if(cmbestadoC.getValue()==null){
+            JOptionPane.showMessageDialog(null, "El campo 'Estado de Cita' está vacío, por favor ingrese la hora de la cita.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
         
         try {
             pps=cone.prepareStatement("INSERT INTO consultas_medicas(fechaCreacion,fechaConsulta,horaConsulta,idPaciente,idMedico,motivo,idEstadoConsulta) VALUES(?,?,?,?,?,?,?)");
@@ -167,6 +185,36 @@ public class VistaConsultasController implements Initializable {
             }
         }catch (SQLException ex) {
             Logger.getLogger(VistaConsultasController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void txtConsultaKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
+    }
+
+    @FXML
+    private void txtidPacKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+        }
+    }
+
+    @FXML
+    private void txtidEmpKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car)){
+            event.consume();
+            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
     }
     
