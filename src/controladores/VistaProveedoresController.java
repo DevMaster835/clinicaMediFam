@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -62,7 +63,9 @@ public class VistaProveedoresController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
+
+    //
 
     @FXML
     private void agregarProveedores(ActionEvent event) {
@@ -84,6 +87,28 @@ public class VistaProveedoresController implements Initializable {
             if(!isEmailValid(txtcorreoProv.getText())){
             return;
             }
+            
+            if(!validarLongitudTelefono(txtTelefono, 8)){
+            return;
+            }
+            
+            if (!validarLongitudMax(txtnombreProv.getText(), 40)) {
+            JOptionPane.showMessageDialog(null, "El nombre del proveedor ingresados es muy largo el máximo es de 40 caracteres, usted ingresó " + txtnombreProv.getText().length() + " caracteres.", "Longitud de los nombres del empleado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+            }
+            if (!validarLongitudMax(txtcontacto.getText(), 40)) {
+            JOptionPane.showMessageDialog(null, "El nombre del contacto ingresado es muy largo el máximo es de 40 caracteres, usted ingresó " + txtcontacto.getText().length() + " caracteres.", "Longitud de los apellidos del empleado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+            }
+            if (!validarLongitudMax(txtTelefono.getText(), 8)) {
+            JOptionPane.showMessageDialog(null, "El teléfono del proveedor ingresado es muy largo el máximo es de 8 dígitos, usted ingresó " + txtTelefono.getText().length() + " dígitos.", "Longitud del teléfono del empleado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+            }
+            if (!validarLongitudMax(txtidProv.getText(), 13)) {
+             JOptionPane.showMessageDialog(null, "La identidad del proveedor ingresado es muy largo el máximo es de 13 dígitos, usted ingresó " + txtidProv.getText().length() + " dígitos.", "Longitud del número de identidad del empleado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+            }
+            
             pps=cone.prepareStatement("INSERT INTO proveedores(idProveedor,RTN,nombreProveedor,nombreContacto,direccion) VALUES(?,?,?,?,?)");
             pps.setString(1, txtidProv.getText());
             pps.setString(2, txtRTN.getText());
@@ -127,6 +152,40 @@ public class VistaProveedoresController implements Initializable {
                 JOptionPane.showMessageDialog(null, "El correo no es valido");
                    return false;
             }
+    }
+    
+    private boolean validarLongitudTelefono(TextField texto, int longitud){
+       if(texto.getText().length() == longitud){
+                Pattern pattern = Pattern.compile("[23789]");
+                Matcher matcher=pattern.matcher(texto.getText().substring(0,1));
+                if(matcher.matches()){ 
+                        return true;
+                    }else{
+                        JOptionPane.showMessageDialog(null, "El número de teléfono debe comenzar con: 2,3,7,8 o 9");
+                        return false;
+                    } 
+       }
+        else{
+       }
+       JOptionPane.showMessageDialog(null, "El número de teléfono debe ser de 8 dígitos", "Longitud del número de telefono",JOptionPane.INFORMATION_MESSAGE);
+       return false;
+    }
+    
+    private boolean validarLongitud(TextField texto, int longitud){
+       if(texto.getText().length() >= longitud){
+           return true;
+       }
+       else{
+           return false;
+       }
+    }
+    
+    private boolean validarLongitudMax(String texto, int longitud) {
+        if (texto.length() <= longitud) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @FXML

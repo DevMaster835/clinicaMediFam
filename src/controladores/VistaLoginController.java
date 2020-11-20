@@ -126,6 +126,7 @@ public class VistaLoginController implements Initializable {
                 stage.setScene(scene);
                 stage.show();
                 
+                
             }else{
                JOptionPane.showMessageDialog(null, "La contraseña es incorrecta, intente nuevamente" //REVISAR PARA INDICAR SI USUARIO O CONTRASEÑA ES INCORRECTO
                          , "Ingrese la contraseña correcta", JOptionPane.ERROR_MESSAGE);

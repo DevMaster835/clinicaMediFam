@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-11-2020 a las 22:40:56
+-- Tiempo de generación: 20-11-2020 a las 23:51:44
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -38,13 +38,6 @@ CREATE TABLE `consultas_medicas` (
   `idEstadoConsulta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `consultas_medicas`
---
-
-INSERT INTO `consultas_medicas` (`noConsulta`, `fechaCreacion`, `fechaConsulta`, `horaConsulta`, `idPaciente`, `idMedico`, `motivo`, `idEstadoConsulta`) VALUES
-(1, '2020-11-13', '2020-11-27', '08:30:00', 1201199, 1205, 'DOLOR FUERTE DE ESTMAGO', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -58,13 +51,6 @@ CREATE TABLE `correo_empleados` (
   `tipoCorreo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `correo_empleados`
---
-
-INSERT INTO `correo_empleados` (`idCorreo`, `idEmpleado`, `correo`, `tipoCorreo`) VALUES
-(1, 1213, 'ana.castillo@gmail.com', 2);
-
 -- --------------------------------------------------------
 
 --
@@ -77,13 +63,6 @@ CREATE TABLE `correo_pacientes` (
   `correo` varchar(35) NOT NULL,
   `tipoCorreo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `correo_pacientes`
---
-
-INSERT INTO `correo_pacientes` (`idCorreo`, `idPaciente`, `correo`, `tipoCorreo`) VALUES
-(1, 1201199, 'emiflow@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -102,7 +81,9 @@ CREATE TABLE `correo_proveedores` (
 --
 
 INSERT INTO `correo_proveedores` (`idCorreo`, `idProveedor`, `correo`) VALUES
-(1, 1201, 'feliperuiz45@yahoo.com');
+(1, 1201, 'feliperuiz45@yahoo.com'),
+(2, 5689, 'juan.sabarro@yahoo.es'),
+(3, 7575, 'dggg');
 
 -- --------------------------------------------------------
 
@@ -114,7 +95,6 @@ CREATE TABLE `detalle_facturacion` (
   `idDetalle` bigint(20) NOT NULL,
   `idFacturacion` bigint(20) NOT NULL,
   `idProducto` int(11) NOT NULL,
-  `precio` double NOT NULL,
   `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -134,18 +114,6 @@ CREATE TABLE `empleados` (
   `direccion` varchar(50) NOT NULL,
   `tipoEmpleado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `empleados`
---
-
-INSERT INTO `empleados` (`idEmpleado`, `nombres`, `apellidos`, `fechaNacimiento`, `idGenero`, `idNacionalidad`, `direccion`, `tipoEmpleado`) VALUES
-(1205, 'MARTHA', 'ISAULA', '1999-05-15', 2, 2, 'BARRIO SAN JUAN', 2),
-(1206, 'JOSE MANUEL', 'CASTILLO', '1999-01-25', 1, 1, 'BARRIO ARRIBA', 1),
-(1207, 'MANUEL ORLANDO', 'FIALLOS', '2000-10-25', 1, 5, 'YARUMELA', 3),
-(1210, 'ALEX DAVID', 'VASQUEZ', '1999-12-12', 1, 3, 'BARRIO LA GRANJA, LA PAZ', 3),
-(1211, 'ALEX DAVID', 'VASQUEZ', '1999-12-12', 1, 3, 'BARRIO LA GRANJA, LA PAZ', 3),
-(1213, 'ANA GABRIELA', 'CASTILLO', '1998-10-26', 2, 1, 'BARRIO LA CONCEPCION, LA PAZ', 2);
 
 -- --------------------------------------------------------
 
@@ -238,14 +206,6 @@ CREATE TABLE `historial_medico` (
   `tratamiento` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `historial_medico`
---
-
-INSERT INTO `historial_medico` (`idHistorial`, `fechaCreacion`, `noConsulta`, `anamnesis`, `diagnostico`, `tratamiento`) VALUES
-(1, '2020-11-13', 1, 'EL PACIENTE PADECE DOLORES DE CABEZA MUY\nFUERTES.', 'TOMAR DOS PANADOL AL DIA POR TRES DIAS', 'TOMAR DOS PANADOL AL DIA POR TRES DIAS'),
-(115, '2020-11-13', 1, 'EL PACIENTE PADECE DOLORES DE CABEZA FUERTES', 'TOMAR 2 PANADOL AL DIA POR 1 SEMANA', 'TOMAR 2 PANADOL AL DIA POR 1 SEMANA');
-
 -- --------------------------------------------------------
 
 --
@@ -328,13 +288,6 @@ CREATE TABLE `pacientes` (
   `tipoSangre` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `pacientes`
---
-
-INSERT INTO `pacientes` (`idPaciente`, `nombres`, `apellidos`, `fechaNacimiento`, `idGenero`, `idNacionalidad`, `direccion`, `peso`, `altura`, `tipoSangre`) VALUES
-(1201199, 'EDUARDO EMILIANO', 'SUAZO MURILLO', '2003-06-16', 1, 1, 'BARRIO SAN JUAN, LA PAZ', '170', '1.68', 2);
-
 -- --------------------------------------------------------
 
 --
@@ -355,6 +308,7 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`idProducto`, `nombre`, `idPrecioHis`, `fechaVencimiento`, `stock`, `contenidoNeto`) VALUES
+(555, 'VITAFLENACO', 150, '2020-10-25', '150', '100'),
 (1230, 'SUDAGRIP', 7, '2022-10-10', '50', '10');
 
 -- --------------------------------------------------------
@@ -376,7 +330,11 @@ CREATE TABLE `proveedores` (
 --
 
 INSERT INTO `proveedores` (`idProveedor`, `RTN`, `nombreProveedor`, `nombreContacto`, `direccion`) VALUES
-(1201, 12019, 'LABORATORIO SAN JORGE', 'FELIPE RUIZ', 'COMAYAGUELA, FRANCISCO MORAZA');
+(986, 57849, 'DFGRG', 'DGDGD', 'BARRIO LA ALAMEDA, COMAYAGUA'),
+(1201, 12019, 'LABORATORIO SAN JORGE', 'FELIPE RUIZ', 'COMAYAGUELA, FRANCISCO MORAZA'),
+(5689, 1201998, 'JETSTEREO', 'JOSUE GONZALES', 'BARRIO LA ALAMEDA, COMAYAGUA'),
+(7575, 757575, 'fgdgd', 'dgdgg', 'dggdgg'),
+(4987979, 57849, 'DFGRG', 'DGDGD', 'BARRIO LA ALAMEDA, COMAYAGUA');
 
 -- --------------------------------------------------------
 
@@ -393,13 +351,6 @@ CREATE TABLE `signos_vitales` (
   `respiracion` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `signos_vitales`
---
-
-INSERT INTO `signos_vitales` (`idSignosVitales`, `idHistorial`, `temperatura`, `presion`, `pulso`, `respiracion`) VALUES
-(1, 115, '20', '15', '50', '40');
-
 -- --------------------------------------------------------
 
 --
@@ -412,15 +363,6 @@ CREATE TABLE `telefonos_empleados` (
   `telefono` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `telefonos_empleados`
---
-
-INSERT INTO `telefonos_empleados` (`idTelefono`, `idEmpleado`, `telefono`) VALUES
-(1, 1205, 27742347),
-(2, 1207, 27746358),
-(3, 1213, 99856321);
-
 -- --------------------------------------------------------
 
 --
@@ -432,13 +374,6 @@ CREATE TABLE `telefonos_pacientes` (
   `idPaciente` int(14) NOT NULL,
   `telefono` int(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `telefonos_pacientes`
---
-
-INSERT INTO `telefonos_pacientes` (`idTelefono`, `idPaciente`, `telefono`) VALUES
-(1, 1201199, 32654712);
 
 -- --------------------------------------------------------
 
@@ -457,7 +392,9 @@ CREATE TABLE `telefonos_proveedores` (
 --
 
 INSERT INTO `telefonos_proveedores` (`idTelefono`, `idProveedor`, `telefono`) VALUES
-(1, 1201, 88745632);
+(1, 1201, 88745632),
+(2, 5689, 27785632),
+(3, 7575, 8989646);
 
 -- --------------------------------------------------------
 
@@ -534,9 +471,17 @@ CREATE TABLE `tipo_usuario` (
 CREATE TABLE `usuarios` (
   `idUsuario` int(11) NOT NULL,
   `idEmpleado` int(14) NOT NULL,
+  `nombreUsuario` varchar(20) NOT NULL,
   `tipoUsuario` int(4) NOT NULL,
-  `contraseña` varchar(15) NOT NULL
+  `contraseña` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`idUsuario`, `idEmpleado`, `nombreUsuario`, `tipoUsuario`, `contraseña`) VALUES
+(10, 1206, 'josecas', 2, 'c91256697dae5ce709d5b85140604b40');
 
 --
 -- Índices para tablas volcadas
@@ -725,25 +670,25 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `consultas_medicas`
 --
 ALTER TABLE `consultas_medicas`
-  MODIFY `noConsulta` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `noConsulta` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `correo_empleados`
 --
 ALTER TABLE `correo_empleados`
-  MODIFY `idCorreo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idCorreo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `correo_pacientes`
 --
 ALTER TABLE `correo_pacientes`
-  MODIFY `idCorreo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idCorreo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `correo_proveedores`
 --
 ALTER TABLE `correo_proveedores`
-  MODIFY `idCorreo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idCorreo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_facturacion`
@@ -791,25 +736,25 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `signos_vitales`
 --
 ALTER TABLE `signos_vitales`
-  MODIFY `idSignosVitales` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idSignosVitales` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `telefonos_empleados`
 --
 ALTER TABLE `telefonos_empleados`
-  MODIFY `idTelefono` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idTelefono` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `telefonos_pacientes`
 --
 ALTER TABLE `telefonos_pacientes`
-  MODIFY `idTelefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idTelefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `telefonos_proveedores`
 --
 ALTER TABLE `telefonos_proveedores`
-  MODIFY `idTelefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idTelefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_correo`

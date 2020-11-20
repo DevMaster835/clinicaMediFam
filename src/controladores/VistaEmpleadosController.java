@@ -228,7 +228,7 @@ public class VistaEmpleadosController implements Initializable {
             return;
             }
             if (!validarLongitudMax(txtidEmpleado.getText(), 13)) {
-             JOptionPane.showMessageDialog(null, "El salario del empleado ingresado es muy largo el máximo es de 13 dígitos, usted ingresó " + txtidEmpleado.getText().length() + " dígitos.", "Longitud del número de identidad del empleado", JOptionPane.INFORMATION_MESSAGE);
+             JOptionPane.showMessageDialog(null, "La identidad del empleado ingresado es muy largo el máximo es de 13 dígitos, usted ingresó " + txtidEmpleado.getText().length() + " dígitos.", "Longitud del número de identidad del empleado", JOptionPane.INFORMATION_MESSAGE);
             return;
             }
            

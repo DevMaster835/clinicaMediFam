@@ -127,6 +127,45 @@ public class VistaPacientesController implements Initializable {
                 return false;
             }
     }
+    
+    public boolean validarIdentidad(String identidad){
+        String id = identidad.substring(0, 1);
+        if(identidad.length() < 5){
+             JOptionPane.showMessageDialog(null, "El número de identidad debe de tener 13 dígitos, ha ingresado solamente "+identidad.length()+" dígitos.", "Número de identidad invalido", JOptionPane.ERROR_MESSAGE);
+        }
+        if(identidad.length() == 5){
+             if("0".equals(id)){
+                 return true;
+             }
+             else if("1".equals(id)){
+                 return true;
+             }
+             else{
+                 JOptionPane.showMessageDialog(null, "El número de identidad sólo puede comenzar con 0 o 1 ", "Error en campo identidad", JOptionPane.ERROR_MESSAGE);
+                 return false;
+             }
+        }
+        else{
+           return false; 
+        }    
+    }
+    
+    private boolean validarLongitud(TextField texto, int longitud){
+       if(texto.getText().length() >= longitud){
+           return true;
+       }
+       else{
+           return false;
+       }
+    }
+    
+    private boolean validarLongitudMax(String texto, int longitud) {
+        if (texto.length() <= longitud) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     @FXML
     private void guardarPacientes(ActionEvent event) {
@@ -174,10 +213,32 @@ public class VistaPacientesController implements Initializable {
         try{
             if(existePaciente()){
             return;
-        }
+            }
             if(!isEmailValid(txtCorreoPaciente.getText())){
             return;
             }
+            
+            if(validarIdentidad(txtidPaciente.getText())){
+            return;
+            }
+            
+            if (!validarLongitudMax(txtNombrePaciente.getText(), 40)) {
+            JOptionPane.showMessageDialog(null, "Los nombres del paciente ingresados son muy largos el máximo es de 40 caracteres, usted ingresó " + txtNombrePaciente.getText().length() + " caracteres.", "Longitud de los nombres del empleado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+            }
+            if (!validarLongitudMax(txtApellidoPaciente.getText(), 40)) {
+            JOptionPane.showMessageDialog(null, "Los apellidos del paciente ingresados son muy largos el máximo es de 40 caracteres, usted ingresó " + txtApellidoPaciente.getText().length() + " caracteres.", "Longitud de los apellidos del empleado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+            }
+            if (!validarLongitudMax(txtTelPaciente.getText(), 8)) {
+            JOptionPane.showMessageDialog(null, "El teléfono del paciente ingresado es muy largo el máximo es de 8 dígitos, usted ingresó " + txtTelPaciente.getText().length() + " dígitos.", "Longitud del teléfono del empleado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+            }
+            if (!validarLongitudMax(txtidPaciente.getText(), 13)) {
+             JOptionPane.showMessageDialog(null, "La identidad del paciente ingresado es muy largo el máximo es de 13 dígitos, usted ingresó " + txtidPaciente.getText().length() + " dígitos.", "Longitud del número de identidad del empleado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+            }
+            
             pps=cone.prepareStatement("INSERT INTO pacientes(idPaciente,nombres,apellidos,fechaNacimiento,idGenero,idNacionalidad,direccion,peso,altura,tipoSangre) VALUES(?,?,?,?,?,?,?,?,?,?)");
             pps.setString(1, txtidPaciente.getText());
             pps.setString(2, txtNombrePaciente.getText());
