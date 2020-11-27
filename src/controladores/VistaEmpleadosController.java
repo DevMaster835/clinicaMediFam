@@ -257,8 +257,10 @@ public class VistaEmpleadosController implements Initializable {
             JOptionPane.showMessageDialog(null, "Seleccione el género del empleado", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }
         
+        
+        
         String tipoEmp= (String) cmbTipoEmp.getValue();
-        String nacionalidad= (String) cmbNacionalidad.getId();
+       int nacionalidad= cmbNacionalidad.getSelectionModel().getSelectedIndex() + 1;
         String tipoCorreo= (String) cmbtipoCorreo.getValue();
         System.out.println(nacionalidad);
         
@@ -314,14 +316,13 @@ public class VistaEmpleadosController implements Initializable {
             return;
             }
             
-
             pps= cone.prepareStatement("INSERT INTO empleados(idEmpleado,nombres,apellidos,fechaNacimiento,idGenero,idNacionalidad, direccion, tipoEmpleado) VALUES (?,?,?,?,?,?,?,?)");
             pps.setString(1, txtidEmpleado.getText());
             pps.setString(2, txtNombreEmp.getText());
             pps.setString(3, txtApellidoEmp.getText());
             pps.setString(4, String.valueOf(fechaNac));
             pps.setString(5, String.valueOf(genero));
-            pps.setString(6, nacionalidad);
+            pps.setString(6, String.valueOf(nacionalidad));
             pps.setString(7, txtDireccionEmp.getText());
             pps.setString(8, tipoEmp);
             pps.executeUpdate();      
