@@ -46,8 +46,6 @@ public class tipoEmpleados {
                                     resultado.getInt("idTipoEmpleado"),
                                     resultado.getString("tipoEmpleado")                                  
                             ));
-                               
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);
