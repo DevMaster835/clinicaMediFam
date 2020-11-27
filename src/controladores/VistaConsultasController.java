@@ -144,6 +144,8 @@ public class VistaConsultasController implements Initializable {
             pps.setString(7, estadoCita);
             pps.executeUpdate();
             
+            JOptionPane.showMessageDialog(null, "Se ha registrado la consulta medica", "Datos guardados", JOptionPane.PLAIN_MESSAGE);
+            
         } catch (SQLException ex) {
             Logger.getLogger(VistaConsultasController.class.getName()).log(Level.SEVERE, null, ex);
         }

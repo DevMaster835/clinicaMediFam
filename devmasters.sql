@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-11-2020 a las 23:51:44
+-- Tiempo de generación: 27-11-2020 a las 06:53:04
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -32,8 +32,8 @@ CREATE TABLE `consultas_medicas` (
   `fechaCreacion` date NOT NULL,
   `fechaConsulta` date NOT NULL,
   `horaConsulta` time NOT NULL,
-  `idPaciente` int(14) NOT NULL,
-  `idMedico` int(14) NOT NULL,
+  `idPaciente` varchar(13) NOT NULL,
+  `idMedico` varchar(13) NOT NULL,
   `motivo` text NOT NULL,
   `idEstadoConsulta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -46,7 +46,7 @@ CREATE TABLE `consultas_medicas` (
 
 CREATE TABLE `correo_empleados` (
   `idCorreo` int(11) NOT NULL,
-  `idEmpleado` int(14) NOT NULL,
+  `idEmpleado` varchar(13) NOT NULL,
   `correo` varchar(35) NOT NULL,
   `tipoCorreo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -59,10 +59,17 @@ CREATE TABLE `correo_empleados` (
 
 CREATE TABLE `correo_pacientes` (
   `idCorreo` int(11) NOT NULL,
-  `idPaciente` int(14) NOT NULL,
+  `idPaciente` varchar(13) NOT NULL,
   `correo` varchar(35) NOT NULL,
   `tipoCorreo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `correo_pacientes`
+--
+
+INSERT INTO `correo_pacientes` (`idCorreo`, `idPaciente`, `correo`, `tipoCorreo`) VALUES
+(8, '1201199900214', 'martha.padilla@ujcv.edu.hn', 1);
 
 -- --------------------------------------------------------
 
@@ -72,7 +79,7 @@ CREATE TABLE `correo_pacientes` (
 
 CREATE TABLE `correo_proveedores` (
   `idCorreo` int(11) NOT NULL,
-  `idProveedor` int(14) NOT NULL,
+  `idProveedor` varchar(13) NOT NULL,
   `correo` varchar(35) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -81,9 +88,9 @@ CREATE TABLE `correo_proveedores` (
 --
 
 INSERT INTO `correo_proveedores` (`idCorreo`, `idProveedor`, `correo`) VALUES
-(1, 1201, 'feliperuiz45@yahoo.com'),
-(2, 5689, 'juan.sabarro@yahoo.es'),
-(3, 7575, 'dggg');
+(1, '1201', 'feliperuiz45@yahoo.com'),
+(2, '5689', 'juan.sabarro@yahoo.es'),
+(3, '7575', 'dggg');
 
 -- --------------------------------------------------------
 
@@ -105,7 +112,7 @@ CREATE TABLE `detalle_facturacion` (
 --
 
 CREATE TABLE `empleados` (
-  `idEmpleado` int(14) NOT NULL,
+  `idEmpleado` varchar(13) NOT NULL,
   `nombres` varchar(25) NOT NULL,
   `apellidos` varchar(25) NOT NULL,
   `fechaNacimiento` date NOT NULL,
@@ -122,7 +129,7 @@ CREATE TABLE `empleados` (
 --
 
 CREATE TABLE `enfermeras` (
-  `idEmpleado` int(14) NOT NULL,
+  `idEmpleado` varchar(13) NOT NULL,
   `idEspecialidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -168,8 +175,8 @@ CREATE TABLE `fabricantes` (
 CREATE TABLE `facturacion` (
   `idFacturacion` bigint(20) NOT NULL,
   `fechaFactura` date NOT NULL,
-  `idEmpleado` int(12) NOT NULL,
-  `idPaciente` int(12) NOT NULL
+  `idEmpleado` varchar(13) NOT NULL,
+  `idPaciente` varchar(13) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -213,7 +220,7 @@ CREATE TABLE `historial_medico` (
 --
 
 CREATE TABLE `medicos` (
-  `idEmpleado` int(14) NOT NULL,
+  `idEmpleado` varchar(13) NOT NULL,
   `idEspecialidad` int(11) NOT NULL,
   `licenciaMedica` int(7) NOT NULL,
   `añosExperiencia` varchar(2) NOT NULL
@@ -276,7 +283,7 @@ INSERT INTO `nacionalidades` (`idNacionalidad`, `nacionalidad`) VALUES
 --
 
 CREATE TABLE `pacientes` (
-  `idPaciente` int(14) NOT NULL,
+  `idPaciente` varchar(13) NOT NULL,
   `nombres` varchar(25) NOT NULL,
   `apellidos` varchar(25) NOT NULL,
   `fechaNacimiento` date NOT NULL,
@@ -287,6 +294,13 @@ CREATE TABLE `pacientes` (
   `altura` varchar(5) NOT NULL,
   `tipoSangre` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `pacientes`
+--
+
+INSERT INTO `pacientes` (`idPaciente`, `nombres`, `apellidos`, `fechaNacimiento`, `idGenero`, `idNacionalidad`, `direccion`, `peso`, `altura`, `tipoSangre`) VALUES
+('1201199900214', 'Martha Nelly', 'Padilla Isaula', '1999-02-26', 2, 1, 'Barrio La Concepción, La Paz', '150', '157', 1);
 
 -- --------------------------------------------------------
 
@@ -318,7 +332,7 @@ INSERT INTO `productos` (`idProducto`, `nombre`, `idPrecioHis`, `fechaVencimient
 --
 
 CREATE TABLE `proveedores` (
-  `idProveedor` int(14) NOT NULL,
+  `idProveedor` varchar(13) NOT NULL,
   `RTN` int(14) NOT NULL,
   `nombreProveedor` varchar(50) NOT NULL,
   `nombreContacto` varchar(25) NOT NULL,
@@ -330,11 +344,11 @@ CREATE TABLE `proveedores` (
 --
 
 INSERT INTO `proveedores` (`idProveedor`, `RTN`, `nombreProveedor`, `nombreContacto`, `direccion`) VALUES
-(986, 57849, 'DFGRG', 'DGDGD', 'BARRIO LA ALAMEDA, COMAYAGUA'),
-(1201, 12019, 'LABORATORIO SAN JORGE', 'FELIPE RUIZ', 'COMAYAGUELA, FRANCISCO MORAZA'),
-(5689, 1201998, 'JETSTEREO', 'JOSUE GONZALES', 'BARRIO LA ALAMEDA, COMAYAGUA'),
-(7575, 757575, 'fgdgd', 'dgdgg', 'dggdgg'),
-(4987979, 57849, 'DFGRG', 'DGDGD', 'BARRIO LA ALAMEDA, COMAYAGUA');
+('1201', 12019, 'LABORATORIO SAN JORGE', 'FELIPE RUIZ', 'COMAYAGUELA, FRANCISCO MORAZA'),
+('4987979', 57849, 'DFGRG', 'DGDGD', 'BARRIO LA ALAMEDA, COMAYAGUA'),
+('5689', 1201998, 'JETSTEREO', 'JOSUE GONZALES', 'BARRIO LA ALAMEDA, COMAYAGUA'),
+('7575', 757575, 'fgdgd', 'dgdgg', 'dggdgg'),
+('986', 57849, 'DFGRG', 'DGDGD', 'BARRIO LA ALAMEDA, COMAYAGUA');
 
 -- --------------------------------------------------------
 
@@ -359,7 +373,7 @@ CREATE TABLE `signos_vitales` (
 
 CREATE TABLE `telefonos_empleados` (
   `idTelefono` bigint(20) NOT NULL,
-  `idEmpleado` int(14) NOT NULL,
+  `idEmpleado` varchar(13) NOT NULL,
   `telefono` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -371,9 +385,16 @@ CREATE TABLE `telefonos_empleados` (
 
 CREATE TABLE `telefonos_pacientes` (
   `idTelefono` int(11) NOT NULL,
-  `idPaciente` int(14) NOT NULL,
+  `idPaciente` varchar(13) NOT NULL,
   `telefono` int(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `telefonos_pacientes`
+--
+
+INSERT INTO `telefonos_pacientes` (`idTelefono`, `idPaciente`, `telefono`) VALUES
+(9, '1201199900214', 88963214);
 
 -- --------------------------------------------------------
 
@@ -383,7 +404,7 @@ CREATE TABLE `telefonos_pacientes` (
 
 CREATE TABLE `telefonos_proveedores` (
   `idTelefono` int(11) NOT NULL,
-  `idProveedor` int(14) NOT NULL,
+  `idProveedor` varchar(13) NOT NULL,
   `telefono` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -392,9 +413,9 @@ CREATE TABLE `telefonos_proveedores` (
 --
 
 INSERT INTO `telefonos_proveedores` (`idTelefono`, `idProveedor`, `telefono`) VALUES
-(1, 1201, 88745632),
-(2, 5689, 27785632),
-(3, 7575, 8989646);
+(1, '1201', 88745632),
+(2, '5689', 27785632),
+(3, '7575', 8989646);
 
 -- --------------------------------------------------------
 
@@ -470,7 +491,7 @@ CREATE TABLE `tipo_usuario` (
 
 CREATE TABLE `usuarios` (
   `idUsuario` int(11) NOT NULL,
-  `idEmpleado` int(14) NOT NULL,
+  `idEmpleado` varchar(13) NOT NULL,
   `nombreUsuario` varchar(20) NOT NULL,
   `tipoUsuario` int(4) NOT NULL,
   `contraseña` varchar(32) NOT NULL
@@ -481,7 +502,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`idUsuario`, `idEmpleado`, `nombreUsuario`, `tipoUsuario`, `contraseña`) VALUES
-(10, 1206, 'josecas', 2, 'c91256697dae5ce709d5b85140604b40');
+(10, '1206', 'josecas', 2, 'c91256697dae5ce709d5b85140604b40');
 
 --
 -- Índices para tablas volcadas
@@ -682,7 +703,7 @@ ALTER TABLE `correo_empleados`
 -- AUTO_INCREMENT de la tabla `correo_pacientes`
 --
 ALTER TABLE `correo_pacientes`
-  MODIFY `idCorreo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idCorreo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `correo_proveedores`
@@ -748,7 +769,7 @@ ALTER TABLE `telefonos_empleados`
 -- AUTO_INCREMENT de la tabla `telefonos_pacientes`
 --
 ALTER TABLE `telefonos_pacientes`
-  MODIFY `idTelefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idTelefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `telefonos_proveedores`

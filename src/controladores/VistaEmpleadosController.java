@@ -12,24 +12,32 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.KeyCode;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+import modelos.Empleados;
+import modelos.Nacionalidades;
 
 /**
  * FXML Controller class
@@ -43,9 +51,9 @@ public class VistaEmpleadosController implements Initializable {
     
    
     PreparedStatement pps;
+    ObservableList<Empleados> listaEmpleados;
+    ObservableList<Nacionalidades> listaNacionalidades;
 
-    @FXML
-    private TextField txtFechaEmp;
     @FXML
     private TextField txtidEmpleado;
     @FXML
@@ -76,7 +84,38 @@ public class VistaEmpleadosController implements Initializable {
     @FXML
     private ComboBox<?> cmbtipoCorreo;
     @FXML
-    private ComboBox<String> cmbNacionalidad;
+    private ComboBox<Nacionalidades> cmbNacionalidad;
+    @FXML
+    private RadioButton rdbId;
+    @FXML
+    private ToggleGroup grupoBusqueda;
+    @FXML
+    private RadioButton rdbNom;
+    @FXML
+    private Button btnBuscar;
+    @FXML
+    private TableView<Empleados> tblEmpleados;
+    @FXML
+    private TableColumn<Empleados, String>id;
+    @FXML
+    private TableColumn<Empleados, String> nombre;
+    @FXML
+    private DatePicker txtFechaNaci;
+    @FXML
+    private TableColumn<Empleados, String> apellidos;
+    @FXML
+    private TableColumn<Empleados, String> genero;
+    @FXML
+    private TableColumn<Empleados, String> fechaNac;
+    @FXML
+    private TableColumn<Empleados, String> telefono;
+    @FXML
+    private TableColumn<Empleados, String> correo;
+    @FXML
+    private TableColumn<Empleados, String> direccion;
+    @FXML
+    private TableColumn<Empleados, String> tipoEmpleado;
+   
     
 
 
@@ -85,14 +124,42 @@ public class VistaEmpleadosController implements Initializable {
      */
     
     
-    @Override
+
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
          /*   ObservableList<String> items = FXCollections.observableArrayList();
             items.addAll("item-1", "item-2", "item-3", "item-4", "item-5");
 
             ComboBox<String> cbx = new ComboBox<>(items);
-            StackPane pane = new StackPane(cbx);*/
+            StackPane pane = new StackPane(cbx);*/ 
+         
+         //Inicializar
+         listaEmpleados= FXCollections.observableArrayList();
+         listaNacionalidades= FXCollections.observableArrayList();
+         
+         //llenar lista
+         Empleados.llenarTabla(cone, listaEmpleados);
+         Nacionalidades.llenarTabla(cone, listaNacionalidades);
+         
+         //Enlazar listas
+         tblEmpleados.setItems(listaEmpleados);
+         cmbNacionalidad.setItems(listaNacionalidades);
+         
+         //enlazar columnas
+         id.setCellValueFactory(new PropertyValueFactory("idEmp"));
+         nombre.setCellValueFactory(new PropertyValueFactory("nombres"));
+         apellidos.setCellValueFactory(new PropertyValueFactory("apellidos"));
+         fechaNac.setCellValueFactory(new PropertyValueFactory("fechaNac"));
+         genero.setCellValueFactory(new PropertyValueFactory("idGenero"));
+         telefono.setCellValueFactory(new PropertyValueFactory("telefono"));
+         correo.setCellValueFactory(new PropertyValueFactory("correo"));
+         direccion.setCellValueFactory(new PropertyValueFactory("direccion"));
+         tipoEmpleado.setCellValueFactory(new PropertyValueFactory("tipoEmp"));
+         
+         
+         //llenar combobox
+         cmbNacionalidad.setItems(listaNacionalidades);
     }
     
     public void start(Stage primaryStage){
@@ -124,10 +191,10 @@ public class VistaEmpleadosController implements Initializable {
     
     public boolean validarIdentidad(String identidad){
         String id = identidad.substring(0, 1);
-        if(identidad.length() < 5){
+        if(identidad.length() < 13){
              JOptionPane.showMessageDialog(null, "El número de identidad debe de tener 13 dígitos, ha ingresado solamente "+identidad.length()+" dígitos.", "Número de identidad invalido", JOptionPane.ERROR_MESSAGE);
         }
-        if(identidad.length() == 5){
+        if(identidad.length() == 13){
              if("0".equals(id)){
                  return true;
              }
@@ -163,12 +230,23 @@ public class VistaEmpleadosController implements Initializable {
         }
     }
     
+    public void limpiarDatos(){
+        txtidEmpleado.setText("");
+        txtNombreEmp.setText("");
+        txtApellidoEmp.setText("");
+        txtCorreoEmp.setText("");
+        txtDireccionEmp.setText("");
+        txtFechaNaci.setValue(null);
+        txtTelEmp.setText("");
+    }
+    
     
 
 
     //METODOS GUARDAR
      @FXML
     private void guardarEmpleados(ActionEvent event) {
+        LocalDate fechaNac= txtFechaNaci.getValue();
         int genero=0;
         
         if(rdbM.isSelected()==true){
@@ -180,8 +258,9 @@ public class VistaEmpleadosController implements Initializable {
         }
         
         String tipoEmp= (String) cmbTipoEmp.getValue();
-        String nacionalidad= (String) cmbNacionalidad.getValue();
+        String nacionalidad= (String) cmbNacionalidad.getId();
         String tipoCorreo= (String) cmbtipoCorreo.getValue();
+        System.out.println(nacionalidad);
         
         if (txtidEmpleado.getText().isEmpty()){
             
@@ -194,12 +273,11 @@ public class VistaEmpleadosController implements Initializable {
                JOptionPane.showMessageDialog(null, "El campo 'Correo' está vacío, por favor ingrese el correo electrónico del empleado.", "¡Error!", JOptionPane.INFORMATION_MESSAGE); 
                 }else if (txtDireccionEmp.getText().isEmpty() ){
                JOptionPane.showMessageDialog(null, "El campo 'Dirección' está vacío, por favor ingrese la dirección del empleado.", "¡Error!", JOptionPane.INFORMATION_MESSAGE); 
-                }else if (txtFechaEmp.getText().isEmpty() ){
+                }else if (txtFechaNaci.getValue()==null ){
                JOptionPane.showMessageDialog(null, "El campo 'Fecha nacimiento' está vacío, por favor ingrese la fecha de nacimiento del empleado.", "¡Error!", JOptionPane.INFORMATION_MESSAGE); 
                 }else if (txtTelEmp.getText().isEmpty() ){
                JOptionPane.showMessageDialog(null, "El campo 'Teléfono' está vacío, por favor ingrese el teléfono del empleado.", "¡Error!", JOptionPane.INFORMATION_MESSAGE); 
-                }else if (txtNombreEmp.getText().isEmpty() ){
-               JOptionPane.showMessageDialog(null, "El campo 'Nombres' está vacío, por favor ingrese el nombre del empleado.", "¡Error!", JOptionPane.INFORMATION_MESSAGE); 
+                
         }else{
             
 
@@ -232,7 +310,7 @@ public class VistaEmpleadosController implements Initializable {
             return;
             }
            
-            if(validarIdentidad(txtidEmpleado.getText())){
+            if(!validarIdentidad(txtidEmpleado.getText())){
             return;
             }
             
@@ -241,12 +319,12 @@ public class VistaEmpleadosController implements Initializable {
             pps.setString(1, txtidEmpleado.getText());
             pps.setString(2, txtNombreEmp.getText());
             pps.setString(3, txtApellidoEmp.getText());
-            pps.setString(4, txtFechaEmp.getText());
+            pps.setString(4, String.valueOf(fechaNac));
             pps.setString(5, String.valueOf(genero));
             pps.setString(6, nacionalidad);
             pps.setString(7, txtDireccionEmp.getText());
             pps.setString(8, tipoEmp);
-            pps.executeUpdate();
+            pps.executeUpdate();      
             
             
             pps=cone.prepareStatement("INSERT INTO telefonos_empleados(idEmpleado,telefono) VALUES(?,?)");
@@ -260,7 +338,9 @@ public class VistaEmpleadosController implements Initializable {
             pps.setString(3, tipoCorreo);
             pps.executeUpdate();
             
+
             JOptionPane.showMessageDialog(null, "Se ha registrado los datos del Empleado", "Datos guardados", JOptionPane.PLAIN_MESSAGE);
+            limpiarDatos();
         }catch (SQLException ex) {
             Logger.getLogger(VistaEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -275,7 +355,7 @@ public class VistaEmpleadosController implements Initializable {
 
     @FXML
     private void cancelar(ActionEvent event) {
-
+        limpiarDatos();
     }
  
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {
@@ -366,5 +446,11 @@ public class VistaEmpleadosController implements Initializable {
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
     }
+
+    @FXML
+    private void btnBuscar(ActionEvent event) {
+    }
+    
+    
 
 }

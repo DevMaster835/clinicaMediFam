@@ -130,10 +130,10 @@ public class VistaPacientesController implements Initializable {
     
     public boolean validarIdentidad(String identidad){
         String id = identidad.substring(0, 1);
-        if(identidad.length() < 5){
+        if(identidad.length() < 13){
              JOptionPane.showMessageDialog(null, "El número de identidad debe de tener 13 dígitos, ha ingresado solamente "+identidad.length()+" dígitos.", "Número de identidad invalido", JOptionPane.ERROR_MESSAGE);
         }
-        if(identidad.length() == 5){
+        if(identidad.length() == 13){
              if("0".equals(id)){
                  return true;
              }
@@ -218,7 +218,7 @@ public class VistaPacientesController implements Initializable {
             return;
             }
             
-            if(validarIdentidad(txtidPaciente.getText())){
+            if(!validarIdentidad(txtidPaciente.getText())){
             return;
             }
             
