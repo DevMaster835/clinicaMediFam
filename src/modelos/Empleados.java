@@ -199,16 +199,7 @@ public class Empleados {
         
     }
     
-    public static void cmbTipoEmpleado(Connection cone, ObservableList<Empleados>lista){
-        Statement statement;
-        try {
-            statement = cone.createStatement();
-            ResultSet resultado= statement.executeQuery("SELECT * FROM tipo_empleado");
-        } catch (SQLException ex) {
-            Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-    }
+    
     /*
     StringProperty idEmp;
     StringProperty nombre;

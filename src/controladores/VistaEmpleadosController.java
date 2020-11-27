@@ -38,6 +38,7 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import modelos.Empleados;
 import modelos.Nacionalidades;
+import modelos.tipoEmpleados;
 
 /**
  * FXML Controller class
@@ -53,6 +54,7 @@ public class VistaEmpleadosController implements Initializable {
     PreparedStatement pps;
     ObservableList<Empleados> listaEmpleados;
     ObservableList<Nacionalidades> listaNacionalidades;
+    ObservableList<tipoEmpleados> listaTipoEmpleados;
 
     @FXML
     private TextField txtidEmpleado;
@@ -70,7 +72,7 @@ public class VistaEmpleadosController implements Initializable {
     @FXML
     private ToggleGroup grupoGen;
     @FXML
-    private ComboBox<?> cmbTipoEmp;
+    private ComboBox<tipoEmpleados> cmbTipoEmp;
     @FXML
     private Button btnEliminar;
     @FXML
@@ -127,24 +129,21 @@ public class VistaEmpleadosController implements Initializable {
 
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-         /*   ObservableList<String> items = FXCollections.observableArrayList();
-            items.addAll("item-1", "item-2", "item-3", "item-4", "item-5");
-
-            ComboBox<String> cbx = new ComboBox<>(items);
-            StackPane pane = new StackPane(cbx);*/ 
          
          //Inicializar
          listaEmpleados= FXCollections.observableArrayList();
          listaNacionalidades= FXCollections.observableArrayList();
+         listaTipoEmpleados= FXCollections.observableArrayList();
          
          //llenar lista
          Empleados.llenarTabla(cone, listaEmpleados);
          Nacionalidades.llenarTabla(cone, listaNacionalidades);
+         tipoEmpleados.cmbTipoEmpleado(cone, listaTipoEmpleados);
          
          //Enlazar listas
          tblEmpleados.setItems(listaEmpleados);
          cmbNacionalidad.setItems(listaNacionalidades);
+         cmbTipoEmp.setItems(listaTipoEmpleados);
          
          //enlazar columnas
          id.setCellValueFactory(new PropertyValueFactory("idEmp"));
@@ -160,6 +159,7 @@ public class VistaEmpleadosController implements Initializable {
          
          //llenar combobox
          cmbNacionalidad.setItems(listaNacionalidades);
+         cmbTipoEmp.setItems(listaTipoEmpleados);
     }
     
     public void start(Stage primaryStage){
@@ -259,8 +259,8 @@ public class VistaEmpleadosController implements Initializable {
         
         
         
-        String tipoEmp= (String) cmbTipoEmp.getValue();
-       int nacionalidad= cmbNacionalidad.getSelectionModel().getSelectedIndex() + 1;
+        int tipoEmp= cmbTipoEmp.getSelectionModel().getSelectedIndex() + 1;
+        int nacionalidad= cmbNacionalidad.getSelectionModel().getSelectedIndex() + 1;
         String tipoCorreo= (String) cmbtipoCorreo.getValue();
         System.out.println(nacionalidad);
         
@@ -324,7 +324,7 @@ public class VistaEmpleadosController implements Initializable {
             pps.setString(5, String.valueOf(genero));
             pps.setString(6, String.valueOf(nacionalidad));
             pps.setString(7, txtDireccionEmp.getText());
-            pps.setString(8, tipoEmp);
+            pps.setString(8, String.valueOf(tipoEmp));
             pps.executeUpdate();      
             
             
