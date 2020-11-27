@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
 import javax.swing.JOptionPane;
+import modelos.Nacionalidades;
 
 /**
  * FXML Controller class
@@ -39,6 +42,7 @@ public class VistaPacientesController implements Initializable {
     Connection cone= con.openConnection();
     
     PreparedStatement pps;
+    ObservableList<Nacionalidades> listaNacionalidades;
 
     @FXML
     private TextField txtidPaciente;
@@ -73,7 +77,7 @@ public class VistaPacientesController implements Initializable {
     @FXML
     private TextField txtFechaPac;
     @FXML
-    private ComboBox<?> cmbNacionalidad;
+    private ComboBox<Nacionalidades> cmbNacionalidad;
     @FXML
     private ComboBox<?> cmbCorreo;
 
@@ -83,6 +87,15 @@ public class VistaPacientesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        //inicializar
+        listaNacionalidades= FXCollections.observableArrayList();
+        
+        //llenarLista
+        Nacionalidades.llenarTabla(cone, listaNacionalidades);
+        
+        //EnlazarListas
+        cmbNacionalidad.setItems(listaNacionalidades);
     }  
     
     public void limpiarDatos(){
@@ -181,7 +194,7 @@ public class VistaPacientesController implements Initializable {
         
         System.out.println(genero);
         
-        String nacionalidad= (String) cmbNacionalidad.getValue();
+        int nacionalidad= cmbNacionalidad.getSelectionModel().getSelectedIndex() + 1;
         String tipoCorreo= (String) cmbCorreo.getValue();
         String tipoSangre=(String) cmbTipoSangre.getValue();
         
@@ -245,7 +258,7 @@ public class VistaPacientesController implements Initializable {
             pps.setString(3, txtApellidoPaciente.getText());
             pps.setString(4, txtFechaPac.getText());
             pps.setString(5, String.valueOf(genero));
-            pps.setString(6, nacionalidad);
+            pps.setString(6, String.valueOf(nacionalidad));
             pps.setString(7, txtDireccionPaciente.getText());
             pps.setString(8, txtPesoPac.getText());
             pps.setString(9, txtAlturaPac.getText());

@@ -38,6 +38,7 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import modelos.Empleados;
 import modelos.Nacionalidades;
+import modelos.tipoCorreoE;
 import modelos.tipoEmpleados;
 
 /**
@@ -55,6 +56,7 @@ public class VistaEmpleadosController implements Initializable {
     ObservableList<Empleados> listaEmpleados;
     ObservableList<Nacionalidades> listaNacionalidades;
     ObservableList<tipoEmpleados> listaTipoEmpleados;
+    ObservableList<tipoCorreoE> listaTipoCorreo;
 
     @FXML
     private TextField txtidEmpleado;
@@ -84,7 +86,7 @@ public class VistaEmpleadosController implements Initializable {
     @FXML
     private RadioButton rdbF;
     @FXML
-    private ComboBox<?> cmbtipoCorreo;
+    private ComboBox<tipoCorreoE> cmbtipoCorreo;
     @FXML
     private ComboBox<Nacionalidades> cmbNacionalidad;
     @FXML
@@ -134,16 +136,19 @@ public class VistaEmpleadosController implements Initializable {
          listaEmpleados= FXCollections.observableArrayList();
          listaNacionalidades= FXCollections.observableArrayList();
          listaTipoEmpleados= FXCollections.observableArrayList();
+         listaTipoCorreo= FXCollections.observableArrayList();
          
          //llenar lista
          Empleados.llenarTabla(cone, listaEmpleados);
          Nacionalidades.llenarTabla(cone, listaNacionalidades);
          tipoEmpleados.cmbTipoEmpleado(cone, listaTipoEmpleados);
+         tipoCorreoE.cmbTipoCorreoE(cone, listaTipoCorreo);
          
          //Enlazar listas
          tblEmpleados.setItems(listaEmpleados);
          cmbNacionalidad.setItems(listaNacionalidades);
          cmbTipoEmp.setItems(listaTipoEmpleados);
+         cmbtipoCorreo.setItems(listaTipoCorreo);
          
          //enlazar columnas
          id.setCellValueFactory(new PropertyValueFactory("idEmp"));
@@ -261,7 +266,7 @@ public class VistaEmpleadosController implements Initializable {
         
         int tipoEmp= cmbTipoEmp.getSelectionModel().getSelectedIndex() + 1;
         int nacionalidad= cmbNacionalidad.getSelectionModel().getSelectedIndex() + 1;
-        String tipoCorreo= (String) cmbtipoCorreo.getValue();
+        int tipoCorreo= cmbtipoCorreo.getSelectionModel().getSelectedIndex() + 1;
         System.out.println(nacionalidad);
         
         if (txtidEmpleado.getText().isEmpty()){
@@ -336,7 +341,7 @@ public class VistaEmpleadosController implements Initializable {
             pps=cone.prepareStatement("INSERT INTO correo_empleados(idEmpleado, correo, tipoCorreo) VALUES(?,?,?)");
             pps.setString(1, txtidEmpleado.getText());
             pps.setString(2, txtCorreoEmp.getText());
-            pps.setString(3, tipoCorreo);
+            pps.setString(3, String.valueOf(tipoCorreo));
             pps.executeUpdate();
             
 

@@ -56,7 +56,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TabPane layoutX="117.0" layoutY="111.0" prefHeight="444.0" prefWidth="796.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="100.0" layoutY="98.0" prefHeight="444.0" prefWidth="796.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="DATOS GENERALES">
             <content>
@@ -95,7 +95,7 @@
                            </children>
                         </HBox>
                         <TextField fx:id="txtFechaPac" layoutX="387.0" layoutY="147.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <ComboBox fx:id="cmbNacionalidad" editable="true" layoutX="100.0" layoutY="208.0" prefWidth="150.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <ComboBox fx:id="cmbNacionalidad" layoutX="100.0" layoutY="208.0" prefWidth="150.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <Label layoutX="332.0" layoutY="262.0" text="Tipo&#10;Correo:" textAlignment="JUSTIFY" />
                         <ComboBox fx:id="cmbCorreo" editable="true" layoutX="388.0" layoutY="266.0" prefWidth="150.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <Pane layoutX="590.0" layoutY="97.0" prefHeight="145.0" prefWidth="192.0" style="-fx-border-color: black;">

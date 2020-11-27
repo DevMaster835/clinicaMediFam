@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="602.0" prefWidth="937.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaEmpleadosController">
+<AnchorPane id="AnchorPane" prefHeight="635.0" prefWidth="937.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaEmpleadosController">
    <children>
       <VBox layoutX="68.0" prefHeight="42.0" prefWidth="869.0" style="-fx-background-color: #30ACE2;">
          <children>
@@ -40,7 +40,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Pane prefHeight="608.0" prefWidth="69.0" style="-fx-background-color: #30ACE2;">
+      <Pane prefHeight="635.0" prefWidth="69.0" style="-fx-background-color: #30ACE2;">
          <children>
             <ImageView fitHeight="61.0" fitWidth="69.0" layoutX="5.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -77,9 +77,9 @@
                         <TextField fx:id="txtTelEmp" layoutX="387.0" layoutY="190.0" onKeyTyped="#txtTelefonoKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <TextField fx:id="txtCorreoEmp" layoutX="103.0" layoutY="249.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <TextArea fx:id="txtDireccionEmp" layoutX="103.0" layoutY="311.0" prefHeight="86.0" prefWidth="438.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <ComboBox fx:id="cmbTipoEmp" editable="true" layoutX="126.0" layoutY="421.0" prefHeight="25.0" prefWidth="142.0" promptText="Seleccionar&#10;" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <ComboBox fx:id="cmbTipoEmp" layoutX="126.0" layoutY="421.0" prefHeight="25.0" prefWidth="142.0" promptText="Seleccionar&#10;" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <Label layoutX="313.0" layoutY="247.0" text="Tipo&#10;Correo:" textAlignment="JUSTIFY" />
-                        <ComboBox fx:id="cmbtipoCorreo" editable="true" layoutX="382.0" layoutY="249.0" prefWidth="150.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <ComboBox fx:id="cmbtipoCorreo" layoutX="382.0" layoutY="249.0" prefWidth="150.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <ComboBox fx:id="cmbNacionalidad" layoutX="103.0" layoutY="190.0" prefWidth="150.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <HBox layoutX="99.0" layoutY="142.0" prefHeight="25.0" prefWidth="172.0" styleClass="textos" stylesheets="@../css/estilos.css">
                            <children>
