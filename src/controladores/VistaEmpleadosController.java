@@ -214,7 +214,6 @@ public class VistaEmpleadosController implements Initializable {
          gestionarEventos();
          
          //formato fecha
-         
         txtFechaNaci.setConverter(new StringConverter<LocalDate>() {
         String pattern = "dd-MM-yyyy";
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);      

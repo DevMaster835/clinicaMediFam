@@ -32,15 +32,6 @@ public class Empleados {
     /*String tipoEmp;*/
     tipoEmpleados tipoE;
     
-   /* StringProperty idEmp;
-    StringProperty nombre;
-    StringProperty apellido;
-    StringProperty fechaNac;
-    IntegerProperty genero;
-    IntegerProperty nacionalidad;
-    StringProperty direccion;
-    IntegerProperty tipoEmp;*/
-    
     
     public Empleados(String idEmp, String nombres, String apellidos, Date fechaNac, String idGenero, Nacionalidades nac, /*String telefono, String correo,*/ String direccion, tipoEmpleados tipoE/*String tipoEmp*/) {
         this.idEmp = idEmp;

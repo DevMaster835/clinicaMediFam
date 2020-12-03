@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
@@ -20,29 +21,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="571.0" prefWidth="924.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaPacientesController">
+<AnchorPane id="AnchorPane" prefHeight="656.0" prefWidth="997.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaPacientesController">
    <children>
-      <VBox prefHeight="571.0" prefWidth="69.0" style="-fx-background-color: #30ACE2;">
+      <VBox prefHeight="656.0" prefWidth="69.0" style="-fx-background-color: #30ACE2;">
          <children>
             <ImageView fitHeight="61.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../imagenes/logo-de-medifan.png" />
                </image>
             </ImageView>
-            <Pane prefHeight="54.0" prefWidth="69.0">
-               <children>
-                  <Button alignment="BOTTOM_CENTER" layoutX="-1.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="69.0" style="-fx-background-color: #CDCECD;" textAlignment="CENTER" />
-                  <ImageView fitHeight="54.0" fitWidth="69.0" layoutX="8.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../Downloads/387544-medical/387544-medical/png/101-patient-1.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
+            <Pane prefHeight="54.0" prefWidth="69.0" />
          </children></VBox>
-      <VBox layoutX="69.0" prefHeight="42.0" prefWidth="858.0" style="-fx-background-color: #30ACE2;">
+      <VBox layoutX="69.0" prefHeight="42.0" prefWidth="928.0" style="-fx-background-color: #30ACE2;">
          <children>
-            <Label contentDisplay="CENTER" text="Pacientes" textFill="WHITE">
+            <Label contentDisplay="CENTER" prefHeight="42.0" prefWidth="152.0" text="Pacientes" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -56,7 +48,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TabPane layoutX="100.0" layoutY="98.0" prefHeight="444.0" prefWidth="796.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="100.0" layoutY="98.0" prefHeight="494.0" prefWidth="869.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="DATOS GENERALES">
             <content>
@@ -67,16 +59,12 @@
                         <Label layoutX="321.0" layoutY="97.0" text="Apellidos:" />
                         <Label layoutX="19.0" layoutY="152.0" text="Genero:" />
                         <Label layoutX="19.0" layoutY="212.0" text="Nacionalidad:" />
-                        <Label layoutX="331.0" layoutY="213.0" text="Telefono:" />
-                        <Label layoutX="19.0" layoutY="269.0" text="Correo:" />
                         <Label layoutX="319.0" layoutY="144.0" text="Fecha &#10;Nacimiento:" />
                         <Label layoutX="14.0" layoutY="322.0" text="Direccion:" />
                         <TextField fx:id="txtidPaciente" layoutX="99.0" layoutY="36.0" onKeyTyped="#txtidPacKeyTyped" prefHeight="27.0" prefWidth="151.0" style="-fx-background-color: DBDBE6; -fx-border-color: black;" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <TextField fx:id="txtNombrePaciente" layoutX="99.0" layoutY="92.0" onKeyTyped="#txtNombreKeyTyped" style="-fx-background-color: DBDBE6; -fx-border-color: black;" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <TextField fx:id="txtApellidoPaciente" layoutX="384.0" layoutY="92.0" onKeyTyped="#txtApellidoKeyTyped" style="-fx-background-color: DBDBE6; -fx-border-color: black;" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <TextField fx:id="txtTelPaciente" layoutX="389.0" layoutY="208.0" onKeyTyped="#txtTelefonoKeyTyped" style="-fx-background-color: DBDBE6;" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <TextField fx:id="txtCorreoPaciente" layoutX="99.0" layoutY="265.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <TextArea fx:id="txtDireccionPaciente" layoutX="99.0" layoutY="322.0" prefHeight="61.0" prefWidth="163.0" style="-fx-background-color: #DBDBE6;" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <TextArea fx:id="txtDireccionPaciente" layoutX="99.0" layoutY="322.0" prefHeight="86.0" prefWidth="444.0" style="-fx-background-color: #DBDBE6;" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <HBox layoutX="95.0" layoutY="148.0" prefHeight="25.0" prefWidth="172.0" styleClass="textos" stylesheets="@../css/estilos.css">
                            <children>
                               <RadioButton fx:id="rdbM" mnemonicParsing="false" text="Masculino">
@@ -94,10 +82,7 @@
                               </RadioButton>
                            </children>
                         </HBox>
-                        <TextField fx:id="txtFechaPac" layoutX="387.0" layoutY="147.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <ComboBox fx:id="cmbNacionalidad" layoutX="100.0" layoutY="208.0" prefWidth="150.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <Label layoutX="332.0" layoutY="262.0" text="Tipo&#10;Correo:" textAlignment="JUSTIFY" />
-                        <ComboBox fx:id="cmbCorreo" editable="true" layoutX="388.0" layoutY="266.0" prefWidth="150.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <Pane layoutX="590.0" layoutY="97.0" prefHeight="145.0" prefWidth="192.0" style="-fx-border-color: black;">
                            <children>
                               <Label layoutX="14.0" layoutY="26.0" text="Peso:" />
@@ -105,10 +90,10 @@
                               <Label layoutX="11.0" layoutY="92.0" text="Tipo &#10;Sangre:" textAlignment="JUSTIFY" />
                               <TextField fx:id="txtPesoPac" layoutX="56.0" layoutY="22.0" onKeyTyped="#txtpesoKeyTyped" prefHeight="25.0" prefWidth="81.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                               <TextField fx:id="txtAlturaPac" layoutX="56.0" layoutY="55.0" onKeyTyped="#txtalturaKeyTyped" prefHeight="25.0" prefWidth="81.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-                              <ComboBox fx:id="cmbTipoSangre" editable="true" layoutX="56.0" layoutY="97.0" prefHeight="25.0" prefWidth="107.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <ComboBox fx:id="cmbTipoSangre" layoutX="56.0" layoutY="97.0" prefHeight="25.0" prefWidth="107.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
                            </children>
                         </Pane>
-                        <Button fx:id="btnGuardar" alignment="BOTTOM_CENTER" layoutX="507.0" layoutY="328.0" mnemonicParsing="false" onAction="#guardarPacientes" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773; -fx-background-radius: 7px;" text="Guardar" textFill="WHITE">
+                        <Button fx:id="btnGuardar" alignment="BOTTOM_CENTER" layoutX="590.0" layoutY="261.0" mnemonicParsing="false" onAction="#guardarPacientes" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773; -fx-background-radius: 7px;" text="Guardar" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -123,15 +108,55 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
+                        <DatePicker fx:id="txtFechaPac" layoutX="386.0" layoutY="149.0" prefHeight="25.0" prefWidth="147.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab text="INFORMACIÓN DE CONTACTO">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="461.0" prefWidth="796.0">
+                     <children>
+                        <Pane layoutX="24.0" layoutY="67.0" prefHeight="174.0" prefWidth="706.0" style="-fx-border-color: black; -fx-border-radius: 3px;">
+                           <children>
+                              <Label layoutX="25.0" layoutY="24.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Teléfono:" />
+                              <TableView fx:id="tablaTelefonosPac" editable="true" layoutX="248.0" layoutY="41.0" prefHeight="114.0" prefWidth="399.0">
+                                 <columns>
+                                    <TableColumn fx:id="colPac" prefWidth="98.0" text="ID" />
+                                    <TableColumn fx:id="colPaciente" prefWidth="192.0" text="Paciente" />
+                                    <TableColumn fx:id="colTelPac" prefWidth="108.0" text="Teléfono" />
+                                 </columns>
+                              </TableView>
+                              <Button fx:id="btnAgregarTelefono" layoutX="22.0" layoutY="98.0" mnemonicParsing="false" onAction="#agregarTelefono" prefHeight="27.0" prefWidth="151.0" text="Agregar Teléfono" />
+                              <TextField fx:id="txtTelPaciente" layoutX="22.0" layoutY="41.0" onKeyTyped="#txtTelefonoKeyTyped" style="-fx-background-color: DBDBE6;" styleClass="textos" stylesheets="@../css/estilos.css" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="24.0" layoutY="251.0" prefHeight="195.0" prefWidth="706.0" style="-fx-border-color: black; -fx-border-radius: 3px;">
+                           <children>
+                              <TableView fx:id="tablaCorreosPac" editable="true" layoutX="198.0" layoutY="38.0" prefHeight="114.0" prefWidth="491.0">
+                                 <columns>
+                                    <TableColumn fx:id="colCP" prefWidth="98.0" text="ID" />
+                                    <TableColumn fx:id="colPacCo" prefWidth="173.0" text="Paciente" />
+                                    <TableColumn fx:id="colCorreoPac" prefWidth="144.0" text="Correo" />
+                                    <TableColumn fx:id="colTipoC" prefWidth="74.0" text="Tipo Correo" />
+                                 </columns>
+                              </TableView>
+                              <Button fx:id="btnAgregarCorreo" layoutX="25.0" layoutY="146.0" mnemonicParsing="false" onAction="#agregarCorreo" prefHeight="27.0" prefWidth="151.0" text="Agregar Correo" />
+                              <Label layoutX="25.0" layoutY="31.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Correo:" />
+                              <Label layoutX="25.0" layoutY="89.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Tipo Correo:" textAlignment="JUSTIFY" />
+                              <TextField fx:id="txtCorreoPaciente" layoutX="25.0" layoutY="48.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <ComboBox fx:id="cmbCorreo" layoutX="26.0" layoutY="106.0" prefWidth="150.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
           <Tab text="BUSQUEDA">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="796.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="465.0" prefWidth="827.0">
                      <children>
-                        <HBox layoutX="27.0" layoutY="28.0" prefHeight="54.0" prefWidth="346.0" style="-fx-background-color: white; -fx-border-color: black;" stylesheets="@../css/estilos.css">
+                        <HBox layoutX="14.0" layoutY="28.0" prefHeight="54.0" prefWidth="346.0" style="-fx-background-color: white; -fx-border-color: black;" stylesheets="@../css/estilos.css">
                            <children>
                               <RadioButton fx:id="rdbId" mnemonicParsing="false" text="Identidad">
                                  <padding>
@@ -154,7 +179,7 @@
                                     <Insets left="20.0" top="15.0" />
                                  </HBox.margin>
                               </TextField>
-                              <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#btnBuscar" text="Buscar">
+                              <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarPacientes" text="Buscar">
                                  <HBox.margin>
                                     <Insets left="15.0" top="15.0" />
                                  </HBox.margin>
@@ -164,17 +189,18 @@
                               </Button>
                            </children>
                         </HBox>
-                        <TableView fx:id="tblPacientes" layoutX="27.0" layoutY="109.0" prefHeight="276.0" prefWidth="725.0">
+                        <TableView fx:id="tblPacientes" layoutX="9.0" layoutY="109.0" prefHeight="276.0" prefWidth="849.0">
                            <columns>
-                              <TableColumn fx:id="id" editable="false" prefWidth="75.0" text="Identidad" />
-                              <TableColumn fx:id="nombre" prefWidth="75.0" text="Nombres" />
-                              <TableColumn prefWidth="75.0" text="Apellidos" />
-                              <TableColumn prefWidth="75.0" text="Genero" />
-                              <TableColumn prefWidth="75.0" text="Fecha Nacimiento" />
-                              <TableColumn prefWidth="75.0" text="Telefono" />
-                              <TableColumn prefWidth="75.0" text="Correo" />
-                              <TableColumn prefWidth="128.0" text="Direccion" />
-                              <TableColumn prefWidth="71.0" text="Tipo Empleado" />
+                              <TableColumn fx:id="id" editable="false" prefWidth="85.0" text="Identidad" />
+                              <TableColumn fx:id="nombre" prefWidth="93.0" text="Nombres" />
+                              <TableColumn fx:id="colApellidos" prefWidth="101.0" text="Apellidos" />
+                              <TableColumn fx:id="colFechaNac" prefWidth="109.0" text="Fecha Nacimiento" />
+                              <TableColumn fx:id="colGenero" prefWidth="66.0" text="Género" />
+                              <TableColumn fx:id="colNac" prefWidth="81.0" text="Nacionalidad" />
+                              <TableColumn fx:id="colDireccion" prefWidth="151.0" text="Direccion" />
+                              <TableColumn fx:id="colPeso" prefWidth="45.0" text="Peso" />
+                              <TableColumn fx:id="colAltura" prefWidth="41.0" text="Altura" />
+                              <TableColumn fx:id="colSangre" prefWidth="76.0" text="Tipo Sangre" />
                            </columns>
                         </TableView>
                      </children>

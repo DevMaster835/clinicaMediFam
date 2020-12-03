@@ -9,9 +9,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="492.0" prefWidth="980.0" style="-fx-background-color: #F3F3F3;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controladores.VistaMenuController">
+<AnchorPane id="AnchorPane" prefHeight="492.0" prefWidth="980.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaMenuController">
    <children>
+      <Button alignment="BOTTOM_CENTER" layoutX="109.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnPacientes" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="PACIENTES" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
       <VBox layoutY="-7.0" prefHeight="42.0" prefWidth="980.0" style="-fx-background-color: #30ACE2;">
          <children>
             <Label contentDisplay="CENTER" text="Menú" textFill="WHITE">
@@ -34,12 +38,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button alignment="BOTTOM_CENTER" layoutX="109.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnPacientes" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="PACIENTES" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="137.0" layoutY="143.0">
+      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="137.0" layoutY="145.0">
          <image>
             <Image url="@../imagenes/paciente.png" />
          </image>

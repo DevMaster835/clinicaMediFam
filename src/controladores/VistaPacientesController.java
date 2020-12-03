@@ -16,20 +16,32 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javax.swing.JOptionPane;
+import modelos.Correos;
 import modelos.Nacionalidades;
+import modelos.Pacientes;
+import modelos.Telefonos;
+import modelos.tipoCorreoE;
+import modelos.tipoSangre;
 
 /**
  * FXML Controller class
@@ -43,6 +55,11 @@ public class VistaPacientesController implements Initializable {
     
     PreparedStatement pps;
     ObservableList<Nacionalidades> listaNacionalidades;
+    ObservableList<tipoSangre> listaSangre;
+    ObservableList<tipoCorreoE> listaCorreos;
+    ObservableList<Telefonos> listaContacto;
+    ObservableList<Correos> listaCorreo;
+    ObservableList<Pacientes> listaPacientes;
 
     @FXML
     private TextField txtidPaciente;
@@ -61,7 +78,7 @@ public class VistaPacientesController implements Initializable {
     @FXML
     private TextField txtAlturaPac;
     @FXML
-    private ComboBox<?> cmbTipoSangre;
+    private ComboBox<tipoSangre> cmbTipoSangre;
     @FXML
     private Button btnGuardar;
     @FXML
@@ -75,11 +92,65 @@ public class VistaPacientesController implements Initializable {
     @FXML
     private RadioButton rdbF;
     @FXML
-    private TextField txtFechaPac;
+    private DatePicker txtFechaPac;
     @FXML
     private ComboBox<Nacionalidades> cmbNacionalidad;
     @FXML
-    private ComboBox<?> cmbCorreo;
+    private ComboBox<tipoCorreoE> cmbCorreo;
+    @FXML
+    private RadioButton rdbId;
+    @FXML
+    private ToggleGroup grupoBusqueda;
+    @FXML
+    private RadioButton rdbNom;
+    @FXML
+    private TextField txtBuscar;
+    @FXML
+    private Button btnBuscar;
+    @FXML
+    private TableView<Pacientes> tblPacientes;
+    @FXML
+    private TableColumn<?, ?> id;
+    @FXML
+    private TableColumn<?, ?> nombre;
+    @FXML
+    private TableView<Telefonos> tablaTelefonosPac;
+    @FXML
+    private TableColumn<?, ?> colPac;
+    @FXML
+    private TableColumn<?, ?> colPaciente;
+    @FXML
+    private TableColumn<?, ?> colTelPac;
+    @FXML
+    private Button btnAgregarTelefono;
+    @FXML
+    private TableView<?> tablaCorreosPac;
+    @FXML
+    private TableColumn<?, ?> colCP;
+    @FXML
+    private TableColumn<?, ?> colPacCo;
+    @FXML
+    private TableColumn<?, ?> colTipoC;
+    @FXML
+    private Button btnAgregarCorreo;
+    @FXML
+    private TableColumn<?, ?> colCorreoPac;
+    @FXML
+    private TableColumn<?, ?> colApellidos;
+    @FXML
+    private TableColumn<?, ?> colFechaNac;
+    @FXML
+    private TableColumn<?, ?> colGenero;
+    @FXML
+    private TableColumn<Pacientes, Nacionalidades> colNac;
+    @FXML
+    private TableColumn<?, ?> colDireccion;
+    @FXML
+    private TableColumn<?, ?> colPeso;
+    @FXML
+    private TableColumn<?, ?> colAltura;
+    @FXML
+    private TableColumn<Pacientes, tipoSangre> colSangre;
 
     /**
      * Initializes the controller class.
@@ -90,24 +161,90 @@ public class VistaPacientesController implements Initializable {
         
         //inicializar
         listaNacionalidades= FXCollections.observableArrayList();
+        listaSangre= FXCollections.observableArrayList();
+        listaCorreos=FXCollections.observableArrayList();
         
         //llenarLista
         Nacionalidades.llenarTabla(cone, listaNacionalidades);
+        tipoSangre.cmbTipoSangre(cone, listaSangre);
+        tipoCorreoE.cmbTipoCorreoE(cone, listaCorreos);
         
         //EnlazarListas
         cmbNacionalidad.setItems(listaNacionalidades);
+        cmbTipoSangre.setItems(listaSangre);
+        cmbCorreo.setItems(listaCorreos);
+        
+        //LLENAR TABLA PACIENTES
+        listaPacientes= FXCollections.observableArrayList();
+        Pacientes.llenarTabla(cone, listaPacientes);
+        tblPacientes.setItems(listaPacientes);
+        
+        id.setCellValueFactory(new PropertyValueFactory("id"));
+        nombre.setCellValueFactory(new PropertyValueFactory("nombres"));
+        colApellidos.setCellValueFactory(new PropertyValueFactory("apellidos"));
+        colFechaNac.setCellValueFactory(new PropertyValueFactory("fechaNacimiento"));
+        colGenero.setCellValueFactory(new PropertyValueFactory("genero"));
+        colNac.setCellValueFactory(new PropertyValueFactory("nac"));
+        colDireccion.setCellValueFactory(new PropertyValueFactory("direccion"));
+        colPeso.setCellValueFactory(new PropertyValueFactory("peso"));
+        colAltura.setCellValueFactory(new PropertyValueFactory("altura"));
+        colSangre.setCellValueFactory(new PropertyValueFactory("ts"));
+        
+        
+        //TABLA DE TELEFONOS
+         listaContacto= FXCollections.observableArrayList();
+         colPac.setCellValueFactory(new PropertyValueFactory("id"));
+         colPaciente.setCellValueFactory(new PropertyValueFactory("nombre"));
+         colTelPac.setCellValueFactory(new PropertyValueFactory("numero"));
+         
+         //TABLA DE CORREOS
+         listaCorreo= FXCollections.observableArrayList();
+         colCP.setCellValueFactory(new PropertyValueFactory("id"));
+         colPacCo.setCellValueFactory(new PropertyValueFactory("nombre"));
+         colCorreoPac.setCellValueFactory(new PropertyValueFactory("correo"));
+         colTipoC.setCellValueFactory(new PropertyValueFactory("tipoCorreo"));
+         
+         seleccionar();
     }  
     
     public void limpiarDatos(){
         txtidPaciente.setText("");
         txtNombrePaciente.setText("");
         txtApellidoPaciente.setText("");
-        txtFechaPac.setText("");
+        txtFechaPac.setValue(null);
         cmbNacionalidad.setValue(null);
         txtDireccionPaciente.setText("");
         txtPesoPac.setText("");
         txtAlturaPac.setText("");
         txtTelPaciente.setText(""); 
+    }
+    
+    public void seleccionar(){
+        this.tblPacientes.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Pacientes>(){
+            @Override
+            public void changed(ObservableValue<? extends Pacientes> arg0,
+                 Pacientes valorAnterior, Pacientes valorSeleccionado) {
+                
+                txtidPaciente.setText(String.valueOf(valorSeleccionado.getId()));
+                txtNombrePaciente.setText(String.valueOf(valorSeleccionado.getNombres()));
+                txtApellidoPaciente.setText(String.valueOf(valorSeleccionado.getApellidos()));
+                txtFechaPac.setValue(valorSeleccionado.getFechaNacimiento().toLocalDate());
+                if(valorSeleccionado.getGenero().equals("Masculino")){
+                    rdbM.setSelected(true);
+                }else{
+                    rdbF.setSelected(true);
+                }          
+                cmbNacionalidad.setValue(valorSeleccionado.getNac());
+                txtDireccionPaciente.setText(valorSeleccionado.getDireccion());
+                txtPesoPac.setText(valorSeleccionado.getPeso());
+                txtAlturaPac.setText(valorSeleccionado.getAltura());
+                cmbTipoSangre.setValue(valorSeleccionado.getTs());
+                //System.out.println("Seleccionó un registro");
+            }
+                    
+                }
+        );
     }
     
     //VALIDACIONES
@@ -195,8 +332,8 @@ public class VistaPacientesController implements Initializable {
         System.out.println(genero);
         
         int nacionalidad= cmbNacionalidad.getSelectionModel().getSelectedIndex() + 1;
-        String tipoCorreo= (String) cmbCorreo.getValue();
-        String tipoSangre=(String) cmbTipoSangre.getValue();
+        int tipoC= cmbCorreo.getSelectionModel().getSelectedIndex() + 1;
+        int tipoS= cmbTipoSangre.getSelectionModel().getSelectedIndex() + 1;
         
         
         if (txtidPaciente.getText() == null ) {
@@ -207,7 +344,7 @@ public class VistaPacientesController implements Initializable {
             JOptionPane.showMessageDialog(null, "El campo de Apellido esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }else if (genero == 0 ) {
             JOptionPane.showMessageDialog(null, "Seleccione una opcion de genero valida, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (txtFechaPac.getText() == null ) {
+        }else if (txtFechaPac.getValue() == null ) {
             JOptionPane.showMessageDialog(null, "El campo de fecha esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }else if (txtDireccionPaciente.getText() == null ) {
             JOptionPane.showMessageDialog(null, "El campo de Direccion esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
@@ -256,13 +393,13 @@ public class VistaPacientesController implements Initializable {
             pps.setString(1, txtidPaciente.getText());
             pps.setString(2, txtNombrePaciente.getText());
             pps.setString(3, txtApellidoPaciente.getText());
-            pps.setString(4, txtFechaPac.getText());
+            pps.setString(4, txtFechaPac.getValue().toString());
             pps.setString(5, String.valueOf(genero));
             pps.setString(6, String.valueOf(nacionalidad));
             pps.setString(7, txtDireccionPaciente.getText());
             pps.setString(8, txtPesoPac.getText());
             pps.setString(9, txtAlturaPac.getText());
-            pps.setString(10, tipoSangre);
+            pps.setString(10, String.valueOf(tipoS));
             pps.executeUpdate();
             
             pps=cone.prepareStatement("INSERT INTO telefonos_pacientes(idPaciente,telefono) VALUES(?,?)");
@@ -273,7 +410,7 @@ public class VistaPacientesController implements Initializable {
             pps=cone.prepareStatement("INSERT INTO correo_pacientes(idPaciente,correo,tipoCorreo) VALUES(?,?,?)");
             pps.setString(1, txtidPaciente.getText());
             pps.setString(2, txtCorreoPaciente.getText());
-            pps.setString(3, tipoCorreo);
+            pps.setString(3, String.valueOf(tipoC));
             pps.executeUpdate();
             
             JOptionPane.showMessageDialog(null, "Se ha registrado los datos del paciente", "Datos guardados", JOptionPane.PLAIN_MESSAGE);
@@ -349,6 +486,37 @@ public class VistaPacientesController implements Initializable {
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
+    }
+
+    @FXML
+    private void buscarPacientes(ActionEvent event) {
+    }
+
+    @FXML
+    private void agregarTelefono(ActionEvent event) {
+        int numero= Integer.parseInt(this.txtTelPaciente.getText());
+        String idE= this.txtidPaciente.getText();
+        String nombreE= txtNombrePaciente.getText() + " " + this.txtApellidoPaciente.getText();
+        
+        Telefonos ic= new Telefonos(idE,nombreE,numero);
+        
+        if(!this.listaContacto.contains(ic)){
+            this.listaContacto.add(ic);
+            this.tablaTelefonosPac.setItems(listaContacto);
+            txtTelPaciente.setText("");
+            txtTelPaciente.requestFocus();
+        }else{
+            Alert alert= new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El número de télefono ya existe");
+            alert.showAndWait();
+            txtTelPaciente.requestFocus();
+        }
+    }
+
+    @FXML
+    private void agregarCorreo(ActionEvent event) {
     }
     
     

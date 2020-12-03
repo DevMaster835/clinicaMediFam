@@ -53,6 +53,7 @@ public class tipoCorreoE {
             
     }
     
+    
     @Override
     public String toString(){
        return  tipoCorreo;
