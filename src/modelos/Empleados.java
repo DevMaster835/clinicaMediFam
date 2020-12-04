@@ -90,29 +90,31 @@ public class Empleados {
     public static void llenarTabla(Connection cone, ObservableList <Empleados>lista){
         try {
             Statement statement= cone.createStatement();
-            ResultSet resultado= statement.executeQuery("SELECT e.idEmpleado, e.nombres, e.apellidos, e.fechaNacimiento, gen.genero, e.idNacionalidad, nac.nacionalidad, tels.telefono, correo.correo, e.direccion, e.tipoEmpleado, tpe.tipoEmpleado FROM empleados e,genero gen, nacionalidades nac, telefonos_empleados tels,correo_empleados correo,tipo_empleado tpe WHERE gen.idGenero=e.idGenero and nac.idNacionalidad=e.idNacionalidad and tels.idEmpleado=e.idEmpleado and correo.idEmpleado=e.idEmpleado and tpe.idTipoEmpleado=e.tipoEmpleado");
+            ResultSet resultado= statement.executeQuery("SELECT emp.idEmpleado, emp.nombres, emp.apellidos, emp.fechaNacimiento, emp.idGenero, gen.genero, emp.idNacionalidad, nac.nacionalidad, emp.direccion, emp.tipoEmpleado, te.tipoEmpleado " +
+                "FROM empleados emp, genero gen, nacionalidades nac, tipo_empleado te " +
+                "WHERE gen.idGenero=emp.idGenero and nac.idNacionalidad=emp.idNacionalidad and te.idTipoEmpleado=emp.tipoEmpleado;");
             while(resultado.next()){
                 lista.add(
                             new Empleados(
-                                    resultado.getString("e.idEmpleado"),
-                                    resultado.getString("e.nombres"),
-                                    resultado.getString("e.apellidos"),
-                                    resultado.getDate("e.fechaNacimiento"),
+                                    resultado.getString("emp.idEmpleado"),
+                                    resultado.getString("emp.nombres"),
+                                    resultado.getString("emp.apellidos"),
+                                    resultado.getDate("emp.fechaNacimiento"),
                                     resultado.getString("gen.genero"),
                                     //resultado.getString("nac.nacionalidad"),
                             new Nacionalidades(
-                                    resultado.getInt("e.idNacionalidad"),
+                                    resultado.getInt("emp.idNacionalidad"),
                                     resultado.getString("nac.nacionalidad")
                             ),
                                    /* resultado.getString("tels.telefono"),
                                     resultado.getString("correo.correo"),*/
                             
-                                    resultado.getString("e.direccion"),
+                                    resultado.getString("emp.direccion"),
                                    // resultado.getString("tpe.tipoEmpleado")
                             
                             new tipoEmpleados(
-                                    resultado.getInt("e.tipoEmpleado"),
-                                    resultado.getString("tpe.tipoEmpleado")
+                                    resultado.getInt("emp.tipoEmpleado"),
+                                    resultado.getString("te.tipoEmpleado")
                             )
                                     
                             ));

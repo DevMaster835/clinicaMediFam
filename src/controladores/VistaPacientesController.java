@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +37,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
 import modelos.Correos;
 import modelos.Nacionalidades;
@@ -124,7 +127,7 @@ public class VistaPacientesController implements Initializable {
     @FXML
     private Button btnAgregarTelefono;
     @FXML
-    private TableView<?> tablaCorreosPac;
+    private TableView<Correos> tablaCorreosPac;
     @FXML
     private TableColumn<?, ?> colCP;
     @FXML
@@ -204,6 +207,7 @@ public class VistaPacientesController implements Initializable {
          colCorreoPac.setCellValueFactory(new PropertyValueFactory("correo"));
          colTipoC.setCellValueFactory(new PropertyValueFactory("tipoCorreo"));
          
+         formatoFecha();
          seleccionar();
     }  
     
@@ -217,6 +221,36 @@ public class VistaPacientesController implements Initializable {
         txtPesoPac.setText("");
         txtAlturaPac.setText("");
         txtTelPaciente.setText(""); 
+    }
+    
+    public void formatoFecha(){
+        txtFechaPac.setConverter(new StringConverter<LocalDate>() {
+        String pattern = "dd-MM-yyyy";
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);      
+        {
+                txtFechaPac.setPromptText(pattern.toLowerCase());
+         
+        }
+
+             @Override
+             public String toString(LocalDate date) {
+                 if (date != null) {
+                    return dateFormatter.format(date);
+                }else {
+                    return "";
+                }
+             }
+
+             @Override
+             public LocalDate fromString(String string) {
+                 if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                }else {
+                    return null;
+                }
+             }
+        
+        });
     }
     
     public void seleccionar(){
@@ -356,17 +390,17 @@ public class VistaPacientesController implements Initializable {
             JOptionPane.showMessageDialog(null, "El campo de Tipo de sangre esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }else if (cmbNacionalidad.getValue() == null ) {
             JOptionPane.showMessageDialog(null, "El campo de Nacionalidad esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (cmbCorreo.getValue() == null ) {
-            JOptionPane.showMessageDialog(null, "El campo de Correo esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+      //  }else if (cmbCorreo.getValue() == null ) {
+         //  JOptionPane.showMessageDialog(null, "El campo de Correo esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }else{
             
         try{
             if(existePaciente()){
             return;
             }
-            if(!isEmailValid(txtCorreoPaciente.getText())){
+          /*  if(!isEmailValid(txtCorreoPaciente.getText())){
             return;
-            }
+            }*/
             
             if(!validarIdentidad(txtidPaciente.getText())){
             return;
@@ -380,10 +414,10 @@ public class VistaPacientesController implements Initializable {
             JOptionPane.showMessageDialog(null, "Los apellidos del paciente ingresados son muy largos el máximo es de 40 caracteres, usted ingresó " + txtApellidoPaciente.getText().length() + " caracteres.", "Longitud de los apellidos del empleado", JOptionPane.INFORMATION_MESSAGE);
             return;
             }
-            if (!validarLongitudMax(txtTelPaciente.getText(), 8)) {
+            /*if (!validarLongitudMax(txtTelPaciente.getText(), 8)) {
             JOptionPane.showMessageDialog(null, "El teléfono del paciente ingresado es muy largo el máximo es de 8 dígitos, usted ingresó " + txtTelPaciente.getText().length() + " dígitos.", "Longitud del teléfono del empleado", JOptionPane.INFORMATION_MESSAGE);
             return;
-            }
+            }*/
             if (!validarLongitudMax(txtidPaciente.getText(), 13)) {
              JOptionPane.showMessageDialog(null, "La identidad del paciente ingresado es muy largo el máximo es de 13 dígitos, usted ingresó " + txtidPaciente.getText().length() + " dígitos.", "Longitud del número de identidad del empleado", JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -402,16 +436,32 @@ public class VistaPacientesController implements Initializable {
             pps.setString(10, String.valueOf(tipoS));
             pps.executeUpdate();
             
+            //GUARDAR TELEFONOS
+            for(int i=0;i<tablaTelefonosPac.getItems().size();i++){
             pps=cone.prepareStatement("INSERT INTO telefonos_pacientes(idPaciente,telefono) VALUES(?,?)");
             pps.setString(1, txtidPaciente.getText());
-            pps.setString(2, txtTelPaciente.getText());
-            pps.executeUpdate();
+            pps.setString(2, String.valueOf(tablaTelefonosPac.getItems().get(i).getNumero()));
+            pps.executeUpdate();    
+            }
             
-            pps=cone.prepareStatement("INSERT INTO correo_pacientes(idPaciente,correo,tipoCorreo) VALUES(?,?,?)");
-            pps.setString(1, txtidPaciente.getText());
-            pps.setString(2, txtCorreoPaciente.getText());
-            pps.setString(3, String.valueOf(tipoC));
-            pps.executeUpdate();
+            //GUARDAR CORREOS
+            for(int j=0;j<tablaTelefonosPac.getItems().size();j++){
+                int tipoco=0;
+                
+                if(tablaCorreosPac.getItems().get(j).getTipoCorreo().equals("Personal")){
+                    tipoco=1;
+                }else if(tablaCorreosPac.getItems().get(j).getTipoCorreo().equals("Empresa")){
+                    tipoco=2;
+                }else if(tipoco==0){
+                  JOptionPane.showMessageDialog(null, "Seleccione el tipo de correo", "Error", JOptionPane.PLAIN_MESSAGE);  
+                }
+               pps=cone.prepareStatement("INSERT INTO correo_pacientes(idPaciente,correo,tipoCorreo) VALUES(?,?,?)");
+               pps.setString(1, txtidPaciente.getText());
+               pps.setString(2, String.valueOf(tablaCorreosPac.getItems().get(j).getCorreo()));
+               pps.setString(3, String.valueOf(tipoco));
+               pps.executeUpdate(); 
+            }
+            
             
             JOptionPane.showMessageDialog(null, "Se ha registrado los datos del paciente", "Datos guardados", JOptionPane.PLAIN_MESSAGE);
         }catch(SQLException ex){
@@ -517,6 +567,27 @@ public class VistaPacientesController implements Initializable {
 
     @FXML
     private void agregarCorreo(ActionEvent event) {
+        String idE= this.txtidPaciente.getText();
+        String nombreE= txtNombrePaciente.getText() + " " + this.txtApellidoPaciente.getText();
+        String correo= txtCorreoPaciente.getText();
+        String tipoC= String.valueOf(cmbCorreo.getValue());
+        
+        Correos c= new Correos(idE,nombreE,correo,tipoC);
+        
+        if(!this.listaCorreo.contains(c)){
+            this.listaCorreo.add(c);
+            this.tablaCorreosPac.setItems(listaCorreo);
+            txtCorreoPaciente.setText("");
+            cmbCorreo.setValue(null);
+            txtCorreoPaciente.requestFocus();
+        }else{
+            Alert alert= new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El correo ya existe");
+            alert.showAndWait();
+            txtCorreoPaciente.requestFocus();
+        }
     }
     
     

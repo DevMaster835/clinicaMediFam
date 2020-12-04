@@ -157,10 +157,12 @@ public class VistaEmpleadosController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
      */
     
     
 
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
@@ -348,6 +350,7 @@ public class VistaEmpleadosController implements Initializable {
         txtDireccionEmp.setText("");
         txtFechaNaci.setValue(null);
         txtTelEmp.setText("");
+        txtidEmpleado.requestFocus();
         
      //   btnGuardar.setDisable(false);
     }
