@@ -189,7 +189,7 @@ public class VistaMenuController implements Initializable {
     private void btnProveedores(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaProveedores.fxml"));
                 Stage stage = new Stage();
-                Scene scene = new Scene(root, 997, 656);
+                Scene scene = new Scene(root, 909, 593);
                 stage.setScene(scene);
                 stage.setResizable(false);
                 stage.initStyle(StageStyle.UNDECORATED);
@@ -225,7 +225,7 @@ public class VistaMenuController implements Initializable {
     private void btnProductos(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaProductos.fxml"));
                 Stage stage = new Stage();
-                Scene scene = new Scene(root, 997, 656);
+                Scene scene = new Scene(root, 938, 587);
                 stage.setScene(scene);
                 stage.setResizable(false);
                 stage.initStyle(StageStyle.UNDECORATED);

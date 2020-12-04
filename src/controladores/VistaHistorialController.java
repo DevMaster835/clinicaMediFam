@@ -76,6 +76,12 @@ public class VistaHistorialController implements Initializable {
     private Button btnCancelar;
     @FXML
     private Button btnEliminar;
+    @FXML
+    private Button Close;
+    @FXML
+    private Button Minimize;
+    @FXML
+    private Button Return;
 
     /**
      * Initializes the controller class.
@@ -240,6 +246,18 @@ public class VistaHistorialController implements Initializable {
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
+    }
+
+    @FXML
+    private void exitButtonOnAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void minimizeButtonOnAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void ReturnButton(ActionEvent event) {
     }
     
 }

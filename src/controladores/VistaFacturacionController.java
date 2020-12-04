@@ -101,6 +101,18 @@ public class VistaFacturacionController implements Initializable {
     private TableColumn<?, ?> colConNeto;
     @FXML
     private TableColumn<?, ?> colCantidad;
+    @FXML
+    private TextField txtcodigoProd1;
+    @FXML
+    private TextField txtproducto1;
+    @FXML
+    private Button btnbuscarProd1;
+    @FXML
+    private TextField txtprecioProd1;
+    @FXML
+    private Button btnAñadir1;
+    @FXML
+    private Button btnAñadirProd1;
     
    
     /**

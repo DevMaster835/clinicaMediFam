@@ -7,6 +7,7 @@ package controladores;
 
 import Conexion.conexion;
 import com.mysql.jdbc.Connection;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,8 +26,13 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -37,8 +43,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
 import modelos.Correos;
@@ -149,12 +159,31 @@ public class VistaPacientesController implements Initializable {
     @FXML
     private TableColumn<Pacientes, tipoSangre> colSangre;
 
+    private double xOffset = 0; 
+    private double yOffset = 0;
+    
+    @FXML
+    private Button Close;
+    @FXML
+    private Button Minimize;
+    @FXML
+    private Button Return;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        Tooltip tooltipClose = new Tooltip("Close");
+        Close.setTooltip(tooltipClose);
+        
+        Tooltip tooltipMinimize = new Tooltip("Minimize");
+        Minimize.setTooltip(tooltipMinimize);
+        
+        Tooltip tooltipReturn = new Tooltip("Return");
+        Return.setTooltip(tooltipReturn);
         
         //inicializar
         listaNacionalidades= FXCollections.observableArrayList();
@@ -203,7 +232,46 @@ public class VistaPacientesController implements Initializable {
          
          formatoFecha();
          seleccionar();
-    }  
+    } 
+    
+    @FXML
+    private void exitButtonOnAction(ActionEvent event){
+     ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();      
+    }
+
+    @FXML
+    private void minimizeButtonOnAction(ActionEvent event){
+     ((Stage)(((Button)event.getSource()).getScene().getWindow())).setIconified(true);
+    }
+    
+    @FXML
+    void ReturnButton(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaMenu.fxml"));
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setResizable(false);
+                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stage.setX(event.getScreenX() - xOffset);
+                stage.setY(event.getScreenY() - yOffset);
+            }
+        });
+                stage.show();
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+    }
+    
+    
     
     public void limpiarDatos(){
         txtidPaciente.setText("");
