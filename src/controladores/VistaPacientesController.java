@@ -22,6 +22,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -101,15 +103,7 @@ public class VistaPacientesController implements Initializable {
     @FXML
     private ComboBox<tipoCorreoE> cmbCorreo;
     @FXML
-    private RadioButton rdbId;
-    @FXML
-    private ToggleGroup grupoBusqueda;
-    @FXML
-    private RadioButton rdbNom;
-    @FXML
     private TextField txtBuscar;
-    @FXML
-    private Button btnBuscar;
     @FXML
     private TableView<Pacientes> tblPacientes;
     @FXML
@@ -476,6 +470,27 @@ public class VistaPacientesController implements Initializable {
 
     @FXML
     private void eliminarPacientes(ActionEvent event) {
+        try {
+            int confirmar= JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este Paciente?");
+            if(JOptionPane.OK_OPTION==confirmar){
+                
+            pps= cone.prepareStatement("DELETE FROM pacientes WHERE idPaciente=?");
+            pps.setString(1, txtidPaciente.getText());
+            int res= pps.executeUpdate();
+            
+                if(res>0){
+                    JOptionPane.showMessageDialog(null, "El paciente ha sido eliminado", "Paciente eliminado", JOptionPane.PLAIN_MESSAGE);
+                    limpiarDatos();
+                }else{
+                   JOptionPane.showMessageDialog(null, "Error al eliminar Paciente", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
+                }
+            }
+            
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaPacientesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -538,9 +553,6 @@ public class VistaPacientesController implements Initializable {
         }
     }
 
-    @FXML
-    private void buscarPacientes(ActionEvent event) {
-    }
 
     @FXML
     private void agregarTelefono(ActionEvent event) {
@@ -589,6 +601,42 @@ public class VistaPacientesController implements Initializable {
             txtCorreoPaciente.requestFocus();
         }
     }
+
+    @FXML
+    private void buscarPaciente(KeyEvent event) {
+        FilteredList<Pacientes> filteredData = new FilteredList<>(listaPacientes, p -> true);
+      tblPacientes.setItems(filteredData); 
+      
+      txtBuscar.textProperty().addListener((observable, oldValue, newValue) -> {
+          filteredData.setPredicate(paciente -> {
+              
+              if(newValue==null || newValue.isEmpty()){
+                  return true;
+              }
+              
+              String lowerCaseFilter= newValue.toLowerCase();
+              
+              if(paciente.getId().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                  return true;
+              }else if(paciente.getNombres().toLowerCase().indexOf(lowerCaseFilter)!= -1){
+                  return true;
+              }else{
+                  return false;
+              }
+              
+          });
+      });
+        
+      SortedList<Pacientes> sortedData = new SortedList<>(filteredData);
+      sortedData.comparatorProperty().bind(tblPacientes.comparatorProperty());
+      
+      tblPacientes.setItems(sortedData);
+    }
+
+        
+        
+        
+    }
     
     
-}
+

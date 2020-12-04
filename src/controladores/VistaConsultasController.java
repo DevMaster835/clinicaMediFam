@@ -7,6 +7,7 @@ package controladores;
 
 import Conexion.conexion;
 import com.mysql.jdbc.Connection;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,16 +16,29 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javax.swing.JOptionPane;
+import modelos.EstadoConsulta;
 
 /**
  * FXML Controller class
@@ -37,6 +51,8 @@ public class VistaConsultasController implements Initializable {
     
     PreparedStatement pps;
     ResultSet rs;
+    
+    ObservableList<EstadoConsulta> estadoConsulta;
 
     @FXML
     private TextField txtnoConsulta;
@@ -49,7 +65,7 @@ public class VistaConsultasController implements Initializable {
     @FXML
     private TextField txtnombrePac;
     @FXML
-    private ComboBox<?> cmbestadoC;
+    private ComboBox<EstadoConsulta> cmbestadoC;
     @FXML
     private TextArea txtmotivo;
     @FXML
@@ -68,14 +84,81 @@ public class VistaConsultasController implements Initializable {
     private Button btnbuscarMedico;
     @FXML
     private TextField txthoraCita;
+    @FXML
+    private TableView<?> tablaConsultas;
+    @FXML
+    private TextField txtBuscar;
 
     /**
      * Initializes the controller class.
      */
+    
+    @FXML
+    private Button Close;
+    @FXML
+    private Button Minimize;
+    @FXML
+    private Button Return;
+    
+    private double xOffset = 0; 
+    private double yOffset = 0;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+        
+        estadoConsulta=FXCollections.observableArrayList();
+        EstadoConsulta.cmbEstado(cone, estadoConsulta);
+        cmbestadoC.setItems(estadoConsulta);
+        
+        Tooltip tooltipClose = new Tooltip("Close");
+        Close.setTooltip(tooltipClose);
+        
+        Tooltip tooltipMinimize = new Tooltip("Minimize");
+        Minimize.setTooltip(tooltipMinimize);
+        
+        Tooltip tooltipReturn = new Tooltip("Return");
+        Return.setTooltip(tooltipReturn);
+        
+        
+    } 
+    
+    @FXML
+    private void exitButtonOnAction(ActionEvent event){
+     ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();      
+    }
+
+    @FXML
+    private void minimizeButtonOnAction(ActionEvent event){
+     ((Stage)(((Button)event.getSource()).getScene().getWindow())).setIconified(true);
+    }
+    
+    @FXML
+    void ReturnButton(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaMenu.fxml"));
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setResizable(false);
+                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stage.setX(event.getScreenX() - xOffset);
+                stage.setY(event.getScreenY() - yOffset);
+            }
+        });
+                stage.show();
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+    }
 
     @FXML
     private void eliminarConsulta(ActionEvent event) {
@@ -106,7 +189,8 @@ public class VistaConsultasController implements Initializable {
     private void agregarConsulta(ActionEvent event) {
         LocalDate fechaCreacion= txtfechaCreacion.getValue();
         LocalDate fechaCita=txtfechaCita.getValue();
-        String estadoCita= (String) cmbestadoC.getValue();
+    //    String estadoCita= (String) cmbestadoC.getValue();
+        int estadoCon= cmbestadoC.getSelectionModel().getSelectedIndex() + 1;
        
         System.out.println(fechaCreacion);
         
@@ -141,7 +225,7 @@ public class VistaConsultasController implements Initializable {
             pps.setString(4, txtidPaciente.getText());
             pps.setString(5, txtidMedico.getText());
             pps.setString(6, txtmotivo.getText());
-            pps.setString(7, estadoCita);
+            pps.setString(7, String.valueOf(estadoCon));
             pps.executeUpdate();
             
             JOptionPane.showMessageDialog(null, "Se ha registrado la consulta medica", "Datos guardados", JOptionPane.PLAIN_MESSAGE);
@@ -218,6 +302,10 @@ public class VistaConsultasController implements Initializable {
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
+    }
+
+    @FXML
+    private void buscarConsulta(KeyEvent event) {
     }
     
 }

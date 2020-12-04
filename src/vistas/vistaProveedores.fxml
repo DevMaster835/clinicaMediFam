@@ -5,18 +5,21 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="582.0" prefWidth="938.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaProveedoresController">
+<AnchorPane id="AnchorPane" prefHeight="593.0" prefWidth="909.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaProveedoresController">
    <children>
-      <VBox prefHeight="587.0" prefWidth="69.0" style="-fx-background-color: #30ACE2;">
+      <VBox prefHeight="593.0" prefWidth="69.0" style="-fx-background-color: #30ACE2;">
          <children>
             <ImageView fitHeight="61.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -35,7 +38,7 @@
             </Pane>
          </children>
       </VBox>
-      <VBox layoutX="69.0" prefHeight="42.0" prefWidth="869.0" style="-fx-background-color: #30ACE2;">
+      <VBox layoutX="69.0" prefHeight="42.0" prefWidth="840.0" style="-fx-background-color: #30ACE2;">
          <children>
             <Label contentDisplay="CENTER" text="Proveedores" textFill="WHITE">
                <font>
@@ -47,30 +50,26 @@
             </Label>
          </children>
       </VBox>
-      <Label layoutX="404.0" layoutY="83.0" text="DATOS PERSONALES DEL PROVEEDOR">
+      <Label layoutX="367.0" layoutY="79.0" text="DATOS PERSONALES DEL PROVEEDOR">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TabPane layoutX="111.0" layoutY="128.0" prefHeight="425.0" prefWidth="786.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="111.0" layoutY="114.0" prefHeight="465.0" prefWidth="741.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="DATOS GENERALES">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="315.0" prefWidth="786.0">
                      <children>
-                        <Label layoutX="58.0" layoutY="35.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Codigo:" />
+                        <Label layoutX="58.0" layoutY="35.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Código:" />
                         <Label layoutX="58.0" layoutY="110.0" styleClass="labels" stylesheets="@../css/estilos.css" text="RTN:" />
                         <Label layoutX="55.0" layoutY="181.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Proveedor" />
                         <Label layoutX="295.0" layoutY="181.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Contacto:" />
-                        <Label layoutX="516.0" layoutY="132.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Telefono:" />
-                        <Label layoutX="242.0" layoutY="132.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Correo:" />
-                        <Label layoutX="56.0" layoutY="252.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Direccion:" />
+                        <Label layoutX="56.0" layoutY="252.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Dirección:" />
                         <TextField fx:id="txtidProv" layoutX="58.0" layoutY="52.0" onKeyTyped="#txtcodigoKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <TextField fx:id="txtRTN" layoutX="58.0" layoutY="127.0" onKeyTyped="#txtrtnKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <TextField fx:id="txtnombreProv" layoutX="55.0" layoutY="200.0" onKeyTyped="#txtnombreKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <TextField fx:id="txtcontacto" layoutX="295.0" layoutY="200.0" onKeyTyped="#txtcontactoKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <TextField fx:id="txtTelefono" layoutX="569.0" layoutY="127.0" onKeyTyped="#txttelefonoKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <TextField fx:id="txtcorreoProv" layoutX="295.0" layoutY="127.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <TextArea fx:id="txtdireccionProv" layoutX="56.0" layoutY="269.0" prefHeight="89.0" prefWidth="395.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <Button fx:id="btnGuardar" alignment="BOTTOM_CENTER" layoutX="481.0" layoutY="43.0" mnemonicParsing="false" onAction="#agregarProveedores" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773; -fx-background-radius: 7px;" text="Guardar" textFill="WHITE">
                            <font>
@@ -93,15 +92,86 @@
           </Tab>
             <Tab text="INFORMACIÓN DE CONTACTO">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="443.0" prefWidth="786.0">
+                     <children>
+                        <Pane layoutX="32.0" layoutY="59.0" prefHeight="162.0" prefWidth="706.0" style="-fx-border-color: black; -fx-border-radius: 3px;">
+                           <children>
+                              <TableView fx:id="tablaTelefonos" editable="true" layoutX="247.0" layoutY="28.0" prefHeight="114.0" prefWidth="399.0">
+                                 <columns>
+                                    <TableColumn fx:id="idTel" prefWidth="98.0" text="ID" />
+                                    <TableColumn fx:id="colProvTel" prefWidth="192.0" text="Proveedor" />
+                                    <TableColumn fx:id="colTelProv" prefWidth="108.0" text="Teléfono" />
+                                 </columns>
+                              </TableView>
+                              <Button fx:id="btnAgregarTelefono" layoutX="22.0" layoutY="100.0" mnemonicParsing="false" onAction="#agregarTelefono" prefHeight="27.0" prefWidth="151.0" text="Agregar Teléfono" />
+                              <Label layoutX="22.0" layoutY="35.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Telefono:" />
+                              <TextField fx:id="txtTelefono" layoutX="22.0" layoutY="54.0" onKeyTyped="#txttelefonoKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="32.0" layoutY="238.0" prefHeight="167.0" prefWidth="706.0" style="-fx-border-color: black; -fx-border-radius: 3px;">
+                           <children>
+                              <TableView fx:id="tablaCorreos" editable="true" layoutX="252.0" layoutY="30.0" prefHeight="114.0" prefWidth="400.0">
+                                 <columns>
+                                    <TableColumn fx:id="idCorreo" prefWidth="98.0" text="ID" />
+                                    <TableColumn fx:id="colProv" prefWidth="173.0" text="Proveedor" />
+                                    <TableColumn fx:id="colCorreo" prefWidth="144.0" text="Correo" />
+                                 </columns>
+                              </TableView>
+                              <Button fx:id="btnAgregarCorreo" layoutX="25.0" layoutY="91.0" mnemonicParsing="false" onAction="#agregarCorreo" prefHeight="27.0" prefWidth="151.0" text="Agregar Correo" />
+                              <Label layoutX="25.0" layoutY="30.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Correo:" />
+                              <TextField fx:id="txtcorreoProv" layoutX="25.0" layoutY="49.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
               </content>
             </Tab>
           <Tab text="BUSQUEDA">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="36.0" layoutY="32.0" prefHeight="54.0" prefWidth="285.0" style="-fx-background-color: white; -fx-border-color: black;" stylesheets="@../css/estilos.css">
+                           <children>
+                              <Label styleClass="labels" stylesheets="@../css/estilos.css" text="Buscar:">
+                                 <HBox.margin>
+                                    <Insets left="15.0" top="18.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="txtBuscar" onKeyTyped="#buscarProveedor" styleClass="textos" stylesheets="@../css/estilos.css">
+                                 <HBox.margin>
+                                    <Insets left="20.0" top="15.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <TableView fx:id="tblProveedores" layoutX="36.0" layoutY="118.0" prefHeight="300.0" prefWidth="669.0">
+                          <columns>
+                            <TableColumn fx:id="colCodigo" prefWidth="75.0" resizable="false" text="Código" />
+                            <TableColumn fx:id="colRTN" prefWidth="107.0" resizable="false" text="RTN" />
+                              <TableColumn fx:id="colProveedor" prefWidth="171.0" resizable="false" text="Proveedor" />
+                              <TableColumn fx:id="colContacto" prefWidth="128.0" resizable="false" text="Contacto" />
+                              <TableColumn fx:id="colDireccion" prefWidth="187.0" resizable="false" text="Direccion" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
             </content>
           </Tab>
         </tabs>
       </TabPane>
+      <Button fx:id="Close" layoutX="885.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="closebutton" stylesheets="@../css/estilos.css">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="Minimize" layoutX="857.0" layoutY="14.0" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="minimizebutton" stylesheets="@../css/estilos.css">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="Return" alignment="BOTTOM_CENTER" layoutX="828.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReturnButton" prefHeight="15.0" prefWidth="15.0" styleClass="returnbutton" stylesheets="@../css/estilos.css" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

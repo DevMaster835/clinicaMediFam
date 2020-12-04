@@ -63,6 +63,12 @@ public class Correos {
         }
         return true;
     }
+
+    public Correos(String id, String nombre, String correo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.correo = correo;
+    }
     
     
     

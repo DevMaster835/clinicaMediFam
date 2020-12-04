@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -27,12 +28,12 @@ public class SistemaDevMasters extends Application {
         
         try {
             FXMLLoader loader= new FXMLLoader();
-            loader.setLocation(SistemaDevMasters.class.getResource("/vistas/vistaEmpleados.fxml"));
-            Pane ventana = (Pane) loader.load();
-            
-            
+            loader.setLocation(SistemaDevMasters.class.getResource("/vistas/vistaMenu.fxml"));
+            Pane ventana = (Pane) loader.load();    
             Scene scene= new Scene(ventana);
             primaryStage.setScene(scene);
+            primaryStage.initStyle(StageStyle.UNDECORATED);           
+            primaryStage.setResizable(false);
             primaryStage.show();
         } catch (IOException ex) {
             Logger.getLogger(SistemaDevMasters.class.getName()).log(Level.SEVERE, null, ex);

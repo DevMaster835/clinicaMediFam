@@ -161,7 +161,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="472.0" prefWidth="821.0">
                      <children>
-                        <HBox layoutX="36.0" layoutY="24.0" prefHeight="54.0" prefWidth="346.0" style="-fx-background-color: white; -fx-border-color: black;" stylesheets="@../css/estilos.css">
+                        <HBox layoutX="36.0" layoutY="24.0" prefHeight="54.0" prefWidth="297.0" style="-fx-background-color: white; -fx-border-color: black;" stylesheets="@../css/estilos.css">
                            <children>
                               <RadioButton fx:id="rdbId" mnemonicParsing="false" text="Identidad">
                                  <padding>
@@ -179,19 +179,11 @@
                                     <Insets left="-80.0" top="25.0" />
                                  </HBox.margin>
                               </RadioButton>
-                              <TextField styleClass="textos" stylesheets="@../css/estilos.css">
+                              <TextField fx:id="txtBuscar" onKeyTyped="#buscarEmpleado" styleClass="textos" stylesheets="@../css/estilos.css">
                                  <HBox.margin>
                                     <Insets left="20.0" top="15.0" />
                                  </HBox.margin>
                               </TextField>
-                              <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarEmpleado" text="Buscar">
-                                 <HBox.margin>
-                                    <Insets left="15.0" top="15.0" />
-                                 </HBox.margin>
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Button>
                            </children>
                         </HBox>
                         <TableView fx:id="tblEmpleados" layoutX="29.0" layoutY="95.0" prefHeight="342.0" prefWidth="820.0" stylesheets="@../css/estilos.css">
@@ -212,5 +204,20 @@
           </Tab>
         </tabs>
       </TabPane>
+      <Button fx:id="Close" layoutX="973.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="closebutton" stylesheets="@../css/estilos.css">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="Minimize" layoutX="945.0" layoutY="14.0" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="minimizebutton" stylesheets="@../css/estilos.css">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="Return" alignment="BOTTOM_CENTER" layoutX="916.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReturnButton" prefHeight="15.0" prefWidth="15.0" styleClass="returnbutton" stylesheets="@../css/estilos.css" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

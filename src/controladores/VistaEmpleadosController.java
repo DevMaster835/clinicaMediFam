@@ -24,6 +24,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -58,6 +60,9 @@ public class VistaEmpleadosController implements Initializable {
     
     conexion con= new conexion();
     Connection cone= con.openConnection();
+    Empleados emp;
+    
+    
     
    
     PreparedStatement pps;
@@ -106,8 +111,6 @@ public class VistaEmpleadosController implements Initializable {
     @FXML
     private RadioButton rdbNom;
     @FXML
-    private Button btnBuscar;
-    @FXML
     private TableView<Empleados> tblEmpleados;
     @FXML
     private TableColumn<Empleados, String>id;
@@ -153,6 +156,8 @@ public class VistaEmpleadosController implements Initializable {
     private Button btnAgregarCorreo;
     @FXML
     private Button btnActualizar;
+    @FXML
+    private TextField txtBuscar;
 
 
     /**
@@ -168,54 +173,40 @@ public class VistaEmpleadosController implements Initializable {
         
         
          //Inicializar
-         listaEmpleados= FXCollections.observableArrayList();
          listaNacionalidades= FXCollections.observableArrayList();
          listaTipoEmpleados= FXCollections.observableArrayList();
          listaTipoCorreo= FXCollections.observableArrayList();
          
-         //TABLA DE TELEFONOS
-         listaContacto= FXCollections.observableArrayList();
-         idTel.setCellValueFactory(new PropertyValueFactory("id"));
-         this.colEmpTel.setCellValueFactory(new PropertyValueFactory("nombre"));
-         this.colTel.setCellValueFactory(new PropertyValueFactory("numero"));
-         
-         //TABLA DE CORREOS
-         listaCorreo= FXCollections.observableArrayList();
-         idCorreo.setCellValueFactory(new PropertyValueFactory("id"));
-         colEmpCo.setCellValueFactory(new PropertyValueFactory("nombre"));
-         colCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
-         colTipoC.setCellValueFactory(new PropertyValueFactory("tipoCorreo"));
-         
          //llenar lista
-         Empleados.llenarTabla(cone, listaEmpleados);
          Nacionalidades.llenarTabla(cone, listaNacionalidades);
          tipoEmpleados.cmbTipoEmpleado(cone, listaTipoEmpleados);
          tipoCorreoE.cmbTipoCorreoE(cone, listaTipoCorreo);
          
          //Enlazar listas
-         tblEmpleados.setItems(listaEmpleados);
          cmbNacionalidad.setItems(listaNacionalidades);
          cmbTipoEmp.setItems(listaTipoEmpleados);
          cmbtipoCorreo.setItems(listaTipoCorreo);
-         
-         //enlazar columnas
-         id.setCellValueFactory(new PropertyValueFactory("idEmp"));
-         nombre.setCellValueFactory(new PropertyValueFactory("nombres"));
-         apellidos.setCellValueFactory(new PropertyValueFactory("apellidos"));
-         fechaNac.setCellValueFactory(new PropertyValueFactory("fechaNac"));
-         genero.setCellValueFactory(new PropertyValueFactory("idGenero"));
-         colNacionalidad.setCellValueFactory(new PropertyValueFactory("nac"));
-         colDireccion.setCellValueFactory(new PropertyValueFactory("direccion"));
-         colTipoEmp.setCellValueFactory(new PropertyValueFactory("tipoE"));
-         
-         
+
          //llenar combobox
          cmbNacionalidad.setItems(listaNacionalidades);
          cmbTipoEmp.setItems(listaTipoEmpleados);
          
+         formatoFecha();
+         tablaEmpleados();
+         tablaContacto();
          gestionarEventos();
+       
+    }
+    
+    public void start(Stage primaryStage){
+        //cargarCombobox();
          
-         //formato fecha
+             
+        
+    }
+    
+    public void formatoFecha(){
+        //formato fecha
         txtFechaNaci.setConverter(new StringConverter<LocalDate>() {
         String pattern = "dd-MM-yyyy";
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);      
@@ -243,15 +234,36 @@ public class VistaEmpleadosController implements Initializable {
              }
         
         });
-        
-            
     }
     
-    public void start(Stage primaryStage){
-        //cargarCombobox();
-         
-             
+    public void tablaEmpleados(){
+        listaEmpleados= FXCollections.observableArrayList();
+        Empleados.llenarTabla(cone, listaEmpleados);
+        tblEmpleados.setItems(listaEmpleados);
         
+         id.setCellValueFactory(new PropertyValueFactory("idEmp"));
+         nombre.setCellValueFactory(new PropertyValueFactory("nombres"));
+         apellidos.setCellValueFactory(new PropertyValueFactory("apellidos"));
+         fechaNac.setCellValueFactory(new PropertyValueFactory("fechaNac"));
+         genero.setCellValueFactory(new PropertyValueFactory("idGenero"));
+         colNacionalidad.setCellValueFactory(new PropertyValueFactory("nac"));
+         colDireccion.setCellValueFactory(new PropertyValueFactory("direccion"));
+         colTipoEmp.setCellValueFactory(new PropertyValueFactory("tipoE"));
+    }
+    
+    public void tablaContacto(){
+        //TABLA DE TELEFONOS
+         listaContacto= FXCollections.observableArrayList();
+         idTel.setCellValueFactory(new PropertyValueFactory("id"));
+         this.colEmpTel.setCellValueFactory(new PropertyValueFactory("nombre"));
+         this.colTel.setCellValueFactory(new PropertyValueFactory("numero"));
+         
+         //TABLA DE CORREOS
+         listaCorreo= FXCollections.observableArrayList();
+         idCorreo.setCellValueFactory(new PropertyValueFactory("id"));
+         colEmpCo.setCellValueFactory(new PropertyValueFactory("nombre"));
+         colCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
+         colTipoC.setCellValueFactory(new PropertyValueFactory("tipoCorreo"));
     }
     
     public void gestionarEventos(){
@@ -354,9 +366,6 @@ public class VistaEmpleadosController implements Initializable {
         
      //   btnGuardar.setDisable(false);
     }
-    
-    
-
 
     //METODOS GUARDAR
      @FXML
@@ -464,9 +473,6 @@ public class VistaEmpleadosController implements Initializable {
                 pps.executeUpdate();
             }
 
-            
-            
-
             JOptionPane.showMessageDialog(null, "Se ha registrado los datos del Empleado", "Datos guardados", JOptionPane.PLAIN_MESSAGE);
             limpiarDatos();
         }catch (SQLException ex) {
@@ -510,6 +516,26 @@ public class VistaEmpleadosController implements Initializable {
 
     @FXML
     private void eliminarEmpleados(ActionEvent event) {
+        try {
+            int confirmar= JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este Empleado?");
+            if(JOptionPane.OK_OPTION==confirmar){
+                
+            pps= cone.prepareStatement("DELETE FROM empleados WHERE idEmpleado=?");
+            pps.setString(1, txtidEmpleado.getText());
+            int res= pps.executeUpdate();
+            
+                if(res>0){
+                    JOptionPane.showMessageDialog(null, "El empleado ha sido eliminado", "Empleado eliminado", JOptionPane.PLAIN_MESSAGE);
+                    limpiarDatos();
+                    
+                }else{
+                   JOptionPane.showMessageDialog(null, "Error al eliminar el Empleado", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
+                }       
+            }
+   
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -663,7 +689,34 @@ public class VistaEmpleadosController implements Initializable {
     }
 
     @FXML
-    private void buscarEmpleado(ActionEvent event) {
+    private void buscarEmpleado(KeyEvent event) {
+      FilteredList<Empleados> filteredData = new FilteredList<>(listaEmpleados, p -> true);
+      tblEmpleados.setItems(filteredData); 
+      
+      txtBuscar.textProperty().addListener((observable, oldValue, newValue) -> {
+          filteredData.setPredicate(empleado -> {
+              
+              if(newValue==null || newValue.isEmpty()){
+                  return true;
+              }
+              
+              String lowerCaseFilter= newValue.toLowerCase();
+              
+              if(empleado.getIdEmp().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                  return true;
+              }else if(empleado.getNombres().toLowerCase().indexOf(lowerCaseFilter)!= -1){
+                  return true;
+              }else{
+                  return false;
+              }
+              
+          });
+      });
+        
+      SortedList<Empleados> sortedData = new SortedList<>(filteredData);
+      sortedData.comparatorProperty().bind(tblEmpleados.comparatorProperty());
+      
+      tblEmpleados.setItems(sortedData);
     }
 
     

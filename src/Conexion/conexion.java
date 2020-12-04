@@ -12,6 +12,10 @@ import java.sql.Statement;
 public class conexion {
     private static Connection con;
     private Statement statement;
+
+    public static Connection getCon() {
+        return con;
+    }
     
     public Connection openConnection(){
     
