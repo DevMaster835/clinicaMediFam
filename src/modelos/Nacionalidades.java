@@ -47,7 +47,7 @@ public class Nacionalidades {
                             ));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Especialidades.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }

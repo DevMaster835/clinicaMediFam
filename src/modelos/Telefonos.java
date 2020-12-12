@@ -14,10 +14,10 @@ import java.util.Objects;
 public class Telefonos {
     String id;
     String nombre;
-    int numero;
+    String numero;
     
 
-    public Telefonos(String id, String nombre, int numero) {
+    public Telefonos(String id, String nombre, String numero) {
         this.id = id;
         this.nombre = nombre;
         this.numero = numero;
@@ -32,7 +32,7 @@ public class Telefonos {
         return nombre;
     }
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
@@ -54,7 +54,7 @@ public class Telefonos {
             return false;
         }
         final Telefonos other = (Telefonos) obj;
-        if (this.numero != other.numero) {
+        if (!this.numero.equals(other.numero)) {
             return false;
         }
         return true;

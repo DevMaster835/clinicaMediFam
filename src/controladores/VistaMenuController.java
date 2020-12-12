@@ -8,8 +8,6 @@ package controladores;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -154,7 +152,6 @@ public class VistaMenuController implements Initializable {
                 ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }
 
-    @FXML
     private void btnEnfermeras(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaEnfermeros.fxml"));
                 Stage stage = new Stage();
@@ -329,5 +326,32 @@ public class VistaMenuController implements Initializable {
                 stage.show();
     }
   */ 
+
+    @FXML
+    private void btnFacturacion(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaFacturacion.fxml"));
+                Stage stage = new Stage();
+                Scene scene = new Scene(root, 1046, 608);
+                stage.setScene(scene);    
+                stage.setResizable(false);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setResizable(false);
+                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stage.setX(event.getScreenX() - xOffset);
+                stage.setY(event.getScreenY() - yOffset);
+            }
+        });
+                stage.show();
+               ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();   
+    }
     
 }

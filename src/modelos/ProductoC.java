@@ -12,15 +12,15 @@ package modelos;
 public class ProductoC {
     int codigo;
     String producto;
-    int contNeto;
     double precio;
+    int contNeto;
     int cantidad;
 
-    public ProductoC(int codigo, String producto, int contNeto, double precio, int cantidad) {
+    public ProductoC(int codigo, String producto, double precio, int contNeto, int cantidad) {
         this.codigo = codigo;
         this.producto = producto;
-        this.contNeto = contNeto;
         this.precio = precio;
+        this.contNeto = contNeto;
         this.cantidad = cantidad;
     }
 

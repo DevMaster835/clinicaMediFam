@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="492.0" prefWidth="980.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaMenuController">
    <children>
-      <Button alignment="BOTTOM_CENTER" layoutX="109.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnPacientes" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="PACIENTES" textFill="WHITE">
+      <Button alignment="BOTTOM_CENTER" layoutX="109.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnPacientes" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" styleClass="btn-pacientes" stylesheets="@../css/estilos.css" text="PACIENTES" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -38,11 +38,6 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="137.0" layoutY="145.0">
-         <image>
-            <Image url="@../imagenes/paciente.png" />
-         </image>
-      </ImageView>
       <Button alignment="BOTTOM_CENTER" layoutX="290.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnEmpleados" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="EMPLEADOS" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
@@ -53,7 +48,7 @@
             <Image url="@../imagenes/empleados.png" />
          </image>
       </ImageView>
-      <Button alignment="BOTTOM_CENTER" layoutX="475.0" layoutY="139.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="MEDICOS" textFill="WHITE">
+      <Button alignment="BOTTOM_CENTER" layoutX="475.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnMedicos" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="MEDICOS" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -63,26 +58,16 @@
             <Image url="@../imagenes/doctor.png" />
          </image>
       </ImageView>
-      <Button alignment="BOTTOM_CENTER" layoutX="663.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnEnfermeras" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="ENFERMERAS" textFill="WHITE">
+      <Button alignment="BOTTOM_CENTER" layoutX="663.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnFacturacion" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="Facturación" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="691.0" layoutY="145.0">
-         <image>
-            <Image url="@../imagenes/enfermera.png" />
-         </image>
-      </ImageView>
-      <Button alignment="BOTTOM_CENTER" layoutX="109.0" layoutY="324.0" mnemonicParsing="false" onAction="#btnProveedores" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="PROVEEDORES" textFill="WHITE">
+      <Button alignment="BOTTOM_CENTER" layoutX="109.0" layoutY="324.0" mnemonicParsing="false" onAction="#btnProveedores" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" styleClass="btn-proveedores" stylesheets="@../css/estilos.css" text="PROVEEDORES" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="137.0" layoutY="332.0">
-         <image>
-            <Image url="@../imagenes/proveedores.png" />
-         </image>
-      </ImageView>
       <Button alignment="BOTTOM_CENTER" layoutX="290.0" layoutY="324.0" mnemonicParsing="false" onAction="#btnProductos" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="PRODUCTOS" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
@@ -123,5 +108,10 @@
             <Font size="10.0" />
          </font>
       </Button>
+      <ImageView fitHeight="93.0" fitWidth="117.0" layoutX="679.0" layoutY="147.0">
+         <image>
+            <Image url="@../imagenes/factura.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

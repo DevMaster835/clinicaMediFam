@@ -98,7 +98,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="291.0" prefWidth="756.0">
                      <children>
-                        <TableView fx:id="tblProductos" layoutX="30.0" layoutY="102.0" prefHeight="200.0" prefWidth="609.0">
+                        <TableView fx:id="tblProductos" layoutX="30.0" layoutY="102.0" prefHeight="200.0" prefWidth="609.0" stylesheets="@../css/estilos.css">
                           <columns>
                             <TableColumn fx:id="colCodigo" prefWidth="96.0" text="Código" />
                             <TableColumn fx:id="colProd" prefWidth="131.0" text="Producto" />

@@ -23,9 +23,7 @@ import javafx.stage.StageStyle;
 public class SistemaDevMasters extends Application {
     
     @Override
-    public void start(Stage primaryStage) {
-        
-        
+    public void start(Stage primaryStage) {              
         try {
             FXMLLoader loader= new FXMLLoader();
             loader.setLocation(SistemaDevMasters.class.getResource("/vistas/vistaMenu.fxml"));
@@ -37,8 +35,7 @@ public class SistemaDevMasters extends Application {
             primaryStage.show();
         } catch (IOException ex) {
             Logger.getLogger(SistemaDevMasters.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }        
     }
 
     /**

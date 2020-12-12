@@ -46,6 +46,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -460,16 +461,8 @@ public class VistaEmpleadosController implements Initializable {
         try{
             if(existeEmpleado()){
             return;
-            }
-          /*  if(!validarLongitudTelefono(txtTelEmp, 8)){
-            return;
-            }*/
-        
-          /* if(!isEmailValid(txtCorreoEmp.getText())){
-            return;
-            }*/
-           
-           if (!validarLongitudMax(txtNombreEmp.getText(), 40)) {
+            }          
+            if (!validarLongitudMax(txtNombreEmp.getText(), 40)) {
             JOptionPane.showMessageDialog(null, "Los nombres del empleado ingresados son muy largos el máximo es de 40 caracteres, usted ingresó " + txtNombreEmp.getText().length() + " caracteres.", "Longitud de los nombres del empleado", JOptionPane.INFORMATION_MESSAGE);
             return;
             }
@@ -529,6 +522,7 @@ public class VistaEmpleadosController implements Initializable {
 
             JOptionPane.showMessageDialog(null, "Se ha registrado los datos del Empleado", "Datos guardados", JOptionPane.PLAIN_MESSAGE);
             limpiarDatos();
+            tablaEmpleados();
         }catch (SQLException ex) {
             Logger.getLogger(VistaEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -581,6 +575,7 @@ public class VistaEmpleadosController implements Initializable {
                 if(res>0){
                     JOptionPane.showMessageDialog(null, "El empleado ha sido eliminado", "Empleado eliminado", JOptionPane.PLAIN_MESSAGE);
                     limpiarDatos();
+                    tablaEmpleados();
                     
                 }else{
                    JOptionPane.showMessageDialog(null, "Error al eliminar el Empleado", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
@@ -624,12 +619,14 @@ public class VistaEmpleadosController implements Initializable {
                         return true;
                     }else{
                         JOptionPane.showMessageDialog(null, "El número de teléfono debe comenzar con: 2,3,7,8 o 9");
-                        return false;
+                        txtTelEmp.requestFocus();
+                        return false;                        
                     } 
        }
         else{
        }
        JOptionPane.showMessageDialog(null, "El número de teléfono debe ser de 8 dígitos", "Longitud del número de telefono",JOptionPane.INFORMATION_MESSAGE);
+       txtTelEmp.requestFocus();
        return false;
     }
     
@@ -650,7 +647,7 @@ public class VistaEmpleadosController implements Initializable {
     private void txtNombreEmpKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car)){
+        if(!Character.isAlphabetic(car) && car>'\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
         }
@@ -660,7 +657,7 @@ public class VistaEmpleadosController implements Initializable {
     private void txtidEmpKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car>'\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -669,9 +666,12 @@ public class VistaEmpleadosController implements Initializable {
     @FXML
     private void txtApellidoEmpKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
+       // KeyCode space= event.getCode().BACK_SPACE;
+       
         
-        if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car)){
+        if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car) && car>'\b'){
             event.consume();
+            
             JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
         }
     }
@@ -679,20 +679,51 @@ public class VistaEmpleadosController implements Initializable {
     @FXML
     private void txtTelefonoKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
+            if((!Character.isDigit(car)) && car>'\b'){
+                event.consume();
+                JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            }
         
-        if(!Character.isDigit(car)){
-            event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
-        }
     }
 
 
     @FXML
     private void agregarTelefono(ActionEvent event) {
-        int numero= Integer.parseInt(this.txtTelEmp.getText());
+        //int numero= Integer.parseInt(this.txtTelEmp.getText());
+        String numero= txtTelEmp.getText();
         String idE= this.txtidEmpleado.getText();
         String nombreE= txtNombreEmp.getText() + " " + this.txtApellidoEmp.getText();
         
+        if(txtidEmpleado.getText().isEmpty()){
+            Alert alert= new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("La identidad del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtidEmpleado.requestFocus();
+        }else if(txtNombreEmp.getText().isEmpty()){
+            Alert alert= new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El nombre del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtNombreEmp.requestFocus();
+         }else if(txtTelEmp.getText().isEmpty()){
+             Alert alert= new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El teléfono del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtTelEmp.requestFocus();
+         }  
+        if(!validarLongitudTelefono(txtTelEmp, 8)){
+            return;
+        }
+        if (!validarLongitudMax(txtTelEmp.getText(), 8)) {
+            JOptionPane.showMessageDialog(null, "El teléfono del empleado ingresado es muy largo el máximo es de 8 dígitos, usted ingresó " + txtTelEmp.getText().length() + " dígitos.", "Longitud del teléfono del empleado", JOptionPane.INFORMATION_MESSAGE);
+            return;     
+        }        
+                 
         Telefonos ic= new Telefonos(idE,nombreE,numero);
         
         if(!this.listaContacto.contains(ic)){
@@ -709,12 +740,6 @@ public class VistaEmpleadosController implements Initializable {
             txtTelEmp.requestFocus();
         }
         
-        System.out.println(tablaTelefonos.getItems().size());
-        for(int i=0;i<tablaTelefonos.getItems().size();i++){
-                
-            System.out.println(String.valueOf(tablaTelefonos.getItems().get(i).getNumero()));
-               
-            }
     }
 
     @FXML
@@ -723,6 +748,40 @@ public class VistaEmpleadosController implements Initializable {
         String nombreE= txtNombreEmp.getText() + " " + this.txtApellidoEmp.getText();
         String correo= txtCorreoEmp.getText();
         String tipoC= String.valueOf(cmbtipoCorreo.getValue());
+        
+        if(txtidEmpleado.getText().isEmpty()){
+            Alert alert= new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("La identidad del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtidEmpleado.requestFocus();
+        }else if(txtNombreEmp.getText().isEmpty()){
+            Alert alert= new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El nombre del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtNombreEmp.requestFocus();
+        }else if(txtCorreoEmp.getText().isEmpty()){
+            Alert alert= new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El correo del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtNombreEmp.requestFocus();
+        }else if(cmbtipoCorreo.getValue()==null){
+            Alert alert= new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("Seleccione el tipo de correo");
+            alert.showAndWait();
+        }else{
+        if(!isEmailValid(txtCorreoEmp.getText())){
+            return;
+        }
+        
+     
         
         Correos c= new Correos(idE,nombreE,correo,tipoC);
         
@@ -739,6 +798,7 @@ public class VistaEmpleadosController implements Initializable {
             alert.setContentText("El correo ya existe");
             alert.showAndWait();
             txtCorreoEmp.requestFocus();
+        }
         }
     }
 
@@ -772,6 +832,7 @@ public class VistaEmpleadosController implements Initializable {
       
       tblEmpleados.setItems(sortedData);
     }
+
   
 
 }

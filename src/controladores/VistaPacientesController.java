@@ -37,6 +37,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -168,6 +169,16 @@ public class VistaPacientesController implements Initializable {
     private Button Minimize;
     @FXML
     private Button Return;
+    @FXML
+    private Label lbid;
+    @FXML
+    private Label lbNombre;
+    @FXML
+    private Label lbApellido;
+    @FXML
+    private Label lbTelefono;
+    @FXML
+    private Label lbCorreo;
     
     /**
      * Initializes the controller class.
@@ -232,6 +243,7 @@ public class VistaPacientesController implements Initializable {
          
          formatoFecha();
          seleccionar();
+         inicializarAlertas();
     } 
     
     @FXML
@@ -271,6 +283,13 @@ public class VistaPacientesController implements Initializable {
                 ((Node)(event.getSource())).getScene().getWindow().hide();
     }
     
+    public void inicializarAlertas(){
+        lbid.setVisible(false);
+        lbNombre.setVisible(false);
+        lbApellido.setVisible(false);
+        lbTelefono.setVisible(false);
+        lbCorreo.setVisible(false);
+    }
     
     
     public void limpiarDatos(){
@@ -522,6 +541,10 @@ public class VistaPacientesController implements Initializable {
                pps.setString(2, String.valueOf(tablaCorreosPac.getItems().get(j).getCorreo()));
                pps.setString(3, String.valueOf(tipoco));
                pps.executeUpdate(); 
+               
+               limpiarDatos();
+              /* tblPacientes.getItems().clear();
+               Pacientes.llenarTabla(cone, listaPacientes);*/
             }
             
             
@@ -539,23 +562,25 @@ public class VistaPacientesController implements Initializable {
     @FXML
     private void eliminarPacientes(ActionEvent event) {
         try {
-            int confirmar= JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este Paciente?");
-            if(JOptionPane.OK_OPTION==confirmar){
-                
-            pps= cone.prepareStatement("DELETE FROM pacientes WHERE idPaciente=?");
-            pps.setString(1, txtidPaciente.getText());
-            int res= pps.executeUpdate();
+           if (JOptionPane.showConfirmDialog(null, "¿Desea eliminar al paciente?", "Eliminar Paciente",
+                JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) == JOptionPane.YES_OPTION) {
+               pps= cone.prepareStatement("DELETE FROM pacientes WHERE idPaciente=?");
+               pps.setString(1, txtidPaciente.getText());
+               int res= pps.executeUpdate();
             
                 if(res>0){
                     JOptionPane.showMessageDialog(null, "El paciente ha sido eliminado", "Paciente eliminado", JOptionPane.PLAIN_MESSAGE);
                     limpiarDatos();
-                }else{
+                    tblPacientes.getItems().clear();
+                    Pacientes.llenarTabla(cone, listaPacientes);
+                }else {
                    JOptionPane.showMessageDialog(null, "Error al eliminar Paciente", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
                 }
-            }
+            }else{
             
-            
-            
+           }
+           
+               
         } catch (SQLException ex) {
             Logger.getLogger(VistaPacientesController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -565,9 +590,12 @@ public class VistaPacientesController implements Initializable {
     private void txtidPacKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car>'\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbid.setVisible(true);
+            lbid.setText("Sólo se permiten números");
+        }else{
+            lbid.setVisible(false);
         }
     }
 
@@ -575,9 +603,13 @@ public class VistaPacientesController implements Initializable {
     private void txtNombreKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car)){
+        if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car) && car>'\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
+            //JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
+            lbNombre.setVisible(true);
+            lbNombre.setText("Sólo se permiten letras");
+        }else{
+            lbNombre.setVisible(false);
         }
     }
 
@@ -585,9 +617,13 @@ public class VistaPacientesController implements Initializable {
     private void txtApellidoKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car)){
+        if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car) && car>'\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
+            //JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
+            lbApellido.setVisible(true);
+            lbApellido.setText("Sólo se permiten letras");
+        }else{
+            lbApellido.setVisible(false);
         }
     }
 
@@ -595,9 +631,13 @@ public class VistaPacientesController implements Initializable {
     private void txtTelefonoKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car>'\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            //JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbTelefono.setVisible(true);
+            lbTelefono.setText("Sólo se permiten números");
+        }else{
+            lbTelefono.setVisible(false);
         }
     }
 
@@ -605,7 +645,7 @@ public class VistaPacientesController implements Initializable {
     private void txtpesoKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car) && car>'.'){
+        if(!Character.isDigit(car) && car>'.' && car>'\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -615,7 +655,7 @@ public class VistaPacientesController implements Initializable {
     private void txtalturaKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car) && car>'.'){
+        if(!Character.isDigit(car) && car>'.' && car>'\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -624,7 +664,7 @@ public class VistaPacientesController implements Initializable {
 
     @FXML
     private void agregarTelefono(ActionEvent event) {
-        int numero= Integer.parseInt(this.txtTelPaciente.getText());
+        String numero= txtTelPaciente.getText();
         String idE= this.txtidPaciente.getText();
         String nombreE= txtNombrePaciente.getText() + " " + this.txtApellidoPaciente.getText();
         

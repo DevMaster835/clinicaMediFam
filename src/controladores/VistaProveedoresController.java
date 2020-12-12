@@ -444,7 +444,7 @@ public class VistaProveedoresController implements Initializable {
 
     @FXML
     private void agregarTelefono(ActionEvent event) {
-        int numero= Integer.parseInt(this.txtTelefono.getText());
+        String numero= txtTelefono.getText();
         String idE= this.txtidProv.getText();
         String nombreE= txtnombreProv.getText();
         

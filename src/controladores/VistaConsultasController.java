@@ -259,12 +259,15 @@ public class VistaConsultasController implements Initializable {
     @FXML
     private void buscarMedico(ActionEvent event) {
         try{
+            String prueba;
             pps=cone.prepareStatement("SELECT * FROM empleados where idEmpleado=?");
             pps.setString(1, txtidMedico.getText());
             rs=pps.executeQuery();
             
             if(rs.next()){
                 txtMedico.setText(rs.getString("nombres"));
+                prueba= rs.getString("apellidos");
+                System.out.println(prueba);
             }else{
                 JOptionPane.showMessageDialog(null, "No existe ningun empleado con identidad: " + txtidPaciente.getText(), "No existe empleado", JOptionPane.INFORMATION_MESSAGE);
                 txtidMedico.requestFocus();

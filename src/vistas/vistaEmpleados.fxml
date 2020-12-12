@@ -73,8 +73,8 @@
                         <TextField fx:id="txtNombreEmp" layoutX="63.0" layoutY="114.0" onKeyTyped="#txtNombreEmpKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <TextField fx:id="txtApellidoEmp" layoutX="363.0" layoutY="114.0" onKeyTyped="#txtApellidoEmpKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <TextArea fx:id="txtDireccionEmp" layoutX="61.0" layoutY="338.0" prefHeight="86.0" prefWidth="444.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <ComboBox fx:id="cmbTipoEmp" layoutX="360.0" layoutY="260.0" prefHeight="25.0" prefWidth="142.0" promptText="Seleccionar&#10;" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <ComboBox fx:id="cmbNacionalidad" layoutX="57.0" layoutY="260.0" prefWidth="151.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <ComboBox fx:id="cmbTipoEmp" layoutX="360.0" layoutY="260.0" prefHeight="25.0" prefWidth="142.0" promptText="Seleccionar&#10;" styleClass="combo-box" stylesheets="@../css/estilos.css" />
+                        <ComboBox fx:id="cmbNacionalidad" layoutX="57.0" layoutY="260.0" prefWidth="151.0" promptText="Seleccionar" styleClass="combo-box" stylesheets="@../css/estilos.css" />
                         <HBox layoutX="61.0" layoutY="190.0" prefHeight="27.0" prefWidth="173.0" styleClass="textos" stylesheets="@../css/estilos.css">
                            <children>
                               <RadioButton fx:id="rdbM" mnemonicParsing="false" text="Masculino">
@@ -107,7 +107,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <DatePicker fx:id="txtFechaNaci" layoutX="360.0" layoutY="190.0" prefHeight="27.0" prefWidth="151.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <DatePicker fx:id="txtFechaNaci" layoutX="360.0" layoutY="190.0" prefHeight="27.0" prefWidth="151.0" styleClass="date-picker" stylesheets="@../css/estilos.css" />
                         <Label layoutX="62.0" layoutY="321.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Dirección:" />
                         <Button fx:id="btnActualizar" alignment="BOTTOM_CENTER" layoutX="715.0" layoutY="160.0" mnemonicParsing="false" onAction="#actualizarEmpleado" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773; -fx-background-radius: 7px;" text="Actualizar" textFill="WHITE">
                            <font>
@@ -125,8 +125,8 @@
                         <Pane layoutX="35.0" layoutY="69.0" prefHeight="174.0" prefWidth="706.0" style="-fx-border-color: black; -fx-border-radius: 3px;">
                            <children>
                               <Label layoutX="25.0" layoutY="24.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Teléfono:" />
-                              <TextField fx:id="txtTelEmp" layoutX="25.0" layoutY="41.0" onKeyTyped="#txtTelefonoKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
-                              <TableView fx:id="tablaTelefonos" editable="true" layoutX="248.0" layoutY="41.0" prefHeight="114.0" prefWidth="399.0">
+                              <TextField fx:id="txtTelEmp" layoutX="25.0" layoutY="41.0" onKeyTyped="#txtTelefonoKeyTyped" style="-fx-background-radius: 11px;" styleClass="text-field" stylesheets="@../css/estilos.css" />
+                              <TableView fx:id="tablaTelefonos" editable="true" layoutX="248.0" layoutY="41.0" prefHeight="114.0" prefWidth="399.0" stylesheets="@../css/estilos.css">
                                 <columns>
                                   <TableColumn fx:id="idTel" prefWidth="98.0" text="ID" />
                                   <TableColumn fx:id="colEmpTel" prefWidth="192.0" text="Empleado" />
@@ -138,7 +138,7 @@
                         </Pane>
                         <Pane layoutX="35.0" layoutY="263.0" prefHeight="195.0" prefWidth="706.0" style="-fx-border-color: black; -fx-border-radius: 3px;">
                            <children>
-                              <TableView fx:id="tablaCorreos" editable="true" layoutX="198.0" layoutY="38.0" prefHeight="114.0" prefWidth="491.0">
+                              <TableView fx:id="tablaCorreos" editable="true" layoutX="198.0" layoutY="38.0" prefHeight="114.0" prefWidth="491.0" stylesheets="@../css/estilos.css">
                                  <columns>
                                     <TableColumn fx:id="idCorreo" prefWidth="98.0" text="ID" />
                                     <TableColumn fx:id="colEmpCo" prefWidth="173.0" text="Empleado" />
@@ -148,7 +148,7 @@
                               </TableView>
                               <Button fx:id="btnAgregarCorreo" layoutX="25.0" layoutY="146.0" mnemonicParsing="false" onAction="#agregarCorreo" prefHeight="27.0" prefWidth="151.0" text="Agregar Correo" />
                               <Label layoutX="25.0" layoutY="31.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Correo:" />
-                              <TextField fx:id="txtCorreoEmp" layoutX="28.0" layoutY="53.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <TextField fx:id="txtCorreoEmp" layoutX="28.0" layoutY="53.0" style="-fx-background-radius: 11px;" styleClass="text-field" stylesheets="@../css/estilos.css" />
                               <Label layoutX="25.0" layoutY="89.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Tipo Correo:" textAlignment="JUSTIFY" />
                               <ComboBox fx:id="cmbtipoCorreo" layoutX="25.0" layoutY="106.0" prefHeight="27.0" prefWidth="156.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
                            </children>

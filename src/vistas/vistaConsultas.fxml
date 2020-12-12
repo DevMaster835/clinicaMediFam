@@ -66,9 +66,9 @@
                         <Label layoutX="69.0" layoutY="49.0" styleClass="labels" stylesheets="@../css/estilos.css" text="N° Consulta:" />
                         <TextField fx:id="txtnoConsulta" layoutX="69.0" layoutY="66.0" onKeyTyped="#txtConsultaKeyTyped" prefHeight="25.0" prefWidth="127.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <Label layoutX="69.0" layoutY="126.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Fecha Creacion:" textAlignment="JUSTIFY" />
-                        <DatePicker fx:id="txtfechaCreacion" layoutX="69.0" layoutY="150.0" prefHeight="27.0" prefWidth="127.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <DatePicker fx:id="txtfechaCreacion" layoutX="69.0" layoutY="150.0" prefHeight="27.0" prefWidth="127.0" styleClass="date-picker" stylesheets="@../css/estilos.css" />
                         <Label layoutX="73.0" layoutY="199.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Fecha Cita:" />
-                        <DatePicker fx:id="txtfechaCita" layoutX="69.0" layoutY="216.0" prefHeight="27.0" prefWidth="127.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <DatePicker fx:id="txtfechaCita" layoutX="69.0" layoutY="216.0" prefHeight="27.0" prefWidth="127.0" styleClass="date-picker" stylesheets="@../css/estilos.css" />
                         <Label layoutX="316.0" layoutY="198.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Hora:" />
                         <TextField fx:id="txthoraCita" layoutX="316.0" layoutY="216.0" prefHeight="27.0" prefWidth="88.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <Pane layoutX="454.0" layoutY="105.0" prefHeight="190.0" prefWidth="290.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos" stylesheets="@../css/estilos.css">
@@ -116,7 +116,7 @@
                            </children>
                         </Pane>
                         <Label layoutX="71.0" layoutY="413.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Estado Consulta:" />
-                        <ComboBox fx:id="cmbestadoC" layoutX="73.0" layoutY="430.0" prefHeight="25.0" prefWidth="127.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <ComboBox fx:id="cmbestadoC" layoutX="73.0" layoutY="430.0" prefHeight="25.0" prefWidth="127.0" styleClass="combo-box" stylesheets="@../css/estilos.css" />
                         <Label layoutX="73.0" layoutY="284.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Motivo:" />
                         <TextArea fx:id="txtmotivo" layoutX="69.0" layoutY="304.0" prefHeight="89.0" prefWidth="249.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <Button fx:id="btnGuardar" alignment="BOTTOM_CENTER" layoutX="82.0" layoutY="481.0" mnemonicParsing="false" onAction="#agregarConsulta" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773; -fx-background-radius: 7px;" text="Agregar" textFill="WHITE">
@@ -142,7 +142,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tablaConsultas" layoutX="22.0" layoutY="136.0" prefHeight="375.0" prefWidth="792.0">
+                        <TableView fx:id="tablaConsultas" layoutX="22.0" layoutY="136.0" prefHeight="375.0" prefWidth="792.0" stylesheets="@../css/estilos.css">
                           <columns>
                             <TableColumn prefWidth="86.0" text="No. Consulta" />
                             <TableColumn prefWidth="93.0" text="Fecha Creación" />
