@@ -58,7 +58,6 @@
                               <Label layoutX="321.0" layoutY="31.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Empleado:" />
                               <TextField fx:id="txtidEmp" layoutX="33.0" layoutY="51.0" onKeyTyped="#txtidEmpKeyTyped" prefHeight="25.0" prefWidth="132.0" styleClass="textos" />
                               <TextField fx:id="txtempleado" editable="false" layoutX="321.0" layoutY="51.0" prefHeight="25.0" prefWidth="206.0" styleClass="textos" />
-                              <Button fx:id="btnbuscarEmp" layoutX="176.0" layoutY="51.0" mnemonicParsing="false" onAction="#buscarEmpleado" text="Buscar" />
                            </children>
                         </Pane>
                         <Pane layoutX="44.0" layoutY="137.0" prefHeight="157.0" prefWidth="589.0" style="-fx-border-color: BLACK;">

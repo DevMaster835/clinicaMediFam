@@ -72,8 +72,6 @@ public class VistaFacturacionController implements Initializable {
     private TextField txtidEmp;
     @FXML
     private TextField txtempleado;
-    @FXML
-    private Button btnbuscarEmp;
    
     @FXML
     private TextField txtFactura;
@@ -173,8 +171,6 @@ public class VistaFacturacionController implements Initializable {
     @FXML
     private Tab paneDatos;
     @FXML
-    private Button btnImpirmir;
-    @FXML
     private Button Close;
     @FXML
     private Button Minimize;
@@ -186,6 +182,7 @@ public class VistaFacturacionController implements Initializable {
      * Initializes the controller class.
      */
     
+    String idEmpl= VistaLoginController.idEmp;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -197,7 +194,9 @@ public class VistaFacturacionController implements Initializable {
        tablaProducto();
        tablaServicios();
        
-      
+       txtempleado.setText(VistaLoginController.nombresEmp + " " + VistaLoginController.apellidosEmp);
+       txtidEmp.setText(idEmpl);
+
     }   
     
     public void tablaProducto(){
@@ -248,6 +247,7 @@ public class VistaFacturacionController implements Initializable {
         txtcorreoPac.setText("");
         txtidEmp.setText("");
         txtempleado.setText("");
+        
     }
     
     public void limpiarProductos(){
@@ -302,7 +302,6 @@ public class VistaFacturacionController implements Initializable {
                 ((Node)(event.getSource())).getScene().getWindow().hide();
     }
     
-    @FXML
     private void buscarEmpleado(ActionEvent event) {
         
           try{
@@ -434,7 +433,7 @@ public class VistaFacturacionController implements Initializable {
             case "Productos":{
                 pps=cone.prepareStatement("INSERT INTO facturacion(fechaFactura, idEmpleado, idPaciente) VALUES(?,?,?)");
                 pps.setString(1, txtfechaFactura.getValue().toString());
-                pps.setString(2, txtidEmp.getText());
+                pps.setString(2, idEmpl);
                 pps.setString(3, txtidPac.getText());
                 pps.executeUpdate();
                 
@@ -469,7 +468,7 @@ public class VistaFacturacionController implements Initializable {
             case "Servicios":{
                 pps=cone.prepareStatement("INSERT INTO facturacion(fechaFactura, idEmpleado, idPaciente) VALUES(?,?,?)");
                 pps.setString(1, txtfechaFactura.getValue().toString());
-                pps.setString(2, txtidEmp.getText());
+                pps.setString(2, idEmpl);
                 pps.setString(3, txtidPac.getText());
                 pps.executeUpdate();
             
@@ -496,7 +495,7 @@ public class VistaFacturacionController implements Initializable {
             case "Producto-Servicio":{
                 pps=cone.prepareStatement("INSERT INTO facturacion(fechaFactura, idEmpleado, idPaciente) VALUES(?,?,?)");
                 pps.setString(1, txtfechaFactura.getValue().toString());
-                pps.setString(2, txtidEmp.getText());
+                pps.setString(2, idEmpl);
                 pps.setString(3, txtidPac.getText());
                 pps.executeUpdate();
             
@@ -668,9 +667,6 @@ public class VistaFacturacionController implements Initializable {
         }
     }
 
-    @FXML
-    private void AgregarDetalle(ActionEvent event) {
-    }
     
     public void imprimirFactura1(){
         try {
@@ -718,10 +714,6 @@ public class VistaFacturacionController implements Initializable {
         }
     }
 
-    @FXML
-    private void imprimirFactura(ActionEvent event) {
-
-    }
 
 
 

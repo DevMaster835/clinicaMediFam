@@ -12,7 +12,6 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,6 +43,9 @@ public class VistaLoginController implements Initializable {
     
     PreparedStatement pps;
     ResultSet rs;
+    public static String nombresEmp;
+    public static String apellidosEmp;
+    public static String idEmp;
 
     @FXML
     private Pane panel1;
@@ -85,11 +87,13 @@ public class VistaLoginController implements Initializable {
             String usuario = txtUsuario.getText();
             String contraseña = String.valueOf(txtContra.getText());
             String contraseñaEncriptada=DigestUtils.md5Hex(contraseña);
-            String sql = "SELECT * from usuarios where nombreUsuario ='" +usuario+ "' and contraseña='"+contraseñaEncriptada+"' ";
-
-            pps=cone.prepareStatement(sql);
-         //   pps.setString(1, usuario);
-          //  pps.setString(2, contraseña);
+            
+            
+            pps=cone.prepareStatement("SELECT empleados.idEmpleado, empleados.nombres, empleados.apellidos, usuarios.nombreUsuario, usuarios.contraseña " +
+                                        "FROM empleados,usuarios " +
+                                        "WHERE usuarios.idEmpleado=empleados.idEmpleado and usuarios.nombreUsuario=? and usuarios.contraseña=?");
+            pps.setString(1, usuario);
+            pps.setString(2, contraseñaEncriptada);
             System.out.println(contraseñaEncriptada);
             
             rs = pps.executeQuery();
@@ -97,6 +101,7 @@ public class VistaLoginController implements Initializable {
                 JOptionPane.showMessageDialog(null, "Por favor llene todos los campos.", "Ingrese sus datos", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }*/
+          
             if(!validarContraseñas(contraseña)){
             
                 return;
@@ -116,7 +121,12 @@ public class VistaLoginController implements Initializable {
             txtContra.requestFocus();
             return;
             }
+            
             if(rs.next()){
+                idEmp= rs.getString("empleados.idEmpleado");
+                nombresEmp= rs.getString("empleados.nombres");
+                apellidosEmp= rs.getString("empleados.apellidos");
+                System.out.println(nombresEmp + " " + apellidosEmp);
                 Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaMenu.fxml"));
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
@@ -171,6 +181,20 @@ public class VistaLoginController implements Initializable {
                  return false;
              } else if(politicasContraseñaNumeros(contraseña) && !politicasContraseñaMayusculas(contraseña) && politicasContraseñaMinusculas(contraseña)){
                  JOptionPane.showMessageDialog(null, "La contraseña no cumple con: \n 1. Debe contener al menos una letra mayúscula (A-Z)"
+                         , "¡Directrices de contraseña no cumplidas!", JOptionPane.ERROR_MESSAGE);
+                 return false;
+             }else if(!politicasContraseñaNumeros(contraseña) && !politicasContraseñaMayusculas(contraseña) && politicasContraseñaMinusculas(contraseña)){
+                 JOptionPane.showMessageDialog(null, "La contraseña no cumple con: \n 1. Debe contener al menos una letra mayúscula (A-Z) \n "
+                                                        + "2. Debe contener al menos un número (0-9)"
+                                                        , "¡Directrices de contraseña no cumplidas!", JOptionPane.ERROR_MESSAGE);
+                 return false;
+             }else if(!politicasContraseñaNumeros(contraseña) && politicasContraseñaMayusculas(contraseña) && !politicasContraseñaMinusculas(contraseña)){
+                 JOptionPane.showMessageDialog(null, "La contraseña no cumple con: \n 1. Debe contener al menos una letra minúscula (a-z)"
+                         + "\n 2. Debe contener al menos un número (0-9)"
+                         , "¡Directrices de contraseña no cumplidas!", JOptionPane.ERROR_MESSAGE);
+                 return false;
+             }else if(!politicasContraseñaNumeros(contraseña) && politicasContraseñaMayusculas(contraseña) && politicasContraseñaMinusculas(contraseña)){
+                 JOptionPane.showMessageDialog(null, "La contraseña no cumple con: \n 1. Debe contener al menos un número (0-9)"
                          , "¡Directrices de contraseña no cumplidas!", JOptionPane.ERROR_MESSAGE);
                  return false;
              }
