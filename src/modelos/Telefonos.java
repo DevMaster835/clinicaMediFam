@@ -5,7 +5,14 @@
  */
 package modelos;
 
+import com.mysql.jdbc.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -58,6 +65,32 @@ public class Telefonos {
             return false;
         }
         return true;
+        
+        
+    }
+    
+    public static void llenarTabla(Connection cone, ObservableList <Telefonos>lista){
+        try {
+            Statement statement= cone.createStatement();
+            
+            ResultSet resultado = statement.executeQuery("SELECT emp.idEmpleado, emp.nombres, tel.telefono FROM empleados emp LEFT JOIN telefonos_empleados tel ON emp.idEmpleado=tel.idEmpleado");
+            while(resultado.next()){
+                lista.add(
+                            new Telefonos(
+                                    resultado.getString("emp.idEmpleado"),
+                                    resultado.getString("emp.nombres"),
+                                    resultado.getString("tel.telefono")         
+                            ));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Telefonos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    @Override
+    public String toString() {
+        return numero;
     }
 
 

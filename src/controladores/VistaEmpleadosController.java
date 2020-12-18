@@ -21,8 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -42,7 +40,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -180,6 +177,10 @@ public class VistaEmpleadosController implements Initializable {
     private TextField txtusuario;
     @FXML
     private TextField txtcontraseña;
+    @FXML
+    private Button btnModificarTel;
+    @FXML
+    private Button btnModificarCo;
 
     /**
      * Initializes the controller class.
@@ -214,11 +215,10 @@ public class VistaEmpleadosController implements Initializable {
         tablaEmpleados();
         tablaContacto();
         gestionarEventos();
-        
-       
+        seleccionarTelefono();
+  
         btnActualizar.setDisable(true);
         btnEliminar.setDisable(true);
-
 
     }
 
@@ -325,7 +325,7 @@ public class VistaEmpleadosController implements Initializable {
         colCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
         colTipoC.setCellValueFactory(new PropertyValueFactory("tipoCorreo"));
     }
-
+    
     public void gestionarEventos() {
 
         tblEmpleados.getSelectionModel().selectedItemProperty().addListener(
@@ -346,20 +346,75 @@ public class VistaEmpleadosController implements Initializable {
                 cmbNacionalidad.setValue(valorSeleccionado.getNac());
                 cmbTipoEmp.setValue(valorSeleccionado.getTipoE());
                 txtDireccionEmp.setText(valorSeleccionado.getDireccion());
-                
+               
+              
+             
+        try {
+            tablaTelefonos.getItems().clear();
+            pps=cone.prepareStatement("SELECT emp.idEmpleado, emp.nombres, tel.idTelefono, tel.telefono FROM empleados emp INNER JOIN telefonos_empleados tel ON emp.idEmpleado=tel.idEmpleado and emp.idEmpleado=?");
+            pps.setString(1, txtidEmpleado.getText());
+            
+           ResultSet rs = pps.executeQuery();
+
+           while(rs.next()){
+               String num= rs.getString("tel.telefono");
+               System.out.println(rs.getString("tel.idTelefono"));
+               Telefonos ic = new Telefonos(txtidEmpleado.getText(), txtNombreEmp.getText(), num);
+
+                if(!listaContacto.contains(ic)) {
+                        listaContacto.add(ic);
+                        tablaTelefonos.setItems(listaContacto);
+                }
+           }
+           
+           tablaCorreos.getItems().clear();
+           PreparedStatement ps=cone.prepareStatement("SELECT emp.idEmpleado, emp.nombres, co.correo, tc.tipoCorreo FROM empleados emp LEFT JOIN correo_empleados co ON emp.idEmpleado=co.idEmpleado INNER JOIN tipo_correo tc ON co.tipoCorreo=tc.idTipoCorreo and emp.idEmpleado=?");
+           ps.setString(1, txtidEmpleado.getText());
+            
+           ResultSet rrs = ps.executeQuery();
+
+           while(rrs.next()){
+               String email= rrs.getString("co.correo"); 
+               String tipo= rrs.getString("tc.tipoCorreo");
+               Correos co = new Correos(txtidEmpleado.getText(), txtNombreEmp.getText(), email, tipo);
+
+                if(!listaCorreo.contains(co)) {
+                        listaCorreo.add(co);
+                        tablaCorreos.setItems(listaCorreo);
+                }
+           }
+           
+        }catch (SQLException ex) {
+            Logger.getLogger(VistaEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                 
                 btnGuardar.setDisable(true);
                 btnActualizar.setDisable(false);
                 btnEliminar.setDisable(false);
+                btnAgregarTelefono.setDisable(true);
+                btnModificarTel.setDisable(false);
             }
             }
 
         }
         );
-        
-
     }
     
-    
+    public void seleccionarTelefono(){
+        tablaTelefonos.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Telefonos>() {
+             @Override
+            public void changed(ObservableValue<? extends Telefonos> arg0,
+                    Telefonos valorAnterior, Telefonos valorSeleccionado) {
+                
+                if(valorSeleccionado!=null){
+                  txtTelEmp.setText(valorSeleccionado.getNumero());
+                }  
+            }
+            }
+        );
+    }
+  
       
     public boolean existeEmpleado() {
         try {
@@ -367,7 +422,58 @@ public class VistaEmpleadosController implements Initializable {
             String sql = "Select nombres from empleados where idEmpleado = '" + txtidEmpleado.getText() + "'";
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
-                JOptionPane.showMessageDialog(null, " Ya existe " + " el número de identidad: " + txtidEmpleado.getText(), "Número de identidad ¡Ya existe!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, " Ya existe " + " el número de identidad: " + txtidEmpleado.getText(), "Número de identidad ¡Ya existe!", JOptionPane.ERROR_MESSAGE);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public boolean existeUsuario() {
+        try {
+            Statement st = cone.createStatement();
+            String sql = "Select nombreUsuario from usuarios where nombreUsuario = '" + txtusuario.getText() + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, " Ya existe " + " el nombre de usuario: " + txtusuario.getText(), "Nombre de usuario ¡Ya existe!", JOptionPane.ERROR_MESSAGE);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public boolean existeTelefono() {
+        try {
+            Statement st = cone.createStatement();
+            String sql = "Select telefono from telefonos_empleados where telefono = '" + txtTelEmp.getText() + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, " Ya existe " + " el número de teléfono: " + txtTelEmp.getText(), "Número de teléfono ¡Ya existe!", JOptionPane.ERROR_MESSAGE);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public boolean existeCorreo() {
+        try {
+            Statement st = cone.createStatement();
+            String sql = "Select correo from correo_empleados where correo = '" + txtCorreoEmp.getText() + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, " Ya existe " + " la dirección de correo: " + txtCorreoEmp.getText(), "Dirección de correo ¡Ya existe!", JOptionPane.ERROR_MESSAGE);
                 return true;
             } else {
                 return false;
@@ -617,6 +723,10 @@ public class VistaEmpleadosController implements Initializable {
                 if (existeEmpleado()) {
                     return;
                 }
+                
+                if (existeUsuario()) {
+                    return;
+                }
 
                 pps = cone.prepareStatement("INSERT INTO empleados(idEmpleado,nombres,apellidos,fechaNacimiento,idGenero,idNacionalidad, direccion, tipoEmpleado) VALUES (?,?,?,?,?,?,?,?)");
                 pps.setString(1, txtidEmpleado.getText());
@@ -674,12 +784,14 @@ public class VistaEmpleadosController implements Initializable {
         }
 
     }
+    
+   
 
     @FXML
     private void actualizarEmpleado(ActionEvent event) {
-        int tipoEmp = cmbTipoEmp.getSelectionModel().getSelectedIndex();
-        int nacionalidad = cmbNacionalidad.getSelectionModel().getSelectedIndex();
-        int tipoCorreo = cmbtipoCorreo.getSelectionModel().getSelectedIndex();
+        int tipoEmp = cmbTipoEmp.getSelectionModel().getSelectedItem().getIdTipo();
+        int nacionalidad = cmbNacionalidad.getSelectionModel().getSelectedItem().getIdNacionalidad();
+        //int tipoCorreo = cmbtipoCorreo.getSelectionModel().getSelectedIndex();
         int genero = 0;
         if (rdbM.isSelected() == true) {
             genero = 1;
@@ -699,7 +811,26 @@ public class VistaEmpleadosController implements Initializable {
             ps.setString(6, txtDireccionEmp.getText());
             ps.setString(7, String.valueOf(tipoEmp));
             ps.setString(8, txtidEmpleado.getText());
+            
+            //BUSCAR idTelefono
+            PreparedStatement pp= cone.prepareStatement("SELECT idTelefono FROM telefonos_empleados WHERE idEmpleado=?");
+            pp.setString(1, txtidEmpleado.getText());
+            ResultSet rs = pps.executeQuery();
 
+            while(rs.next()){
+               String idT= rs.getString("idTelefono");     
+               System.out.println(idT);
+           }
+            
+            //MODIFICAR TELEFONOS
+            for (int i = 0; i < tablaTelefonos.getItems().size(); i++) {
+                for(int j=0;j<tablaTelefonos.getItems().size();j++){
+                    ps = cone.prepareStatement("UPDATE telefonos_empleados SET telefono=? WHERE idEmpleado=? and telefono=?");                  
+                    ps.setString(1, String.valueOf(tablaTelefonos.getItems().get(i).getNumero()));
+                    ps.setString(2, txtidEmpleado.getText());
+                    ps.setString(3, String.valueOf(tablaTelefonos.getItems().get(j).getNumero()));
+            }
+            }
             int mod = ps.executeUpdate();
 
             if (mod >= 1) {
@@ -837,7 +968,6 @@ public class VistaEmpleadosController implements Initializable {
 
     @FXML
     private void agregarTelefono(ActionEvent event) {
-        //int numero= Integer.parseInt(this.txtTelEmp.getText());
         String numero = txtTelEmp.getText();
         String idE = this.txtidEmpleado.getText();
         String nombreE = txtNombreEmp.getText() + " " + this.txtApellidoEmp.getText();
@@ -871,12 +1001,17 @@ public class VistaEmpleadosController implements Initializable {
             JOptionPane.showMessageDialog(null, "El teléfono del empleado ingresado es muy largo el máximo es de 8 dígitos, usted ingresó " + txtTelEmp.getText().length() + " dígitos.", "Longitud del teléfono del empleado", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-
+        if (existeTelefono()) {
+            return;
+        }
+             
+        
         Telefonos ic = new Telefonos(idE, nombreE, numero);
-
+        
         if (!this.listaContacto.contains(ic)) {
+            
             this.listaContacto.add(ic);
-            this.tablaTelefonos.setItems(listaContacto);
+            this.tablaTelefonos.setItems(listaContacto);           
             txtTelEmp.setText("");
             txtTelEmp.requestFocus();
         } else {
@@ -887,6 +1022,7 @@ public class VistaEmpleadosController implements Initializable {
             alert.showAndWait();
             txtTelEmp.requestFocus();
         }
+        
 
     }
 
@@ -898,21 +1034,21 @@ public class VistaEmpleadosController implements Initializable {
         String tipoC = String.valueOf(cmbtipoCorreo.getValue());
 
         if (txtidEmpleado.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setTitle("ERROR");
             alert.setContentText("La identidad del empleado no puede ir vacío");
             alert.showAndWait();
             txtidEmpleado.requestFocus();
         } else if (txtNombreEmp.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setTitle("ERROR");
             alert.setContentText("El nombre del empleado no puede ir vacío");
             alert.showAndWait();
             txtNombreEmp.requestFocus();
         } else if (txtCorreoEmp.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setTitle("ERROR");
             alert.setContentText("El correo del empleado no puede ir vacío");
@@ -920,12 +1056,16 @@ public class VistaEmpleadosController implements Initializable {
             txtNombreEmp.requestFocus();
         } else if (!isEmailValid(txtCorreoEmp.getText())) {
         } else if (cmbtipoCorreo.getValue() == null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setTitle("ERROR");
             alert.setContentText("Seleccione el tipo de correo");
             alert.showAndWait();
         } else {
+            
+            if (existeCorreo()) {
+                    return;
+            }
             Correos c = new Correos(idE, nombreE, correo, tipoC);
 
             if (!this.listaCorreo.contains(c)) {
@@ -974,6 +1114,54 @@ public class VistaEmpleadosController implements Initializable {
         sortedData.comparatorProperty().bind(tblEmpleados.comparatorProperty());
 
         tblEmpleados.setItems(sortedData);
+        
+    }
+
+    @FXML
+    private void modificarTelefono(ActionEvent event) {
+        String numero = txtTelEmp.getText();
+        String idE = this.txtidEmpleado.getText();
+        String nombreE = txtNombreEmp.getText() + " " + this.txtApellidoEmp.getText();
+        
+        if (txtidEmpleado.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("La identidad del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtidEmpleado.requestFocus();
+        } else if (txtNombreEmp.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El nombre del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtNombreEmp.requestFocus();
+        } else if (txtTelEmp.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El teléfono del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtTelEmp.requestFocus();
+        }
+        if (!validarLongitudTelefono(txtTelEmp, 8)) {
+            return;
+        }
+        if (!validarLongitudMax(txtTelEmp.getText(), 8)) {
+            JOptionPane.showMessageDialog(null, "El teléfono del empleado ingresado es muy largo el máximo es de 8 dígitos, usted ingresó " + txtTelEmp.getText().length() + " dígitos.", "Longitud del teléfono del empleado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (existeTelefono()) {
+            return;
+        }
+        
+        Telefonos ic = new Telefonos(idE, nombreE, numero);
+        listaContacto.set(tablaTelefonos.getSelectionModel().getSelectedIndex(), ic);
+    }
+
+    @FXML
+    private void modificarCorreo(ActionEvent event) {
     }
 
 }
