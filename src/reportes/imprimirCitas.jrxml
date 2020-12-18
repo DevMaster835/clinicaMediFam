@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="imprimirCitas" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="61a5d36f-d73c-4728-8574-5ed754a6c04e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="noConsulta" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT consultas_medicas.noConsulta, DATE_FORMAT(consultas_medicas.fechaCreacion, '%d/%m/%Y') as fechaCreacion, DATE_FORMAT(consultas_medicas.fechaConsulta, '%d/%m/%Y') as fechaCita, DATE_FORMAT(consultas_medicas.horaConsulta, '%T') as hraCita, pacientes.nombres as nPac, pacientes.apellidos as aPac, empleados.nombres as nEmp, empleados.apellidos as aEmp, consultas_medicas.motivo, estado_consultas.estado FROM consultas_medicas INNER JOIN pacientes ON consultas_medicas.idPaciente=pacientes.idPaciente INNER JOIN empleados ON consultas_medicas.idMedico=empleados.idEmpleado INNER JOIN estado_consultas ON consultas_medicas.idEstadoConsulta=estado_consultas.idEstado
+WHERE consultas_medicas.noConsulta=$P!{noConsulta}]]>
+	</queryString>
+	<field name="noConsulta" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaCreacion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaCita" class="java.lang.String"/>
+	<field name="hraCita" class="java.lang.String"/>
+	<field name="nPac" class="java.lang.String"/>
+	<field name="aPac" class="java.lang.String"/>
+	<field name="nEmp" class="java.lang.String"/>
+	<field name="aEmp" class="java.lang.String"/>
+	<field name="motivo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estado" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="132" splitType="Stretch">
+			<staticText>
+				<reportElement x="242" y="23" width="327" height="32" uuid="96b77f1c-3092-424c-9038-1b2e8f0a25d8"/>
+				<textElement>
+					<font fontName="Franklin Gothic Book" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLINICA MEDICA MEDIFAM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="75" width="214" height="20" uuid="71ac54f1-3eb6-4170-bde0-ade6804cdf53"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Barrio Arriba, Comayagua, Honduras]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="55" width="162" height="20" uuid="b5de30d8-638c-4034-9b33-b562b8cf62e6"/>
+				<textElement>
+					<font fontName="Franklin Gothic Demi" size="14"/>
+				</textElement>
+				<text><![CDATA[¡Cuidando de tu familia!]]></text>
+			</staticText>
+			<image>
+				<reportElement x="123" y="23" width="70" height="65" uuid="97f98573-f6b0-4571-b5ba-2c584d16c1b7"/>
+				<imageExpression><![CDATA["C:\\Users\\José\\Documents\\NetBeansProjects\\sistemaDevMasters\\src\\imagenes\\logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="366" y="95" width="67" height="19" uuid="463211cd-ef88-4951-8af4-905987777862"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[2772-8974]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="134" splitType="Stretch">
+			<textField>
+				<reportElement x="142" y="21" width="100" height="20" uuid="0c3af8ef-72d5-429b-a4b2-a51c8294db73"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{noConsulta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="54" y="21" width="88" height="20" uuid="19d9c0eb-1075-4780-9862-c56be22228eb"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. Consulta:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="54" y="64" width="69" height="20" uuid="a6bdca5e-b111-4e6b-81ea-eba2b5e488a8"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Paciente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="54" y="105" width="69" height="20" uuid="8ef67f86-5a74-40f1-8a27-3b910a117fc4"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Médico:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="123" y="64" width="100" height="20" uuid="890fe2f3-45cc-439b-9218-dd60c64b3928"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nPac}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="199" y="64" width="100" height="20" uuid="937b123a-1e5c-4530-bd15-3aea36f0bd4f"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aPac}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="123" y="105" width="100" height="20" uuid="c0ecf595-57a1-4083-ba47-d18ae8f3100c"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nEmp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="105" width="100" height="20" uuid="d6f46f9d-b539-4f53-8a4b-f5f557147dba"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aEmp}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="154" splitType="Stretch">
+			<staticText>
+				<reportElement x="54" y="21" width="105" height="20" uuid="c3fbb246-7d46-42ee-8233-c811e6275db9"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Creación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="54" y="81" width="79" height="20" uuid="958ef756-a9d9-4231-9f33-931b70d84158"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Cita:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="433" y="81" width="79" height="20" uuid="7f1afa9c-533b-4bcc-a696-d98014a5437b"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora Cita:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="54" y="127" width="69" height="20" uuid="d017983e-0888-4423-a8e1-6e5ab08b8a21"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Motivo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="123" y="127" width="100" height="20" uuid="3efd581c-cb45-4a6e-a363-d311438eab7b"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{motivo}]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="0" width="752" height="1" uuid="b8632a57-dc3f-49fb-b241-25e10a35f9eb"/>
+			</break>
+			<textField>
+				<reportElement x="159" y="21" width="122" height="20" uuid="16007244-c89a-40fc-a92d-4319b25a9c53"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaCreacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="133" y="81" width="100" height="20" uuid="7f1a4b45-9c39-4241-b7a7-a95bbb58c323"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaCita}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="512" y="81" width="100" height="20" uuid="73004399-7875-4ff9-ad45-21eee6f3fe74"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hraCita}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="25" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="46" splitType="Stretch">
+			<textField>
+				<reportElement x="575" y="14" width="80" height="20" uuid="51fe4271-a97b-4582-8ad0-a86e6b306d64"/>
+				<textElement textAlignment="Right">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="657" y="14" width="40" height="20" uuid="9a9e3ef9-ff56-4904-b18a-85698be64f6e"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

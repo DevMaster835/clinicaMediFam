@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-11-2020 a las 06:53:04
+-- Tiempo de generación: 18-12-2020 a las 20:05:22
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -38,6 +38,13 @@ CREATE TABLE `consultas_medicas` (
   `idEstadoConsulta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `consultas_medicas`
+--
+
+INSERT INTO `consultas_medicas` (`noConsulta`, `fechaCreacion`, `fechaConsulta`, `horaConsulta`, `idPaciente`, `idMedico`, `motivo`, `idEstadoConsulta`) VALUES
+(1, '2020-12-18', '2020-12-21', '14:30:00', '0301199800256', '1201199900302', 'Dolor de cabeza', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -50,6 +57,17 @@ CREATE TABLE `correo_empleados` (
   `correo` varchar(35) NOT NULL,
   `tipoCorreo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `correo_empleados`
+--
+
+INSERT INTO `correo_empleados` (`idCorreo`, `idEmpleado`, `correo`, `tipoCorreo`) VALUES
+(22, '1201199800278', 'martha.padilla@ujcv.edu.hn', 2),
+(23, '1201199800278', 'martha156@yahoo.com', 1),
+(29, '0302200200478', 'yarlenny.torres@gmail.com', 1),
+(36, '1201199900302', 'juanvergas@yahoo.com', 1),
+(37, '1202199702568', 'mariog1997@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -69,7 +87,9 @@ CREATE TABLE `correo_pacientes` (
 --
 
 INSERT INTO `correo_pacientes` (`idCorreo`, `idPaciente`, `correo`, `tipoCorreo`) VALUES
-(8, '1201199900214', 'martha.padilla@ujcv.edu.hn', 1);
+(13, '1201199900302', 'jose.castillo@ujcv.edu.hn', 2),
+(14, '0301199800256', 'mariaz134@gmail.com', 1),
+(15, '0302199800256', 'daniel.mejia@ujcv.edu.hn', 2);
 
 -- --------------------------------------------------------
 
@@ -90,7 +110,9 @@ CREATE TABLE `correo_proveedores` (
 INSERT INTO `correo_proveedores` (`idCorreo`, `idProveedor`, `correo`) VALUES
 (1, '1201', 'feliperuiz45@yahoo.com'),
 (2, '5689', 'juan.sabarro@yahoo.es'),
-(3, '7575', 'dggg');
+(4, '4646464', 'drogueriamiguel@gmail.com'),
+(5, '4646464', 'miguelh13@gmail.com'),
+(6, '8985678', 'clinilab@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -104,6 +126,59 @@ CREATE TABLE `detalle_facturacion` (
   `idProducto` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `detalle_facturacion`
+--
+
+INSERT INTO `detalle_facturacion` (`idDetalle`, `idFacturacion`, `idProducto`, `cantidad`) VALUES
+(1, 1, 1230, 6),
+(2, 1, 25258, 8),
+(3, 5, 25258, 7),
+(4, 6, 25258, 10),
+(5, 7, 25258, 14),
+(6, 8, 25258, 2),
+(7, 9, 1230, 3),
+(8, 10, 1230, 5),
+(9, 11, 1230, 10),
+(10, 12, 25258, 10),
+(11, 12, 1230, 15),
+(12, 13, 1213, 10),
+(13, 15, 1213, 5),
+(14, 15, 1230, 8),
+(15, 16, 1213, 3),
+(16, 17, 1213, 5),
+(17, 17, 1213, 5),
+(18, 19, 1213, 5),
+(19, 19, 1213, 5),
+(20, 21, 1213, 5),
+(21, 21, 25258, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_servicios`
+--
+
+CREATE TABLE `detalle_servicios` (
+  `idDetalle` bigint(20) NOT NULL,
+  `idFacturacion` bigint(20) NOT NULL,
+  `idServicio` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `detalle_servicios`
+--
+
+INSERT INTO `detalle_servicios` (`idDetalle`, `idFacturacion`, `idServicio`, `cantidad`) VALUES
+(1, 4, 1, 1),
+(2, 5, 1, 1),
+(3, 14, 1, 1),
+(4, 14, 2, 1),
+(5, 15, 1, 1),
+(6, 16, 1, 1),
+(7, 21, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -122,6 +197,16 @@ CREATE TABLE `empleados` (
   `tipoEmpleado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `empleados`
+--
+
+INSERT INTO `empleados` (`idEmpleado`, `nombres`, `apellidos`, `fechaNacimiento`, `idGenero`, `idNacionalidad`, `direccion`, `tipoEmpleado`) VALUES
+('0302200200478', 'Yarlenny', 'Torres', '2003-09-24', 2, 1, 'Barrio San Juan, La Paz', 3),
+('1201199800278', 'Martha Nelly', 'Isaula Padilla', '1998-12-12', 2, 1, 'Barrio La Concepción, La Paz', 2),
+('1201199900302', 'Juan', 'Vargas', '1998-12-10', 2, 1, 'Barrio La Joya, Tegucigalpa', 1),
+('1202199702568', 'Maynor', 'Castro', '1997-12-12', 1, 1, 'Barrio Suyapa, Comayagua', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -132,6 +217,32 @@ CREATE TABLE `enfermeras` (
   `idEmpleado` varchar(13) NOT NULL,
   `idEspecialidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `especialidades`
+--
+
+CREATE TABLE `especialidades` (
+  `idEspecialidad` int(11) NOT NULL,
+  `especialidad` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `especialidades`
+--
+
+INSERT INTO `especialidades` (`idEspecialidad`, `especialidad`) VALUES
+(1, 'Médico General'),
+(2, 'Ortopeda'),
+(3, 'Cardiólogo'),
+(4, 'Ginecólogo'),
+(5, 'Pediatra'),
+(6, 'Dermatólogo'),
+(7, 'Neurólogo'),
+(8, 'Urólogo'),
+(9, 'Dentista');
 
 -- --------------------------------------------------------
 
@@ -179,6 +290,33 @@ CREATE TABLE `facturacion` (
   `idPaciente` varchar(13) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `facturacion`
+--
+
+INSERT INTO `facturacion` (`idFacturacion`, `fechaFactura`, `idEmpleado`, `idPaciente`) VALUES
+(1, '2020-12-11', '1201199800278', '1201199900302'),
+(2, '2020-12-11', '1201199800278', '1201199900302'),
+(3, '2020-12-11', '1206897456566', '0301199800256'),
+(4, '2020-12-11', '1206897456566', '0301199800256'),
+(5, '2020-12-11', '1201199800278', '1201199900302'),
+(6, '2020-12-11', '1201199800278', '1201199900302'),
+(7, '2020-12-11', '1201199800278', '1201199900302'),
+(8, '2020-12-11', '1201199800278', '1201199900302'),
+(9, '2020-12-11', '1201199800278', '1201199900302'),
+(10, '2020-12-11', '1201199800278', '1201199900302'),
+(11, '2020-12-11', '1201199800278', '1201199900302'),
+(12, '2020-12-11', '1201199800278', '1201199900302'),
+(13, '2020-12-12', '1201199800278', '1201199900302'),
+(14, '2020-12-04', '1201199800278', '1201199900302'),
+(15, '2020-12-09', '1201199800278', '1201199900302'),
+(16, '2020-12-09', '1206897456566', '1201199900302'),
+(17, '2020-12-11', '1201199800278', '1201199900302'),
+(18, '2020-12-11', '1201199800278', '1201199900302'),
+(19, '2020-12-11', '1201199800278', '1201199900302'),
+(20, '2020-12-11', '1201199800278', '1201199900302'),
+(21, '2020-12-11', '1201199800278', '1201199900302');
+
 -- --------------------------------------------------------
 
 --
@@ -213,6 +351,13 @@ CREATE TABLE `historial_medico` (
   `tratamiento` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `historial_medico`
+--
+
+INSERT INTO `historial_medico` (`idHistorial`, `fechaCreacion`, `noConsulta`, `anamnesis`, `diagnostico`, `tratamiento`) VALUES
+(1, '2020-12-18', 1, 'SIntomas fuertes de dolor de cabeza', 'Tomar dos panadol por 2 días', 'Tomar dos panadol por 2 días');
+
 -- --------------------------------------------------------
 
 --
@@ -225,6 +370,13 @@ CREATE TABLE `medicos` (
   `licenciaMedica` int(7) NOT NULL,
   `añosExperiencia` varchar(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `medicos`
+--
+
+INSERT INTO `medicos` (`idEmpleado`, `idEspecialidad`, `licenciaMedica`, `añosExperiencia`) VALUES
+('1201199800278', 1, 16564601, '5');
 
 -- --------------------------------------------------------
 
@@ -300,7 +452,10 @@ CREATE TABLE `pacientes` (
 --
 
 INSERT INTO `pacientes` (`idPaciente`, `nombres`, `apellidos`, `fechaNacimiento`, `idGenero`, `idNacionalidad`, `direccion`, `peso`, `altura`, `tipoSangre`) VALUES
-('1201199900214', 'Martha Nelly', 'Padilla Isaula', '1999-02-26', 2, 1, 'Barrio La Concepción, La Paz', '150', '157', 1);
+('0301199800256', 'María Alejandra', 'Zuniga', '1998-09-17', 2, 1, 'San Pedro Sula', '130', '130', 3),
+('0302199800256', 'Daniel Alejandro', 'Mejía Perdonmo', '1998-08-15', 1, 1, 'Barrio San Juan, La Paz', '150', '165', 3),
+('1201199900302', 'José Manuel', 'Castillo', '1999-01-25', 1, 1, 'La Paz', '150', '170', 2),
+('1202199800269', 'J', 'M', '2020-12-11', 1, 1, '', '', '', 3);
 
 -- --------------------------------------------------------
 
@@ -313,8 +468,8 @@ CREATE TABLE `productos` (
   `nombre` varchar(30) NOT NULL,
   `idPrecioHis` int(11) NOT NULL,
   `fechaVencimiento` date NOT NULL,
-  `stock` varchar(50) NOT NULL,
-  `contenidoNeto` varchar(6) NOT NULL
+  `stock` int(11) NOT NULL,
+  `contenidoNeto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -322,8 +477,9 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`idProducto`, `nombre`, `idPrecioHis`, `fechaVencimiento`, `stock`, `contenidoNeto`) VALUES
-(555, 'VITAFLENACO', 150, '2020-10-25', '150', '100'),
-(1230, 'SUDAGRIP', 7, '2022-10-10', '50', '10');
+(1213, 'Paracetamol', 3, '2021-04-15', 100, 50),
+(1230, 'SUDAGRIP', 7, '2022-10-10', 50, 10),
+(25258, 'Doloneurobión', 11, '2022-07-21', 100, 50);
 
 -- --------------------------------------------------------
 
@@ -345,10 +501,34 @@ CREATE TABLE `proveedores` (
 
 INSERT INTO `proveedores` (`idProveedor`, `RTN`, `nombreProveedor`, `nombreContacto`, `direccion`) VALUES
 ('1201', 12019, 'LABORATORIO SAN JORGE', 'FELIPE RUIZ', 'COMAYAGUELA, FRANCISCO MORAZA'),
+('4646464', 646464, 'Drogeria Miguel', 'Miguel Sanchez', 'Avenida Junior, 4ta calle, San Pedro Sula'),
 ('4987979', 57849, 'DFGRG', 'DGDGD', 'BARRIO LA ALAMEDA, COMAYAGUA'),
 ('5689', 1201998, 'JETSTEREO', 'JOSUE GONZALES', 'BARRIO LA ALAMEDA, COMAYAGUA'),
-('7575', 757575, 'fgdgd', 'dgdgg', 'dggdgg'),
-('986', 57849, 'DFGRG', 'DGDGD', 'BARRIO LA ALAMEDA, COMAYAGUA');
+('8985678', 464323, 'Grupo Clinilab', 'Oscar Torres', 'Barrio La Guadalupe, Tegucigalpa');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `servicios`
+--
+
+CREATE TABLE `servicios` (
+  `idServicio` int(11) NOT NULL,
+  `servicio` varchar(40) NOT NULL,
+  `precio` decimal(10,0) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `servicios`
+--
+
+INSERT INTO `servicios` (`idServicio`, `servicio`, `precio`) VALUES
+(1, 'Consulta Médica', '650'),
+(2, 'Hospitalización', '1500'),
+(3, 'Servicio de Ambulancia', '600'),
+(4, 'Rayos X', '500'),
+(5, 'Urgencias', '800'),
+(6, 'Cuidados Intensivos', '1350');
 
 -- --------------------------------------------------------
 
@@ -365,6 +545,13 @@ CREATE TABLE `signos_vitales` (
   `respiracion` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `signos_vitales`
+--
+
+INSERT INTO `signos_vitales` (`idSignosVitales`, `idHistorial`, `temperatura`, `presion`, `pulso`, `respiracion`) VALUES
+(3, 1, '35', '135', '40', '60');
+
 -- --------------------------------------------------------
 
 --
@@ -376,6 +563,17 @@ CREATE TABLE `telefonos_empleados` (
   `idEmpleado` varchar(13) NOT NULL,
   `telefono` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `telefonos_empleados`
+--
+
+INSERT INTO `telefonos_empleados` (`idTelefono`, `idEmpleado`, `telefono`) VALUES
+(25, '1201199800278', 27745689),
+(26, '1201199800278', 88113504),
+(33, '0302200200478', 27745689),
+(41, '1201199900302', 99632145),
+(42, '1202199702568', 97852314);
 
 -- --------------------------------------------------------
 
@@ -394,7 +592,10 @@ CREATE TABLE `telefonos_pacientes` (
 --
 
 INSERT INTO `telefonos_pacientes` (`idTelefono`, `idPaciente`, `telefono`) VALUES
-(9, '1201199900214', 88963214);
+(16, '1201199900302', 32852493),
+(17, '1201199900302', 27742347),
+(18, '0301199800256', 25555689),
+(19, '0302199800256', 27742347);
 
 -- --------------------------------------------------------
 
@@ -415,7 +616,10 @@ CREATE TABLE `telefonos_proveedores` (
 INSERT INTO `telefonos_proveedores` (`idTelefono`, `idProveedor`, `telefono`) VALUES
 (1, '1201', 88745632),
 (2, '5689', 27785632),
-(3, '7575', 8989646);
+(4, '4646464', 25552378),
+(5, '4646464', 99745687),
+(6, '8985678', 27452310),
+(7, '8985678', 98745623);
 
 -- --------------------------------------------------------
 
@@ -447,6 +651,16 @@ CREATE TABLE `tipo_empleado` (
   `tipoEmpleado` varchar(35) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `tipo_empleado`
+--
+
+INSERT INTO `tipo_empleado` (`idTipoEmpleado`, `tipoEmpleado`) VALUES
+(1, 'Medico'),
+(2, 'Enfermera'),
+(3, 'Cajero'),
+(4, 'Farmaceutico');
+
 -- --------------------------------------------------------
 
 --
@@ -475,17 +689,6 @@ INSERT INTO `tipo_sangre` (`idSangre`, `tipoSangre`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tipo_usuario`
---
-
-CREATE TABLE `tipo_usuario` (
-  `idTipoUsuario` int(11) NOT NULL,
-  `tipoUsuario` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `usuarios`
 --
 
@@ -493,7 +696,6 @@ CREATE TABLE `usuarios` (
   `idUsuario` int(11) NOT NULL,
   `idEmpleado` varchar(13) NOT NULL,
   `nombreUsuario` varchar(20) NOT NULL,
-  `tipoUsuario` int(4) NOT NULL,
   `contraseña` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -501,8 +703,10 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`idUsuario`, `idEmpleado`, `nombreUsuario`, `tipoUsuario`, `contraseña`) VALUES
-(10, '1206', 'josecas', 2, 'c91256697dae5ce709d5b85140604b40');
+INSERT INTO `usuarios` (`idUsuario`, `idEmpleado`, `nombreUsuario`, `contraseña`) VALUES
+(3, '0302200200478', 'yarlenny.rodas', '396b127b4d939a2c23d8526206d09690'),
+(10, '1201199900302', 'juanver', 'dd522ee57f0715c0724c3092abc60fdb'),
+(11, '1202199702568', 'mariog74', 'd97665aa12c56ee1bdcd59e539f43016');
 
 --
 -- Índices para tablas volcadas
@@ -549,16 +753,33 @@ ALTER TABLE `detalle_facturacion`
   ADD KEY `idProducto` (`idProducto`);
 
 --
+-- Indices de la tabla `detalle_servicios`
+--
+ALTER TABLE `detalle_servicios`
+  ADD PRIMARY KEY (`idDetalle`),
+  ADD KEY `idFacturacion` (`idFacturacion`),
+  ADD KEY `idServicio` (`idServicio`);
+
+--
 -- Indices de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  ADD PRIMARY KEY (`idEmpleado`);
+  ADD PRIMARY KEY (`idEmpleado`),
+  ADD KEY `idGenero` (`idGenero`),
+  ADD KEY `empleados_ibfk_2` (`idNacionalidad`),
+  ADD KEY `empleados_ibfk_3` (`tipoEmpleado`);
 
 --
 -- Indices de la tabla `enfermeras`
 --
 ALTER TABLE `enfermeras`
   ADD PRIMARY KEY (`idEmpleado`);
+
+--
+-- Indices de la tabla `especialidades`
+--
+ALTER TABLE `especialidades`
+  ADD PRIMARY KEY (`idEspecialidad`);
 
 --
 -- Indices de la tabla `estado_consultas`
@@ -596,7 +817,8 @@ ALTER TABLE `historial_medico`
 -- Indices de la tabla `medicos`
 --
 ALTER TABLE `medicos`
-  ADD PRIMARY KEY (`idEmpleado`);
+  ADD PRIMARY KEY (`idEmpleado`),
+  ADD KEY `idEspecialidad` (`idEspecialidad`);
 
 --
 -- Indices de la tabla `nacionalidades`
@@ -624,6 +846,12 @@ ALTER TABLE `productos`
 --
 ALTER TABLE `proveedores`
   ADD PRIMARY KEY (`idProveedor`);
+
+--
+-- Indices de la tabla `servicios`
+--
+ALTER TABLE `servicios`
+  ADD PRIMARY KEY (`idServicio`);
 
 --
 -- Indices de la tabla `signos_vitales`
@@ -672,16 +900,11 @@ ALTER TABLE `tipo_sangre`
   ADD PRIMARY KEY (`idSangre`);
 
 --
--- Indices de la tabla `tipo_usuario`
---
-ALTER TABLE `tipo_usuario`
-  ADD PRIMARY KEY (`idTipoUsuario`);
-
---
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`idUsuario`);
+  ADD PRIMARY KEY (`idUsuario`),
+  ADD KEY `usuarios_ibfk_1` (`idEmpleado`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -691,31 +914,43 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `consultas_medicas`
 --
 ALTER TABLE `consultas_medicas`
-  MODIFY `noConsulta` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `noConsulta` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `correo_empleados`
 --
 ALTER TABLE `correo_empleados`
-  MODIFY `idCorreo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `idCorreo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `correo_pacientes`
 --
 ALTER TABLE `correo_pacientes`
-  MODIFY `idCorreo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idCorreo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `correo_proveedores`
 --
 ALTER TABLE `correo_proveedores`
-  MODIFY `idCorreo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idCorreo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_facturacion`
 --
 ALTER TABLE `detalle_facturacion`
-  MODIFY `idDetalle` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idDetalle` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle_servicios`
+--
+ALTER TABLE `detalle_servicios`
+  MODIFY `idDetalle` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `especialidades`
+--
+ALTER TABLE `especialidades`
+  MODIFY `idEspecialidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `estado_consultas`
@@ -733,7 +968,7 @@ ALTER TABLE `fabricantes`
 -- AUTO_INCREMENT de la tabla `facturacion`
 --
 ALTER TABLE `facturacion`
-  MODIFY `idFacturacion` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idFacturacion` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `genero`
@@ -751,31 +986,37 @@ ALTER TABLE `nacionalidades`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1231;
+  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25259;
+
+--
+-- AUTO_INCREMENT de la tabla `servicios`
+--
+ALTER TABLE `servicios`
+  MODIFY `idServicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `signos_vitales`
 --
 ALTER TABLE `signos_vitales`
-  MODIFY `idSignosVitales` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idSignosVitales` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `telefonos_empleados`
 --
 ALTER TABLE `telefonos_empleados`
-  MODIFY `idTelefono` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idTelefono` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de la tabla `telefonos_pacientes`
 --
 ALTER TABLE `telefonos_pacientes`
-  MODIFY `idTelefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idTelefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `telefonos_proveedores`
 --
 ALTER TABLE `telefonos_proveedores`
-  MODIFY `idTelefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idTelefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_correo`
@@ -787,7 +1028,7 @@ ALTER TABLE `tipo_correo`
 -- AUTO_INCREMENT de la tabla `tipo_empleado`
 --
 ALTER TABLE `tipo_empleado`
-  MODIFY `idTipoEmpleado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTipoEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_sangre`
@@ -796,10 +1037,10 @@ ALTER TABLE `tipo_sangre`
   MODIFY `idSangre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla `tipo_usuario`
+-- AUTO_INCREMENT de la tabla `usuarios`
 --
-ALTER TABLE `tipo_usuario`
-  MODIFY `idTipoUsuario` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `usuarios`
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Restricciones para tablas volcadas
@@ -817,21 +1058,21 @@ ALTER TABLE `consultas_medicas`
 -- Filtros para la tabla `correo_empleados`
 --
 ALTER TABLE `correo_empleados`
-  ADD CONSTRAINT `correo_empleados_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`),
+  ADD CONSTRAINT `correo_empleados_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`) ON DELETE CASCADE,
   ADD CONSTRAINT `correo_empleados_ibfk_2` FOREIGN KEY (`tipoCorreo`) REFERENCES `tipo_correo` (`idTipoCorreo`);
 
 --
 -- Filtros para la tabla `correo_pacientes`
 --
 ALTER TABLE `correo_pacientes`
-  ADD CONSTRAINT `correo_pacientes_ibfk_1` FOREIGN KEY (`idPaciente`) REFERENCES `pacientes` (`idPaciente`),
-  ADD CONSTRAINT `correo_pacientes_ibfk_2` FOREIGN KEY (`tipoCorreo`) REFERENCES `tipo_correo` (`idTipoCorreo`);
+  ADD CONSTRAINT `correo_pacientes_ibfk_1` FOREIGN KEY (`idPaciente`) REFERENCES `pacientes` (`idPaciente`) ON DELETE CASCADE,
+  ADD CONSTRAINT `correo_pacientes_ibfk_2` FOREIGN KEY (`tipoCorreo`) REFERENCES `tipo_correo` (`idTipoCorreo`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `correo_proveedores`
 --
 ALTER TABLE `correo_proveedores`
-  ADD CONSTRAINT `correo_proveedores_ibfk_1` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`);
+  ADD CONSTRAINT `correo_proveedores_ibfk_1` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `detalle_facturacion`
@@ -839,6 +1080,20 @@ ALTER TABLE `correo_proveedores`
 ALTER TABLE `detalle_facturacion`
   ADD CONSTRAINT `detalle_facturacion_ibfk_1` FOREIGN KEY (`idFacturacion`) REFERENCES `facturacion` (`idFacturacion`),
   ADD CONSTRAINT `detalle_facturacion_ibfk_2` FOREIGN KEY (`idProducto`) REFERENCES `productos` (`idProducto`);
+
+--
+-- Filtros para la tabla `detalle_servicios`
+--
+ALTER TABLE `detalle_servicios`
+  ADD CONSTRAINT `detalle_servicios_ibfk_1` FOREIGN KEY (`idFacturacion`) REFERENCES `facturacion` (`idFacturacion`),
+  ADD CONSTRAINT `detalle_servicios_ibfk_2` FOREIGN KEY (`idServicio`) REFERENCES `servicios` (`idServicio`);
+
+--
+-- Filtros para la tabla `empleados`
+--
+ALTER TABLE `empleados`
+  ADD CONSTRAINT `empleados_ibfk_1` FOREIGN KEY (`idGenero`) REFERENCES `genero` (`idGenero`),
+  ADD CONSTRAINT `empleados_ibfk_3` FOREIGN KEY (`tipoEmpleado`) REFERENCES `tipo_empleado` (`idTipoEmpleado`);
 
 --
 -- Filtros para la tabla `enfermeras`
@@ -862,7 +1117,8 @@ ALTER TABLE `historial_medico`
 -- Filtros para la tabla `medicos`
 --
 ALTER TABLE `medicos`
-  ADD CONSTRAINT `medicos_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`);
+  ADD CONSTRAINT `medicos_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`),
+  ADD CONSTRAINT `medicos_ibfk_2` FOREIGN KEY (`idEspecialidad`) REFERENCES `especialidades` (`idEspecialidad`);
 
 --
 -- Filtros para la tabla `pacientes`
@@ -882,19 +1138,25 @@ ALTER TABLE `signos_vitales`
 -- Filtros para la tabla `telefonos_empleados`
 --
 ALTER TABLE `telefonos_empleados`
-  ADD CONSTRAINT `telefonos_empleados_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`);
+  ADD CONSTRAINT `telefonos_empleados_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `telefonos_pacientes`
 --
 ALTER TABLE `telefonos_pacientes`
-  ADD CONSTRAINT `telefonos_pacientes_ibfk_1` FOREIGN KEY (`idPaciente`) REFERENCES `pacientes` (`idPaciente`);
+  ADD CONSTRAINT `telefonos_pacientes_ibfk_1` FOREIGN KEY (`idPaciente`) REFERENCES `pacientes` (`idPaciente`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `telefonos_proveedores`
 --
 ALTER TABLE `telefonos_proveedores`
-  ADD CONSTRAINT `telefonos_proveedores_ibfk_1` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`);
+  ADD CONSTRAINT `telefonos_proveedores_ibfk_1` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
