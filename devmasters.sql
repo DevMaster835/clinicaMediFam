@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-12-2020 a las 20:05:22
+-- Tiempo de generación: 18-12-2020 a las 20:42:29
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `devmasters`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `compras`
+--
+
+CREATE TABLE `compras` (
+  `idCompra` bigint(20) NOT NULL,
+  `fechaCompra` date NOT NULL,
+  `idEmpleado` varchar(13) NOT NULL,
+  `idProveedor` varchar(13) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -43,7 +56,8 @@ CREATE TABLE `consultas_medicas` (
 --
 
 INSERT INTO `consultas_medicas` (`noConsulta`, `fechaCreacion`, `fechaConsulta`, `horaConsulta`, `idPaciente`, `idMedico`, `motivo`, `idEstadoConsulta`) VALUES
-(1, '2020-12-18', '2020-12-21', '14:30:00', '0301199800256', '1201199900302', 'Dolor de cabeza', 2);
+(1, '2020-12-18', '2020-12-21', '14:30:00', '0301199800256', '1201199900302', 'Dolor de cabeza', 2),
+(3, '2020-12-18', '2020-12-25', '14:00:00', '0302199800256', '1201199800278', 'Migraña fuerte', 1);
 
 -- --------------------------------------------------------
 
@@ -113,6 +127,19 @@ INSERT INTO `correo_proveedores` (`idCorreo`, `idProveedor`, `correo`) VALUES
 (4, '4646464', 'drogueriamiguel@gmail.com'),
 (5, '4646464', 'miguelh13@gmail.com'),
 (6, '8985678', 'clinilab@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_compras`
+--
+
+CREATE TABLE `detalle_compras` (
+  `idDetalle` bigint(20) NOT NULL,
+  `idCompra` bigint(20) NOT NULL,
+  `idProducto` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -713,6 +740,14 @@ INSERT INTO `usuarios` (`idUsuario`, `idEmpleado`, `nombreUsuario`, `contraseña
 --
 
 --
+-- Indices de la tabla `compras`
+--
+ALTER TABLE `compras`
+  ADD PRIMARY KEY (`idCompra`),
+  ADD KEY `idEmpleado` (`idEmpleado`),
+  ADD KEY `idProveedor` (`idProveedor`);
+
+--
 -- Indices de la tabla `consultas_medicas`
 --
 ALTER TABLE `consultas_medicas`
@@ -743,6 +778,14 @@ ALTER TABLE `correo_pacientes`
 ALTER TABLE `correo_proveedores`
   ADD PRIMARY KEY (`idCorreo`,`idProveedor`),
   ADD KEY `idProveedor` (`idProveedor`);
+
+--
+-- Indices de la tabla `detalle_compras`
+--
+ALTER TABLE `detalle_compras`
+  ADD PRIMARY KEY (`idDetalle`),
+  ADD KEY `idCompra` (`idCompra`),
+  ADD KEY `idProducto` (`idProducto`);
 
 --
 -- Indices de la tabla `detalle_facturacion`
@@ -911,10 +954,16 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `compras`
+--
+ALTER TABLE `compras`
+  MODIFY `idCompra` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `consultas_medicas`
 --
 ALTER TABLE `consultas_medicas`
-  MODIFY `noConsulta` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `noConsulta` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `correo_empleados`
@@ -1047,6 +1096,13 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- Filtros para la tabla `compras`
+--
+ALTER TABLE `compras`
+  ADD CONSTRAINT `compras_ibfk_1` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`),
+  ADD CONSTRAINT `compras_ibfk_2` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`);
+
+--
 -- Filtros para la tabla `consultas_medicas`
 --
 ALTER TABLE `consultas_medicas`
@@ -1073,6 +1129,13 @@ ALTER TABLE `correo_pacientes`
 --
 ALTER TABLE `correo_proveedores`
   ADD CONSTRAINT `correo_proveedores_ibfk_1` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `detalle_compras`
+--
+ALTER TABLE `detalle_compras`
+  ADD CONSTRAINT `detalle_compras_ibfk_1` FOREIGN KEY (`idCompra`) REFERENCES `compras` (`idCompra`),
+  ADD CONSTRAINT `detalle_compras_ibfk_2` FOREIGN KEY (`idProducto`) REFERENCES `productos` (`idProducto`);
 
 --
 -- Filtros para la tabla `detalle_facturacion`

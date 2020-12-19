@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturaProServicio" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6b616f45-6449-44d3-a58d-8a044711f566">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="128"/>
+	<property name="ireport.y" value="99"/>
 	<queryString>
 		<![CDATA[SELECT facturacion.idFacturacion, facturacion.fechaFactura, empleados.nombres AS nombreE, empleados.apellidos as apellidoE, pacientes.nombres as nombreP, pacientes.apellidos as apellidoP, detalle_facturacion.idProducto as idP, productos.nombre as Producto, productos.idPrecioHis as Precio, detalle_facturacion.cantidad, (productos.idPrecioHis*detalle_facturacion.cantidad) as SubtotalP, detalle_servicios.idServicio as idS, servicios.servicio as Servicio, servicios.precio as Precio, detalle_servicios.cantidad, (servicios.precio*detalle_servicios.cantidad) as SubtotalS FROM facturacion,empleados,pacientes, productos,detalle_facturacion, servicios,detalle_servicios WHERE facturacion.idEmpleado=empleados.idEmpleado and facturacion.idPaciente=pacientes.idPaciente and detalle_facturacion.idProducto=productos.idProducto AND detalle_facturacion.idFacturacion=facturacion.idFacturacion and detalle_servicios.idFacturacion=facturacion.idFacturacion and facturacion.idFacturacion='15' GROUP by detalle_facturacion.idProducto, detalle_servicios.idServicio]]>
 	</queryString>
@@ -145,14 +145,23 @@
 		<band height="26" splitType="Stretch">
 			<staticText>
 				<reportElement x="112" y="2" width="100" height="20" uuid="badab537-b9b0-4201-84af-ba734febb251"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Codigo]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="285" y="2" width="100" height="20" uuid="53352317-0e7d-4d0d-abff-fbc5349735c7"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Descripción]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="430" y="2" width="100" height="20" uuid="0dcef417-e031-4ccf-b413-5f3d39cdd60c"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
 				<text><![CDATA[cantidad]]></text>
 			</staticText>
 		</band>
@@ -161,22 +170,37 @@
 		<band height="71" splitType="Stretch">
 			<textField>
 				<reportElement x="112" y="12" width="100" height="20" uuid="a905965e-80c5-4efc-9d8b-36a37d1c4b25"/>
+				<textElement>
+					<font size="13" isBold="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{idP}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="112" y="41" width="100" height="20" uuid="bcf9de6a-cc13-46bf-8b62-1aec18c1b192"/>
+				<textElement>
+					<font size="13" isBold="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{idS}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="285" y="12" width="100" height="20" uuid="23e9dd16-b24a-4472-a3a3-298eeaa1c9c6"/>
+				<textElement>
+					<font size="13" isBold="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{Producto}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="285" y="41" width="100" height="20" uuid="2d6e5b05-ed49-4642-b3a2-6cdb230de0a2"/>
+				<textElement>
+					<font size="13" isBold="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{Servicio}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="430" y="12" width="100" height="20" uuid="028ef67c-9fb8-43d6-bfdd-04c24d252660"/>
+				<textElement>
+					<font size="13" isBold="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 		</band>

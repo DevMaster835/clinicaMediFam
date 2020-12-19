@@ -9,36 +9,15 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="593.0" prefWidth="909.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaProveedoresController">
+<AnchorPane id="AnchorPane" prefHeight="593.0" prefWidth="859.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaProveedoresController">
    <children>
-      <VBox prefHeight="593.0" prefWidth="69.0" style="-fx-background-color: #30ACE2;">
-         <children>
-            <ImageView fitHeight="61.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/logo-de-medifan.png" />
-               </image>
-            </ImageView>
-            <Pane prefHeight="54.0" prefWidth="69.0">
-               <children>
-                  <Button alignment="BOTTOM_CENTER" layoutX="-1.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="69.0" style="-fx-background-color: #CDCECD;" textAlignment="CENTER" />
-                  <ImageView fitHeight="54.0" fitWidth="69.0" layoutX="8.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../Downloads/387544-medical/387544-medical/png/101-patient-1.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-         </children>
-      </VBox>
-      <VBox layoutX="69.0" prefHeight="42.0" prefWidth="840.0" style="-fx-background-color: #30ACE2;">
+      <VBox layoutX="-14.0" layoutY="-1.0" prefHeight="42.0" prefWidth="893.0" style="-fx-background-color: #30ACE2;">
          <children>
             <Label contentDisplay="CENTER" text="Proveedores" textFill="WHITE">
                <font>
@@ -55,7 +34,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TabPane layoutX="111.0" layoutY="114.0" prefHeight="465.0" prefWidth="741.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="55.0" layoutY="114.0" prefHeight="465.0" prefWidth="741.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="DATOS GENERALES">
             <content>
@@ -81,7 +60,12 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnEliminar" alignment="BOTTOM_CENTER" layoutX="575.0" layoutY="43.0" mnemonicParsing="false" onAction="#eliminarProveedores" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Eliminar" textFill="WHITE">
+                        <Button fx:id="btnEliminar" alignment="BOTTOM_CENTER" disable="true" layoutX="575.0" layoutY="43.0" mnemonicParsing="false" onAction="#eliminarProveedores" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Eliminar" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnActualizar" alignment="BOTTOM_CENTER" disable="true" layoutX="575.0" layoutY="124.0" mnemonicParsing="false" onAction="#actualizarProveedor" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773; -fx-background-radius: 7px;" text="Actualizar" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -103,9 +87,10 @@
                                     <TableColumn fx:id="colTelProv" prefWidth="108.0" text="Teléfono" />
                                  </columns>
                               </TableView>
-                              <Button fx:id="btnAgregarTelefono" layoutX="22.0" layoutY="100.0" mnemonicParsing="false" onAction="#agregarTelefono" prefHeight="27.0" prefWidth="151.0" text="Agregar Teléfono" />
+                              <Button fx:id="btnAgregarTelefono" layoutX="22.0" layoutY="89.0" mnemonicParsing="false" onAction="#agregarTelefono" prefHeight="27.0" prefWidth="151.0" text="Agregar Teléfono" />
                               <Label layoutX="22.0" layoutY="35.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Telefono:" />
                               <TextField fx:id="txtTelefono" layoutX="22.0" layoutY="54.0" onKeyTyped="#txttelefonoKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Button fx:id="btnModificarTel" disable="true" layoutX="21.0" layoutY="123.0" mnemonicParsing="false" onAction="#modificarTelefono" prefHeight="25.0" prefWidth="153.0" text="Modificar Teléfono" />
                            </children>
                         </Pane>
                         <Pane layoutX="32.0" layoutY="238.0" prefHeight="167.0" prefWidth="706.0" style="-fx-border-color: black; -fx-border-radius: 3px;">
@@ -120,6 +105,7 @@
                               <Button fx:id="btnAgregarCorreo" layoutX="25.0" layoutY="91.0" mnemonicParsing="false" onAction="#agregarCorreo" prefHeight="27.0" prefWidth="151.0" text="Agregar Correo" />
                               <Label layoutX="25.0" layoutY="30.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Correo:" />
                               <TextField fx:id="txtcorreoProv" layoutX="25.0" layoutY="49.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Button fx:id="btnModificarCorreo" alignment="TOP_CENTER" disable="true" layoutX="25.0" layoutY="131.0" mnemonicParsing="false" onAction="#modificarCorreo" prefHeight="25.0" prefWidth="153.0" text="Modificar Correo" />
                            </children>
                         </Pane>
                      </children>
@@ -137,7 +123,7 @@
                                     <Insets left="15.0" top="18.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField fx:id="txtBuscar" onKeyTyped="#buscarProveedor" styleClass="textos" stylesheets="@../css/estilos.css">
+                              <TextField fx:id="txtBuscar" onKeyTyped="#buscarProveedores" styleClass="textos" stylesheets="@../css/estilos.css">
                                  <HBox.margin>
                                     <Insets left="20.0" top="15.0" />
                                  </HBox.margin>
@@ -158,17 +144,17 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Button fx:id="Close" layoutX="885.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="closebutton" stylesheets="@../css/estilos.css">
+      <Button fx:id="Close" layoutX="844.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="closebutton" stylesheets="@../css/estilos.css">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Button fx:id="Minimize" layoutX="857.0" layoutY="14.0" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="minimizebutton" stylesheets="@../css/estilos.css">
+      <Button fx:id="Minimize" layoutX="816.0" layoutY="14.0" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="minimizebutton" stylesheets="@../css/estilos.css">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Button fx:id="Return" alignment="BOTTOM_CENTER" layoutX="828.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReturnButton" prefHeight="15.0" prefWidth="15.0" styleClass="returnbutton" stylesheets="@../css/estilos.css" textFill="WHITE">
+      <Button fx:id="Return" alignment="BOTTOM_CENTER" layoutX="787.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReturnButton" prefHeight="15.0" prefWidth="15.0" styleClass="returnbutton" stylesheets="@../css/estilos.css" textFill="WHITE">
          <font>
             <Font name="System Bold" size="10.0" />
          </font>

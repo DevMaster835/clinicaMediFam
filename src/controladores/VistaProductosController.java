@@ -10,12 +10,15 @@ import com.mysql.jdbc.Connection;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -52,7 +55,7 @@ import modelos.Productos;
  */
 public class VistaProductosController implements Initializable {
     
-    conexion con= new conexion();
+   conexion con= new conexion();
     Connection cone= con.openConnection();
     ObservableList<Productos> productos;
     
@@ -104,6 +107,8 @@ public class VistaProductosController implements Initializable {
     private TextField txtBuscar;
     @FXML
     private TableColumn<?, ?> colContenido;
+    @FXML
+    private Button btnActualizar;
 
     /**
      * Initializes the controller class.
@@ -236,24 +241,62 @@ public class VistaProductosController implements Initializable {
         );
     }
     
+    public boolean existeProducto(){
+        try {
+            Statement st = cone.createStatement();
+            String sql = "Select nombre from productos where idProducto = '"+txtcodigoProd.getText()+"'";
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+                JOptionPane.showMessageDialog(null, " Ya existe"+" el codigo de producto: "+txtcodigoProd.getText(), "Codigo de producto ¡Ya existe!", JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            }
+            else{
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaProductosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    
         @FXML
     private void agregarProductos(ActionEvent event) {
         
-        if (txtcodigoProd.getText() == null ) {
+        if (txtcodigoProd.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "El campo de Codigo del Producto esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (txtnombreProd.getText() == null ) {
+        }else if (!validarLongitud(txtcodigoProd, 3)) {
+            JOptionPane.showMessageDialog(null, "El codigo ingresado es muy pequeños el mínimo es de 5 caracteres", "Longitud de codigo", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitudMax(txtcodigoProd.getText(), 10)) {
+            JOptionPane.showMessageDialog(null, "El codigo ingresado es muy largo el máximo es de 10 caracteres, usted ingresó " + txtcodigoProd.getText().length() + " caracteres.", "Longitud de codigo de producto", JOptionPane.ERROR_MESSAGE);
+        }else if (txtnombreProd.getText().isEmpty() ) {
             JOptionPane.showMessageDialog(null, "El campo de Nombre esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (txtPrecio.getText() == null ) {
-            JOptionPane.showMessageDialog(null, "El campo de Precio esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (!validarLongitud(txtnombreProd, 3)) {
+            JOptionPane.showMessageDialog(null, "El nombre ingresado es muy pequeños el mínimo es de 3 caracteres", "Longitud de nombre", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitudMax(txtnombreProd.getText(), 25)) {
+            JOptionPane.showMessageDialog(null, "El nombre ingresado es muy largo el máximo es de 25 caracteres, usted ingresó " + txtnombreProd.getText().length() + " caracteres.", "Longitud de nombre de producto", JOptionPane.ERROR_MESSAGE);
+        }else if (txtconNeto.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo de Contenido neto esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (!validarLongitud(txtconNeto, 1)) {
+            JOptionPane.showMessageDialog(null, "El contenido neto ingresado es muy bajo el mínimo es de 1", "Contenido neto ingresado", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitudMax(txtconNeto.getText(), 3)) {
+            JOptionPane.showMessageDialog(null, "El contenido neto ingresado es muy alto el máximo es de 999, usted ingresó " + txtconNeto.getText() + " caracteres.", "Contenido neto ingresado", JOptionPane.ERROR_MESSAGE);
         }else if (txtfechaVen.getValue() == null ) {
             JOptionPane.showMessageDialog(null, "El campo de fecha esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (txtExistencia.getText() == null ) {
+        }else if (txtExistencia.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "El campo de Existencia esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (txtconNeto.getText() == null ) {
-            JOptionPane.showMessageDialog(null, "El campo de Contenido neto esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (!validarLongitud(txtconNeto, 1)) {
+            JOptionPane.showMessageDialog(null, "El stock del producto ingresado es muy bajo el mínimo es de 1", "Stock ingresado", JOptionPane.ERROR_MESSAGE);
+        }else if (txtPrecio.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo de Precio esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (!isPriceValid(txtPrecio.getText())) {
         }else{   
         
         try{
+            if(existeProducto()){
+            return;
+            }
+            
             pps=cone.prepareStatement("INSERT INTO productos(idProducto,nombre,idPrecioHis,fechaVencimiento,stock,contenidoNeto) VALUES(?,?,?,?,?,?)");
             pps.setString(1, txtcodigoProd.getText());
             pps.setString(2, txtnombreProd.getText());
@@ -268,7 +311,7 @@ public class VistaProductosController implements Initializable {
             JOptionPane.showMessageDialog(null, "Se ha registrado los datos del producto", "Datos guardados", JOptionPane.PLAIN_MESSAGE);
             inicializarDatos();
         }catch(SQLException ex){
-            Logger.getLogger(VistaPacientesController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VistaProductosController.class.getName()).log(Level.SEVERE, null, ex);
         }
       }  
     }
@@ -302,13 +345,67 @@ public class VistaProductosController implements Initializable {
     private void cancelarProductos(ActionEvent event) {
         inicializarDatos();
     }
+    
+   @FXML
+    private void actualizarProductos(ActionEvent event){
+        if (txtcodigoProd.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo de Codigo del Producto esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (!validarLongitud(txtcodigoProd, 3)) {
+            JOptionPane.showMessageDialog(null, "El codigo ingresado es muy pequeños el mínimo es de 5 caracteres", "Longitud de codigo", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitudMax(txtcodigoProd.getText(), 10)) {
+            JOptionPane.showMessageDialog(null, "El codigo ingresado es muy largo el máximo es de 10 caracteres, usted ingresó " + txtcodigoProd.getText().length() + " caracteres.", "Longitud de codigo de producto", JOptionPane.ERROR_MESSAGE);
+        }else if (txtnombreProd.getText().isEmpty() ) {
+            JOptionPane.showMessageDialog(null, "El campo de Nombre esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (!validarLongitud(txtnombreProd, 3)) {
+            JOptionPane.showMessageDialog(null, "El nombre ingresado es muy pequeños el mínimo es de 3 caracteres", "Longitud de nombre", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitudMax(txtnombreProd.getText(), 25)) {
+            JOptionPane.showMessageDialog(null, "El nombre ingresado es muy largo el máximo es de 25 caracteres, usted ingresó " + txtnombreProd.getText().length() + " caracteres.", "Longitud de nombre de producto", JOptionPane.ERROR_MESSAGE);
+        }else if (txtconNeto.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo de Contenido neto esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (!validarLongitud(txtconNeto, 1)) {
+            JOptionPane.showMessageDialog(null, "El contenido neto ingresado es muy bajo el mínimo es de 1", "Contenido neto ingresado", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitudMax(txtconNeto.getText(), 3)) {
+            JOptionPane.showMessageDialog(null, "El contenido neto ingresado es muy alto el máximo es de 999, usted ingresó " + txtconNeto.getText() + " caracteres.", "Contenido neto ingresado", JOptionPane.ERROR_MESSAGE);
+        }else if (txtfechaVen.getValue() == null ) {
+            JOptionPane.showMessageDialog(null, "El campo de fecha esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (txtExistencia.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo de Existencia esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (!validarLongitud(txtconNeto, 1)) {
+            JOptionPane.showMessageDialog(null, "El stock del producto ingresado es muy bajo el mínimo es de 1", "Stock ingresado", JOptionPane.ERROR_MESSAGE);
+        }else if (txtPrecio.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo de Precio esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if (!isPriceValid(txtPrecio.getText())) {
+        }else{   
+            if(existeProducto()){
+            return;
+            }
+        
+        try{
+            pps=cone.prepareStatement("UPDATE productos SET nombre=?, idPrecioHis=?, fechaVencimiento=?, stock=?, contenidoNeto=? WHERE idProducto=?");
+          
+            pps.setString(1, txtnombreProd.getText());
+            pps.setString(2, txtPrecio.getText());
+            pps.setString(3, String.valueOf(txtfechaVen.getValue()));
+            pps.setString(4, txtExistencia.getText());
+            pps.setString(5, txtconNeto.getText());
+            pps.setString(6, txtcodigoProd.getText());
+            pps.executeUpdate();
+            
+            tablaProductos();
+            JOptionPane.showMessageDialog(null, "Se han actualizado los datos del producto", "Datos guardados", JOptionPane.PLAIN_MESSAGE);
+            inicializarDatos();
+        }catch(SQLException ex){
+            Logger.getLogger(VistaProductosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }  
+    }
 
     //EVENTO KEY TYPED
     @FXML
     private void txtCodigoKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car > '\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -319,7 +416,7 @@ public class VistaProductosController implements Initializable {
     private void txtNombreKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car)){
+        if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car) && car > '\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
         }
@@ -329,7 +426,7 @@ public class VistaProductosController implements Initializable {
     private void txtPrecioKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car) && car>'.'){
+        if(!Character.isDigit(car) && car>'.' && car > '\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -339,7 +436,7 @@ public class VistaProductosController implements Initializable {
     private void txtExistenciaKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car > '\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -349,7 +446,7 @@ public class VistaProductosController implements Initializable {
     private void txtConetidoKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car > '\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -358,7 +455,7 @@ public class VistaProductosController implements Initializable {
     private void txtFechaVenKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car) && car>'/'){
+        if(!Character.isDigit(car) && car>'/' && car > '\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -379,9 +476,7 @@ public class VistaProductosController implements Initializable {
               String lowerCaseFilter= newValue.toLowerCase();
               String lowerCase= String.valueOf(newValue.toLowerCase());
               
-              /*if (prod.getId()){
-                  return true;*/
-              /*}else*/ if(prod.getNombre().toLowerCase().indexOf(lowerCaseFilter)!= -1){
+               if(prod.getNombre().toLowerCase().indexOf(lowerCaseFilter)!= -1){
                   return true;
               }else{
                   return false;
@@ -395,6 +490,41 @@ public class VistaProductosController implements Initializable {
       
       tblProductos.setItems(sortedData);
     }
+    
+    private boolean validarLongitud(TextField texto, int longitud){
+       if(texto.getText().length() >= longitud){
+           return true;
+       }
+       else{
+           return false;
+       }
+    }
+    
+    private boolean validarLongitudMax(String texto, int longitud) {
+        if (texto.length() <= longitud) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public static boolean isPriceValid(String price) {
+        final Pattern EMAIL_REGEX = Pattern.compile("^[0-9]+(\\.[0-9]{1,2})?$", Pattern.CASE_INSENSITIVE);
+        if(Integer.parseInt(price) <= 0){        
+            JOptionPane.showMessageDialog(null, "El precio no puede ser 0 o menor", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else{
+            if(EMAIL_REGEX.matcher(price).matches()) {
+                return true;
+            }else{
+                JOptionPane.showMessageDialog(null, "El precio ingresado no es valido");
+                   return false;
+            }
+           
+        }
+        return false;
+    }
+   
+
     
     
     

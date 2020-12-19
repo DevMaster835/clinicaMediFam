@@ -216,6 +216,8 @@ public class VistaEmpleadosController implements Initializable {
         tablaContacto();
         gestionarEventos();
         seleccionarTelefono();
+        seleccionarCorreo();
+        
   
         btnActualizar.setDisable(true);
         btnEliminar.setDisable(true);
@@ -393,6 +395,8 @@ public class VistaEmpleadosController implements Initializable {
                 btnEliminar.setDisable(false);
                 btnAgregarTelefono.setDisable(true);
                 btnModificarTel.setDisable(false);
+                btnAgregarCorreo.setDisable(true);
+                btnModificarCo.setDisable(false);
             }
             }
 
@@ -414,6 +418,21 @@ public class VistaEmpleadosController implements Initializable {
             }
         );
     }
+    
+    public void seleccionarCorreo(){
+        tablaCorreos.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Correos>() {
+             @Override
+            public void changed(ObservableValue<? extends Correos> arg0,
+                    Correos valorAnterior, Correos valorSeleccionado) {
+                
+                if(valorSeleccionado!=null){
+                  txtCorreoEmp.setText(valorSeleccionado.getCorreo());
+                }  
+            }
+            }
+        );
+     }
   
       
     public boolean existeEmpleado() {
@@ -791,7 +810,7 @@ public class VistaEmpleadosController implements Initializable {
     private void actualizarEmpleado(ActionEvent event) {
         int tipoEmp = cmbTipoEmp.getSelectionModel().getSelectedItem().getIdTipo();
         int nacionalidad = cmbNacionalidad.getSelectionModel().getSelectedItem().getIdNacionalidad();
-        //int tipoCorreo = cmbtipoCorreo.getSelectionModel().getSelectedIndex();
+        int tipoCorreo = cmbtipoCorreo.getSelectionModel().getSelectedItem().getIdTipo();
         int genero = 0;
         if (rdbM.isSelected() == true) {
             genero = 1;
@@ -824,16 +843,36 @@ public class VistaEmpleadosController implements Initializable {
             
             //MODIFICAR TELEFONOS
             for (int i = 0; i < tablaTelefonos.getItems().size(); i++) {
-                for(int j=0;j<tablaTelefonos.getItems().size();j++){
-                    ps = cone.prepareStatement("UPDATE telefonos_empleados SET telefono=? WHERE idEmpleado=? and telefono=?");                  
-                    ps.setString(1, String.valueOf(tablaTelefonos.getItems().get(i).getNumero()));
-                    ps.setString(2, txtidEmpleado.getText());
-                    ps.setString(3, String.valueOf(tablaTelefonos.getItems().get(j).getNumero()));
+           //     for(int j=0;j<tablaTelefonos.getItems().size();j++){
+                   PreparedStatement ps1 = cone.prepareStatement("UPDATE telefonos_empleados SET telefono=? WHERE idEmpleado=?");                  
+                    ps1.setString(1, String.valueOf(tablaTelefonos.getItems().get(i).getNumero()));
+                    ps1.setString(2, txtidEmpleado.getText());
+                   // ps.setString(3, String.valueOf(tablaTelefonos.getItems().get(j).getNumero()));
+                   ps1.executeUpdate();
             }
+            //correo
+            for (int i = 0; i < tablaCorreos.getItems().size(); i++) {
+                int tipoco = 0;
+                    if (tablaCorreos.getItems().get(i).getTipoCorreo().equals("Personal")) {
+                        tipoco = 1;
+                    } else if (tablaCorreos.getItems().get(i).getTipoCorreo().equals("Empresa")) {
+                        tipoco = 2;
+                    } else if (tipoco == 0) {
+                        JOptionPane.showMessageDialog(null, "Seleccione el tipo de correo", "Error", JOptionPane.PLAIN_MESSAGE);
+                    }
+                    
+                    PreparedStatement ps2 = cone.prepareStatement("UPDATE correo_empleados SET correo=?, tipoCorreo=?  WHERE idEmpleado=?");                  
+                    ps2.setString(1, String.valueOf(tablaCorreos.getItems().get(i).getCorreo()));
+                     ps2.setString(2, String.valueOf(tipoco));
+                    ps2.setString(3, txtidEmpleado.getText());
+                    ps2.executeUpdate();
             }
+            
+           // }
             int mod = ps.executeUpdate();
 
             if (mod >= 1) {
+                
                 JOptionPane.showMessageDialog(null, "Se han actualizado los datos", "¡Confirmación!", JOptionPane.INFORMATION_MESSAGE);
                 tablaEmpleados();
                 limpiarDatos();
@@ -1162,6 +1201,43 @@ public class VistaEmpleadosController implements Initializable {
 
     @FXML
     private void modificarCorreo(ActionEvent event) {
+        String idE = this.txtidEmpleado.getText();
+        String nombreE = txtNombreEmp.getText() + " " + this.txtApellidoEmp.getText();
+        String correo = txtCorreoEmp.getText();
+        String tipoC = String.valueOf(cmbtipoCorreo.getValue());
+
+        if (txtidEmpleado.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("La identidad del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtidEmpleado.requestFocus();
+        } else if (txtNombreEmp.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El nombre del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtNombreEmp.requestFocus();
+        } else if (txtCorreoEmp.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El correo del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtNombreEmp.requestFocus();
+        } else if (!isEmailValid(txtCorreoEmp.getText())) {
+        } else if (cmbtipoCorreo.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("Seleccione el tipo de correo");
+            alert.showAndWait();
+        } else {
+            Correos c = new Correos(idE, nombreE, correo, tipoC);
+            listaCorreo.set(tablaCorreos.getSelectionModel().getSelectedIndex(), c);
+        }
     }
 
 }

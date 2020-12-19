@@ -9,7 +9,6 @@ import com.mysql.jdbc.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.ObservableList;
@@ -68,7 +67,7 @@ public class Telefonos {
         
         
     }
-    
+  /*  
     public static void llenarTabla(Connection cone, ObservableList <Telefonos>lista){
         try {
             Statement statement= cone.createStatement();
@@ -87,7 +86,7 @@ public class Telefonos {
         }
         
     }
-
+*/
     @Override
     public String toString() {
         return numero;

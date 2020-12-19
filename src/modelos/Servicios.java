@@ -14,6 +14,7 @@ public class Servicios {
     String servicio;
     double precio;
     int cantidad;
+    double subtotal;
 
         
     public Servicios(int id, String servicio, double precio) {
@@ -22,11 +23,12 @@ public class Servicios {
         this.precio = precio;
     }
 
-    public Servicios(int id, String servicio, double precio, int cantidad) {
+    public Servicios(int id, String servicio, double precio, int cantidad, double subtotal) {
         this.id = id;
         this.servicio = servicio;
         this.precio = precio;
         this.cantidad = cantidad;
+        this.subtotal=subtotal;
     }
 
 
@@ -46,7 +48,11 @@ public class Servicios {
         return cantidad;
     }
 
+    public double getSubtotal() {
+        return subtotal;
+    }
 
+    
     
     
 }

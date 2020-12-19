@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -65,6 +66,7 @@ import modelos.tipoSangre;
  * @author José
  */
 public class VistaPacientesController implements Initializable {
+    
     
     conexion con= new conexion();
     Connection cone= con.openConnection();
@@ -179,6 +181,12 @@ public class VistaPacientesController implements Initializable {
     private Label lbTelefono;
     @FXML
     private Label lbCorreo;
+    @FXML
+    private Button btnModificarTel;
+    @FXML
+    private Button btnActualizar;
+    @FXML
+    private Button btnModificarCorreo;
     
     /**
      * Initializes the controller class.
@@ -210,7 +218,17 @@ public class VistaPacientesController implements Initializable {
         cmbNacionalidad.setItems(listaNacionalidades);
         cmbTipoSangre.setItems(listaSangre);
         cmbCorreo.setItems(listaCorreos);
-        
+
+         formatoFecha();
+         seleccionar();
+         inicializarAlertas();
+         
+         tablaPacientes();
+        tablaContacto();
+        seleccionarTelefono();
+        seleccionarCorreo();
+    }
+    public void tablaPacientes(){
         //LLENAR TABLA PACIENTES
         listaPacientes= FXCollections.observableArrayList();
         Pacientes.llenarTabla(cone, listaPacientes);
@@ -226,25 +244,7 @@ public class VistaPacientesController implements Initializable {
         colPeso.setCellValueFactory(new PropertyValueFactory("peso"));
         colAltura.setCellValueFactory(new PropertyValueFactory("altura"));
         colSangre.setCellValueFactory(new PropertyValueFactory("ts"));
-        
-        
-        //TABLA DE TELEFONOS
-         listaContacto= FXCollections.observableArrayList();
-         colPac.setCellValueFactory(new PropertyValueFactory("id"));
-         colPaciente.setCellValueFactory(new PropertyValueFactory("nombre"));
-         colTelPac.setCellValueFactory(new PropertyValueFactory("numero"));
-         
-         //TABLA DE CORREOS
-         listaCorreo= FXCollections.observableArrayList();
-         colCP.setCellValueFactory(new PropertyValueFactory("id"));
-         colPacCo.setCellValueFactory(new PropertyValueFactory("nombre"));
-         colCorreoPac.setCellValueFactory(new PropertyValueFactory("correo"));
-         colTipoC.setCellValueFactory(new PropertyValueFactory("tipoCorreo"));
-         
-         formatoFecha();
-         seleccionar();
-         inicializarAlertas();
-    } 
+    }
     
     @FXML
     private void exitButtonOnAction(ActionEvent event){
@@ -302,6 +302,10 @@ public class VistaPacientesController implements Initializable {
         txtPesoPac.setText("");
         txtAlturaPac.setText("");
         txtTelPaciente.setText(""); 
+        
+        tablaTelefonosPac.getItems().clear();
+        tablaCorreosPac.getItems().clear();
+        txtidPaciente.requestFocus();
     }
     
     public void formatoFecha(){
@@ -335,12 +339,13 @@ public class VistaPacientesController implements Initializable {
     }
     
     public void seleccionar(){
-        this.tblPacientes.getSelectionModel().selectedItemProperty().addListener(
+        tblPacientes.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<Pacientes>(){
             @Override
             public void changed(ObservableValue<? extends Pacientes> arg0,
                  Pacientes valorAnterior, Pacientes valorSeleccionado) {
                 
+                if(valorSeleccionado!=null){
                 txtidPaciente.setText(String.valueOf(valorSeleccionado.getId()));
                 txtNombrePaciente.setText(String.valueOf(valorSeleccionado.getNombres()));
                 txtApellidoPaciente.setText(String.valueOf(valorSeleccionado.getApellidos()));
@@ -356,11 +361,93 @@ public class VistaPacientesController implements Initializable {
                 txtAlturaPac.setText(valorSeleccionado.getAltura());
                 cmbTipoSangre.setValue(valorSeleccionado.getTs());
                 //System.out.println("Seleccionó un registro");
-            }
-                    
+                
+           try {
+              //tablaContacto();
+            tablaTelefonosPac.getItems().clear();
+            pps=cone.prepareStatement("SELECT pac.idPaciente, pac.nombres, tel.idTelefono, tel.telefono FROM pacientes pac INNER JOIN telefonos_pacientes tel ON pac.idPaciente=tel.idPaciente WHERE pac.idPaciente=?");
+            pps.setString(1, txtidPaciente.getText());
+            
+           ResultSet rs = pps.executeQuery();
+
+           while(rs.next()){
+               String num= rs.getString("tel.telefono");
+               System.out.println(rs.getString("tel.idTelefono"));
+               Telefonos ic = new Telefonos(txtidPaciente.getText(), txtNombrePaciente.getText(), num);
+
+                if(!listaContacto.contains(ic)) {
+                        listaContacto.add(ic);
+                        tablaTelefonosPac.setItems(listaContacto);
                 }
+           }
+           //tablaContacto();
+           tablaCorreosPac.getItems().clear();
+           PreparedStatement ps=cone.prepareStatement("SELECT pac.idPaciente, pac.nombres, co.correo, tc.tipoCorreo FROM pacientes pac LEFT JOIN correo_pacientes co ON pac.idPaciente=co.idPaciente INNER JOIN tipo_correo tc ON co.tipoCorreo=tc.idTipoCorreo WHERE pac.idPaciente=?");
+           ps.setString(1, txtidPaciente.getText());
+            
+           ResultSet rrs = ps.executeQuery();
+
+           while(rrs.next()){
+               String email= rrs.getString("co.correo"); 
+               String tipo= rrs.getString("tc.tipoCorreo");
+               Correos co = new Correos(txtidPaciente.getText(), txtNombrePaciente.getText(), email, tipo);
+
+                if(!listaCorreo.contains(co)) {
+                        listaCorreo.add(co);
+                        tablaCorreosPac.setItems(listaCorreo);
+                }
+           }
+           
+        }catch (SQLException ex) {
+            Logger.getLogger(VistaPacientesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                 
+                btnGuardar.setDisable(true);
+                btnActualizar.setDisable(false);
+                btnEliminar.setDisable(false);
+                btnAgregarTelefono.setDisable(true);
+                btnModificarTel.setDisable(false);
+                btnAgregarCorreo.setDisable(true);
+                btnModificarCorreo.setDisable(false);
+  
+            }
+            }
+
+        }
         );
     }
+    
+    public void seleccionarTelefono(){
+        tablaTelefonosPac.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Telefonos>() {
+             @Override
+            public void changed(ObservableValue<? extends Telefonos> arg0,
+                    Telefonos valorAnterior, Telefonos valorSeleccionado) {
+                
+                if(valorSeleccionado!=null){
+                  txtTelPaciente.setText(valorSeleccionado.getNumero());
+                }  
+            }
+            }
+        );
+    }
+    
+    public void seleccionarCorreo(){
+        tablaCorreosPac.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Correos>() {
+             @Override
+            public void changed(ObservableValue<? extends Correos> arg0,
+                    Correos valorAnterior, Correos valorSeleccionado) {
+                
+                if(valorSeleccionado!=null){
+                  txtCorreoPaciente.setText(valorSeleccionado.getCorreo());
+                }  
+            }
+            }
+        );
+     }
+    
+
     
     //VALIDACIONES
     
@@ -440,8 +527,6 @@ public class VistaPacientesController implements Initializable {
             genero=1;
         }else if(rdbF.isSelected()==true){
             genero=2;
-        }else{
-            JOptionPane.showMessageDialog(null, "Seleccione el género del paciente", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }
         
         System.out.println(genero);
@@ -451,59 +536,57 @@ public class VistaPacientesController implements Initializable {
         int tipoS= cmbTipoSangre.getSelectionModel().getSelectedIndex() + 1;
         
         
-        if (txtidPaciente.getText() == null ) {
-            JOptionPane.showMessageDialog(null, "El campo de identidad esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (txtNombrePaciente.getText() == null ) {
-            JOptionPane.showMessageDialog(null, "El campo de Nombre esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (txtApellidoPaciente.getText() == null ) {
-            JOptionPane.showMessageDialog(null, "El campo de Apellido esta vacío, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (genero == 0 ) {
-            JOptionPane.showMessageDialog(null, "Seleccione una opcion de genero valida, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (txtFechaPac.getValue() == null ) {
-            JOptionPane.showMessageDialog(null, "El campo de fecha esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (txtDireccionPaciente.getText() == null ) {
-            JOptionPane.showMessageDialog(null, "El campo de Direccion esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (txtPesoPac.getText() == null ) {
-            JOptionPane.showMessageDialog(null, "El campo de Peso esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (txtAlturaPac.getText() == null ) {
-            JOptionPane.showMessageDialog(null, "El campo de Altura esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (cmbTipoSangre.getValue() == null ) {
-            JOptionPane.showMessageDialog(null, "El campo de Tipo de sangre esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-        }else if (cmbNacionalidad.getValue() == null ) {
-            JOptionPane.showMessageDialog(null, "El campo de Nacionalidad esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
-      //  }else if (cmbCorreo.getValue() == null ) {
-         //  JOptionPane.showMessageDialog(null, "El campo de Correo esta vacio, por favor complete el formulario.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        if (txtidPaciente.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo Identidad está vacío, por favor ingrese la identidad del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitudMax(txtidPaciente.getText(), 13)) {
+            JOptionPane.showMessageDialog(null, "La identidad del paciente ingresado es muy largo el máximo es de 13 dígitos, usted ingresó " + txtidPaciente.getText().length() + " dígitos.", "Longitud del número de identidad del empleado", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarIdentidad(txtidPaciente.getText())) {
+        } else if (txtNombrePaciente.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo Nombres está vacío, por favor ingrese el nombre del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitud(txtNombrePaciente, 2)) {
+            JOptionPane.showMessageDialog(null, "Los nombres ingresados son muy pequeños el mínimo es de 2 caracteres", "Longitud de los nombres", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitudMax(txtNombrePaciente.getText(), 25)) {
+            JOptionPane.showMessageDialog(null, "Los nombres del paciente ingresados son muy largos el máximo es de 40 caracteres, usted ingresó " + txtNombrePaciente.getText().length() + " caracteres.", "Longitud de los nombres del empleado", JOptionPane.ERROR_MESSAGE);
+        } else if (txtApellidoPaciente.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo Apellidos está vacío, por favor ingrese los apellidos del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitud(txtApellidoPaciente, 2)) {
+            JOptionPane.showMessageDialog(null, "Los apellidos ingresados son muy pequeños el mínimo es de 2 caracteres", "Longitud de los apellidos", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitudMax(txtApellidoPaciente.getText(), 25)) {
+            JOptionPane.showMessageDialog(null, "Los apellidos del paciente ingresados son muy largos el máximo es de 40 caracteres, usted ingresó " + txtApellidoPaciente.getText().length() + " caracteres.", "Longitud de los apellidos del empleado", JOptionPane.ERROR_MESSAGE);
+        } else if (genero == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione el género del paciente", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (txtFechaPac.getValue() == null) {
+            JOptionPane.showMessageDialog(null, "La fecha de nacimiento está vacía, por favor ingrese la fecha de nacimiento del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (cmbNacionalidad.getValue() == null) {
+            JOptionPane.showMessageDialog(null, "Seleccione la nacionalidad del paciente", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (txtDireccionPaciente.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo 'Dirección' está vacío, por favor ingrese la dirección del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (!isValidAdd(txtDireccionPaciente.getText())) {
+        } else if (txtPesoPac.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo 'Peso' está vacío, por favor ingrese el peso del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitud(txtPesoPac, 2)) {
+            JOptionPane.showMessageDialog(null, "El peso ingresado es muy bajo, el mínimo es de 10 lbs", "Peso del paciente", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitudMax(txtPesoPac.getText(), 3)) {
+            JOptionPane.showMessageDialog(null, "El peso ingresado es muy alto, el máximo es de 999 lbs, usted ingresó " + txtPesoPac.getText() + " caracteres.", "Longitud de nombre de usuario", JOptionPane.ERROR_MESSAGE);
+        } else if (txtAlturaPac.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo 'Altura' está vacío, por favor ingrese la altura del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitud(txtAlturaPac, 2)) {
+            JOptionPane.showMessageDialog(null, "La altura ingresada es muy baja", "Altura del paciente", JOptionPane.ERROR_MESSAGE);
+        }  else if (!validarLongitudMax(txtAlturaPac.getText(), 3)) {
+            JOptionPane.showMessageDialog(null, "La altura ingresada es muy alta", "Altura del paciente", JOptionPane.ERROR_MESSAGE);
+        } else if (cmbTipoSangre.getValue() == null) {
+            JOptionPane.showMessageDialog(null, "Seleccione el tipo de sangre", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (tablaTelefonosPac.getItems().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar al menos un número de teléfono", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (tablaCorreosPac.getItems().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar al menos una dirección de correo", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }else{
             
         try{
             if(existePaciente()){
             return;
-            }
-          /*  if(!isEmailValid(txtCorreoPaciente.getText())){
-            return;
-            }*/
-            
-            if(!validarIdentidad(txtidPaciente.getText())){
-            return;
-            }
-            
-            if (!validarLongitudMax(txtNombrePaciente.getText(), 40)) {
-            JOptionPane.showMessageDialog(null, "Los nombres del paciente ingresados son muy largos el máximo es de 40 caracteres, usted ingresó " + txtNombrePaciente.getText().length() + " caracteres.", "Longitud de los nombres del empleado", JOptionPane.INFORMATION_MESSAGE);
-            return;
-            }
-            if (!validarLongitudMax(txtApellidoPaciente.getText(), 40)) {
-            JOptionPane.showMessageDialog(null, "Los apellidos del paciente ingresados son muy largos el máximo es de 40 caracteres, usted ingresó " + txtApellidoPaciente.getText().length() + " caracteres.", "Longitud de los apellidos del empleado", JOptionPane.INFORMATION_MESSAGE);
-            return;
-            }
-            /*if (!validarLongitudMax(txtTelPaciente.getText(), 8)) {
-            JOptionPane.showMessageDialog(null, "El teléfono del paciente ingresado es muy largo el máximo es de 8 dígitos, usted ingresó " + txtTelPaciente.getText().length() + " dígitos.", "Longitud del teléfono del empleado", JOptionPane.INFORMATION_MESSAGE);
-            return;
-            }*/
-            if (!validarLongitudMax(txtidPaciente.getText(), 13)) {
-             JOptionPane.showMessageDialog(null, "La identidad del paciente ingresado es muy largo el máximo es de 13 dígitos, usted ingresó " + txtidPaciente.getText().length() + " dígitos.", "Longitud del número de identidad del empleado", JOptionPane.INFORMATION_MESSAGE);
-            return;
-            }
-            
+            }            
+           
             pps=cone.prepareStatement("INSERT INTO pacientes(idPaciente,nombres,apellidos,fechaNacimiento,idGenero,idNacionalidad,direccion,peso,altura,tipoSangre) VALUES(?,?,?,?,?,?,?,?,?,?)");
             pps.setString(1, txtidPaciente.getText());
             pps.setString(2, txtNombrePaciente.getText());
@@ -542,9 +625,8 @@ public class VistaPacientesController implements Initializable {
                pps.setString(3, String.valueOf(tipoco));
                pps.executeUpdate(); 
                
+               tablaPacientes();
                limpiarDatos();
-              /* tblPacientes.getItems().clear();
-               Pacientes.llenarTabla(cone, listaPacientes);*/
             }
             
             
@@ -557,6 +639,7 @@ public class VistaPacientesController implements Initializable {
 
     @FXML
     private void cancelar(ActionEvent event) {
+        limpiarDatos();
     }
 
     @FXML
@@ -668,6 +751,39 @@ public class VistaPacientesController implements Initializable {
         String idE= this.txtidPaciente.getText();
         String nombreE= txtNombrePaciente.getText() + " " + this.txtApellidoPaciente.getText();
         
+        if (txtidPaciente.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("La identidad del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtidPaciente.requestFocus();
+        } else if (txtNombrePaciente.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El nombre del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtNombrePaciente.requestFocus();
+        } else if (txtTelPaciente.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El teléfono del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtTelPaciente.requestFocus();
+        }
+        if (!validarLongitudTelefono(txtTelPaciente, 8)) {
+            return;
+        }
+        if (!validarLongitudMax(txtTelPaciente.getText(), 8)) {
+            JOptionPane.showMessageDialog(null, "El teléfono del empleado ingresado es muy largo el máximo es de 8 dígitos, usted ingresó " + txtTelPaciente.getText().length() + " dígitos.", "Longitud del teléfono del empleado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (existeTelefono()) {
+            return;
+        }
+        
         Telefonos ic= new Telefonos(idE,nombreE,numero);
         
         if(!this.listaContacto.contains(ic)){
@@ -692,6 +808,40 @@ public class VistaPacientesController implements Initializable {
         String correo= txtCorreoPaciente.getText();
         String tipoC= String.valueOf(cmbCorreo.getValue());
         
+        if (txtidPaciente.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("La identidad del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtidPaciente.requestFocus();
+        } else if (txtNombrePaciente.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El nombre del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtNombrePaciente.requestFocus();
+        } else if (txtCorreoPaciente.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El correo del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtCorreoPaciente.requestFocus();
+        } else if (!isEmailValid(txtCorreoPaciente.getText())) {
+        } else if (cmbCorreo.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("Seleccione el tipo de correo");
+            alert.showAndWait();
+        } else {
+            
+            if (existeCorreo()) {
+                    return;
+            }
+        
         Correos c= new Correos(idE,nombreE,correo,tipoC);
         
         if(!this.listaCorreo.contains(c)){
@@ -708,6 +858,7 @@ public class VistaPacientesController implements Initializable {
             alert.showAndWait();
             txtCorreoPaciente.requestFocus();
         }
+    }
     }
 
     @FXML
@@ -740,8 +891,311 @@ public class VistaPacientesController implements Initializable {
       
       tblPacientes.setItems(sortedData);
     }
+    
+    public static boolean isValidAdd(String address) {
+        final Pattern ADD_REGEX = Pattern.compile("[a-zA-Z\\,\\t\\h]+|(^$)", Pattern.CASE_INSENSITIVE);
+        if(ADD_REGEX.matcher(address).matches()) {
+            return true;
+        }else{
+         JOptionPane.showMessageDialog(null, "La direccion no es valida");
+         return false;        
+        }
+      }
 
         
+    @FXML
+    private void modificarTelefono(ActionEvent event) {
+        String numero = txtTelPaciente.getText();
+        String idE = this.txtidPaciente.getText();
+        String nombreE = txtNombrePaciente.getText() + " " + this.txtApellidoPaciente.getText();
+        
+        if (txtidPaciente.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("La identidad del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtidPaciente.requestFocus();
+        } else if (txtNombrePaciente.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El nombre del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtNombrePaciente.requestFocus();
+        } else if (txtTelPaciente.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El teléfono del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtTelPaciente.requestFocus();
+        }
+        if (!validarLongitudTelefono(txtTelPaciente, 8)) {
+            return;
+        }
+        if (!validarLongitudMax(txtTelPaciente.getText(), 8)) {
+            JOptionPane.showMessageDialog(null, "El teléfono del empleado ingresado es muy largo el máximo es de 8 dígitos, usted ingresó " + txtTelPaciente.getText().length() + " dígitos.", "Longitud del teléfono del empleado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (existeTelefono()) {
+            return;
+        }
+        
+        Telefonos ic = new Telefonos(idE, nombreE, numero);
+        listaContacto.set(tablaTelefonosPac.getSelectionModel().getSelectedIndex(), ic);
+    }
+        
+    public boolean existeTelefono() {
+        try {
+            Statement st = cone.createStatement();
+            String sql = "Select telefono from telefonos_pacientes where telefono = '" + txtTelPaciente.getText() + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, " Ya existe " + " el número de teléfono: " + txtTelPaciente.getText(), "Número de teléfono ¡Ya existe!", JOptionPane.ERROR_MESSAGE);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public boolean existeCorreo() {
+        try {
+            Statement st = cone.createStatement();
+            String sql = "Select correo from correo_pacientes where correo = '" + txtCorreoPaciente.getText() + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, " Ya existe " + " la dirección de correo: " + txtCorreoPaciente.getText(), "Dirección de correo ¡Ya existe!", JOptionPane.ERROR_MESSAGE);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    private boolean validarLongitudTelefono(TextField texto, int longitud) {
+        if (texto.getText().length() == longitud) {
+            Pattern pattern = Pattern.compile("[23789]");
+            Matcher matcher = pattern.matcher(texto.getText().substring(0, 1));
+            if (matcher.matches()) {
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "El número de teléfono debe comenzar con: 2,3,7,8 o 9");
+                txtTelPaciente.requestFocus();
+                return false;
+            }
+        } else {
+        }
+        JOptionPane.showMessageDialog(null, "El número de teléfono debe ser de 8 dígitos", "Longitud del número de telefono", JOptionPane.INFORMATION_MESSAGE);
+        txtTelPaciente.requestFocus();
+        return false;
+    }
+    
+    
+    @FXML
+    private void actualizarPaciente(ActionEvent event) {
+        int tipoS = cmbTipoSangre.getSelectionModel().getSelectedItem().getIdSangre();
+        int nacionalidad = cmbNacionalidad.getSelectionModel().getSelectedItem().getIdNacionalidad();
+        //int tipoCorreo = cmbtipoCorreo.getSelectionModel().getSelectedIndex();
+        int genero = 0;
+        if (rdbM.isSelected() == true) {
+            genero = 1;
+        } else if (rdbF.isSelected() == true) {
+            genero = 2;
+        }if (txtidPaciente.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo Identidad está vacío, por favor ingrese la identidad del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitudMax(txtidPaciente.getText(), 13)) {
+            JOptionPane.showMessageDialog(null, "La identidad del paciente ingresado es muy largo el máximo es de 13 dígitos, usted ingresó " + txtidPaciente.getText().length() + " dígitos.", "Longitud del número de identidad del empleado", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarIdentidad(txtidPaciente.getText())) {
+        } else if (txtNombrePaciente.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo Nombres está vacío, por favor ingrese el nombre del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitud(txtNombrePaciente, 2)) {
+            JOptionPane.showMessageDialog(null, "Los nombres ingresados son muy pequeños el mínimo es de 2 caracteres", "Longitud de los nombres", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitudMax(txtNombrePaciente.getText(), 25)) {
+            JOptionPane.showMessageDialog(null, "Los nombres del paciente ingresados son muy largos el máximo es de 40 caracteres, usted ingresó " + txtNombrePaciente.getText().length() + " caracteres.", "Longitud de los nombres del empleado", JOptionPane.ERROR_MESSAGE);
+        } else if (txtApellidoPaciente.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo Apellidos está vacío, por favor ingrese los apellidos del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitud(txtApellidoPaciente, 2)) {
+            JOptionPane.showMessageDialog(null, "Los apellidos ingresados son muy pequeños el mínimo es de 2 caracteres", "Longitud de los apellidos", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitudMax(txtApellidoPaciente.getText(), 25)) {
+            JOptionPane.showMessageDialog(null, "Los apellidos del paciente ingresados son muy largos el máximo es de 40 caracteres, usted ingresó " + txtApellidoPaciente.getText().length() + " caracteres.", "Longitud de los apellidos del empleado", JOptionPane.ERROR_MESSAGE);
+        } else if (genero == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione el género del paciente", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (txtFechaPac.getValue() == null) {
+            JOptionPane.showMessageDialog(null, "La fecha de nacimiento está vacía, por favor ingrese la fecha de nacimiento del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (cmbNacionalidad.getValue() == null) {
+            JOptionPane.showMessageDialog(null, "Seleccione la nacionalidad del paciente", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (txtDireccionPaciente.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo 'Dirección' está vacío, por favor ingrese la dirección del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (!isValidAdd(txtDireccionPaciente.getText())) {
+        } else if (txtPesoPac.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo 'Peso' está vacío, por favor ingrese el peso del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitud(txtPesoPac, 2)) {
+            JOptionPane.showMessageDialog(null, "El peso ingresado es muy bajo, el mínimo es de 10 lbs", "Peso del paciente", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitudMax(txtPesoPac.getText(), 3)) {
+            JOptionPane.showMessageDialog(null, "El peso ingresado es muy alto, el máximo es de 999 lbs, usted ingresó " + txtPesoPac.getText() + " caracteres.", "Longitud de nombre de usuario", JOptionPane.ERROR_MESSAGE);
+        } else if (txtAlturaPac.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo 'Altura' está vacío, por favor ingrese la altura del paciente.", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (!validarLongitud(txtAlturaPac, 2)) {
+            JOptionPane.showMessageDialog(null, "La altura ingresada es muy baja", "Altura del paciente", JOptionPane.ERROR_MESSAGE);
+        }  else if (!validarLongitudMax(txtAlturaPac.getText(), 3)) {
+            JOptionPane.showMessageDialog(null, "La altura ingresada es muy alta", "Altura del paciente", JOptionPane.ERROR_MESSAGE);
+        } else if (cmbTipoSangre.getValue() == null) {
+            JOptionPane.showMessageDialog(null, "Seleccione el tipo de sangre", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (tablaTelefonosPac.getItems().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar al menos un número de teléfono", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (tablaCorreosPac.getItems().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar al menos una dirección de correo", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }
+        try {
+            
+            PreparedStatement ps = cone.prepareStatement("UPDATE pacientes SET nombres=?, apellidos=?, fechaNacimiento=?, idGenero=?, idNacionalidad=?, direccion=?, peso=?, altura=?, tipoSangre=? WHERE idPaciente=?");
+            ps.setString(1, txtNombrePaciente.getText());
+            ps.setString(2, txtApellidoPaciente.getText());
+            ps.setString(3, String.valueOf(txtFechaPac.getValue()));
+            ps.setString(4, String.valueOf(genero));
+            ps.setString(5, String.valueOf(nacionalidad));
+            ps.setString(6, txtDireccionPaciente.getText());
+            ps.setString(7, txtPesoPac.getText());
+            ps.setString(8, txtAlturaPac.getText());
+            ps.setString(9, String.valueOf(tipoS));
+            ps.setString(10, txtidPaciente.getText());
+            
+            
+            //MODIFICAR TELEFONOS
+            for (int i = 0; i < tablaTelefonosPac.getItems().size(); i++) {
+                
+                  PreparedStatement  ps1 = cone.prepareStatement("UPDATE telefonos_pacientes SET telefono=? WHERE idPaciente=?");                  
+                    ps1.setString(1, String.valueOf(tablaTelefonosPac.getItems().get(i).getNumero()));
+                    ps1.setString(2, txtidPaciente.getText()); 
+                    ps1.executeUpdate();
+            }
+            //midmodificar correo
+            for (int i = 0; i < tablaCorreosPac.getItems().size(); i++) {
+                int tipoco = 0;
+                    if (tablaCorreosPac.getItems().get(i).getTipoCorreo().equals("Personal")) {
+                        tipoco = 1;
+                    } else if (tablaCorreosPac.getItems().get(i).getTipoCorreo().equals("Empresa")) {
+                        tipoco = 2;
+                    } else if (tipoco == 0) {
+                        JOptionPane.showMessageDialog(null, "Seleccione el tipo de correo", "Error", JOptionPane.PLAIN_MESSAGE);
+                    }
+                    
+                    PreparedStatement ps2 = cone.prepareStatement("UPDATE correo_pacientes SET correo=?, tipoCorreo=?  WHERE idPaciente=?");                  
+                    ps2.setString(1, String.valueOf(tablaCorreosPac.getItems().get(i).getCorreo()));
+                    ps2.setString(2, String.valueOf(tipoco));
+                    ps2.setString(3, txtidPaciente.getText());
+                    ps2.executeUpdate();
+            }
+            
+            int mod = ps.executeUpdate();
+
+            if (mod >= 1) {
+                JOptionPane.showMessageDialog(null, "Se han actualizado los datos", "¡Confirmación!", JOptionPane.INFORMATION_MESSAGE);
+                tablaPacientes();
+                limpiarDatos();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaPacientesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    public void tablaContacto() {
+        //TABLA DE TELEFONOS
+        listaContacto = FXCollections.observableArrayList();
+        colPac.setCellValueFactory(new PropertyValueFactory("id"));
+        this.colPaciente.setCellValueFactory(new PropertyValueFactory("nombre"));
+        this.colTelPac.setCellValueFactory(new PropertyValueFactory("numero"));
+
+        //TABLA DE CORREOS
+        listaCorreo = FXCollections.observableArrayList();
+        colCP.setCellValueFactory(new PropertyValueFactory("id"));
+        colPacCo.setCellValueFactory(new PropertyValueFactory("nombre"));
+        colCorreoPac.setCellValueFactory(new PropertyValueFactory("correo"));
+        colTipoC.setCellValueFactory(new PropertyValueFactory("tipoCorreo"));
+    }
+
+    @FXML
+    private void modificarCorreo(ActionEvent event) {
+        String idE = this.txtidPaciente.getText();
+        String nombreE = txtNombrePaciente.getText() + " " + this.txtApellidoPaciente.getText();
+        String correo = txtCorreoPaciente.getText();
+        String tipoC = String.valueOf(cmbCorreo.getValue());
+
+        if (txtidPaciente.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("La identidad del paciente no puede ir vacío");
+            alert.showAndWait();
+            txtCorreoPaciente.requestFocus();
+        } else if (txtNombrePaciente.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El nombre del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtNombrePaciente.requestFocus();
+        } else if (txtCorreoPaciente.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("El correo del empleado no puede ir vacío");
+            alert.showAndWait();
+            txtNombrePaciente.requestFocus();
+        } else if (!isEmailValid(txtCorreoPaciente.getText())) {
+        } else if (cmbCorreo.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setTitle("ERROR");
+            alert.setContentText("Seleccione el tipo de correo");
+            alert.showAndWait();
+        } else {
+            Correos c = new Correos(idE, nombreE, correo, tipoC);
+            listaCorreo.set(tablaCorreosPac.getSelectionModel().getSelectedIndex(), c);
+        }
+    }
+    
+    private void buscarPacientes(KeyEvent event) {
+        FilteredList<Pacientes> filteredData = new FilteredList<>(listaPacientes, p -> true);
+        tblPacientes.setItems(filteredData);
+
+        txtBuscar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(paciente -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (paciente.getId().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true;
+                } else if (paciente.getNombres().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            });
+        });
+
+        SortedList<Pacientes> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tblPacientes.comparatorProperty());
+
+        tblPacientes.setItems(sortedData);
+        
+    }
+    
         
         
     }

@@ -14,8 +14,6 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -24,16 +22,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="656.0" prefWidth="997.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaPacientesController">
    <children>
-      <VBox prefHeight="656.0" prefWidth="69.0" style="-fx-background-color: #30ACE2;">
-         <children>
-            <ImageView fitHeight="61.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/logo-de-medifan.png" />
-               </image>
-            </ImageView>
-            <Pane prefHeight="54.0" prefWidth="69.0" />
-         </children></VBox>
-      <VBox layoutX="69.0" prefHeight="42.0" prefWidth="928.0" style="-fx-background-color: #30ACE2;">
+      <VBox prefHeight="42.0" prefWidth="997.0" style="-fx-background-color: #30ACE2;">
          <children>
             <Label contentDisplay="CENTER" prefHeight="42.0" prefWidth="152.0" text="Pacientes" textFill="WHITE">
                <font>
@@ -49,7 +38,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TabPane layoutX="99.0" layoutY="111.0" prefHeight="515.0" prefWidth="869.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="45.0" layoutY="107.0" prefHeight="515.0" prefWidth="869.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="DATOS GENERALES">
             <content>
@@ -99,12 +88,12 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnCancelar" alignment="BOTTOM_CENTER" layoutX="771.0" layoutY="213.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Cancelar" textFill="WHITE">
+                        <Button fx:id="btnCancelar" alignment="BOTTOM_CENTER" layoutX="771.0" layoutY="359.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Cancelar" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnEliminar" alignment="BOTTOM_CENTER" layoutX="771.0" layoutY="293.0" mnemonicParsing="false" onAction="#eliminarPacientes" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Eliminar" textFill="WHITE">
+                        <Button fx:id="btnEliminar" alignment="BOTTOM_CENTER" disable="true" layoutX="771.0" layoutY="282.0" mnemonicParsing="false" onAction="#eliminarPacientes" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Eliminar" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -127,6 +116,11 @@
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Label>
+                        <Button fx:id="btnActualizar" alignment="BOTTOM_CENTER" disable="true" layoutX="771.0" layoutY="207.0" mnemonicParsing="false" onAction="#actualizarPaciente" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773; -fx-background-radius: 7px;" text="Actualizar" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
             </content>
@@ -151,9 +145,10 @@
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font></Label>
+                              <Button fx:id="btnModificarTel" disable="true" layoutX="21.0" layoutY="135.0" mnemonicParsing="false" onAction="#modificarTelefono" prefHeight="25.0" prefWidth="153.0" text="Modificar Teléfono" />
                            </children>
                         </Pane>
-                        <Pane layoutX="24.0" layoutY="251.0" prefHeight="195.0" prefWidth="706.0" style="-fx-border-color: black; -fx-border-radius: 3px;">
+                        <Pane layoutX="24.0" layoutY="251.0" prefHeight="224.0" prefWidth="706.0" style="-fx-border-color: black; -fx-border-radius: 3px;">
                            <children>
                               <TableView fx:id="tablaCorreosPac" editable="true" layoutX="198.0" layoutY="38.0" prefHeight="114.0" prefWidth="491.0" stylesheets="@../css/estilos.css">
                                  <columns>
@@ -163,7 +158,7 @@
                                     <TableColumn fx:id="colTipoC" prefWidth="74.0" text="Tipo Correo" />
                                  </columns>
                               </TableView>
-                              <Button fx:id="btnAgregarCorreo" layoutX="25.0" layoutY="146.0" mnemonicParsing="false" onAction="#agregarCorreo" prefHeight="27.0" prefWidth="151.0" text="Agregar Correo" />
+                              <Button fx:id="btnAgregarCorreo" layoutX="25.0" layoutY="143.0" mnemonicParsing="false" onAction="#agregarCorreo" prefHeight="27.0" prefWidth="151.0" text="Agregar Correo" />
                               <Label layoutX="25.0" layoutY="31.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Correo:" />
                               <Label layoutX="25.0" layoutY="89.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Tipo Correo:" textAlignment="JUSTIFY" />
                               <TextField fx:id="txtCorreoPaciente" layoutX="25.0" layoutY="48.0" styleClass="textos" stylesheets="@../css/estilos.css" />
@@ -172,6 +167,7 @@
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font></Label>
+                              <Button fx:id="btnModificarCorreo" disable="true" layoutX="25.0" layoutY="185.0" mnemonicParsing="false" onAction="#modificarCorreo" prefHeight="25.0" prefWidth="152.0" text="Modificar Correo" />
                            </children>
                         </Pane>
                      </children>

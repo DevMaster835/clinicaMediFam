@@ -183,11 +183,13 @@ public class VistaFacturacionController implements Initializable {
      */
     
     String idEmpl= VistaLoginController.idEmp;
+    @FXML
+    private TableColumn<?, ?> colSubtotal;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-       noFactura();
+       
        comboFactura();
        paneProducto.setDisable(true);
        paneServicio.setDisable(true);
@@ -206,6 +208,7 @@ public class VistaFacturacionController implements Initializable {
        colPrecio.setCellValueFactory(new PropertyValueFactory("precio"));
        colConNeto.setCellValueFactory(new PropertyValueFactory("contNeto"));
        colCantidad.setCellValueFactory(new PropertyValueFactory("cantidad"));
+       colSubtotal.setCellValueFactory(new PropertyValueFactory("subtotal"));
     }
     
     public void tablaServicios(){
@@ -214,7 +217,7 @@ public class VistaFacturacionController implements Initializable {
         colServicio.setCellValueFactory(new PropertyValueFactory("servicio"));
         colPrecioS.setCellValueFactory(new PropertyValueFactory("precio"));
         colCantidadS.setCellValueFactory(new PropertyValueFactory("cantidad")); 
-        
+        colSubTotalS.setCellValueFactory(new PropertyValueFactory("subtotal"));
     }
     
     public void comboFactura(){
@@ -401,9 +404,9 @@ public class VistaFacturacionController implements Initializable {
    
     @FXML
     private void guardarFactura(ActionEvent event) {
-        if (txtFactura.getText().isEmpty() ){
-           JOptionPane.showMessageDialog(null, "El campo 'Factura No' está vacío, por favor ingrese el número de factura.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
-       }else if(txtfechaFactura.getValue() == null ){
+      //  if (txtFactura.getText().isEmpty() ){
+      //     JOptionPane.showMessageDialog(null, "El campo 'Factura No' está vacío, por favor ingrese el número de factura.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+       if(txtfechaFactura.getValue() == null ){
            JOptionPane.showMessageDialog(null, "El campo 'Fecha' está vacío, por favor seleccione la fecha.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
        }else if(txtidEmp.getText().isEmpty()){
            JOptionPane.showMessageDialog(null, "El campo 'Identidad' está vacío, por favor ingrese la identidad del empleado.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
@@ -426,7 +429,7 @@ public class VistaFacturacionController implements Initializable {
        }else{
   
         try {           
-           
+           noFactura();
            String valor = cmbConceptos.getSelectionModel().getSelectedItem();
            switch (valor) {
 
@@ -444,12 +447,12 @@ public class VistaFacturacionController implements Initializable {
                      pps.setString(3, String.valueOf(tablaProductos.getItems().get(i).getCantidad()));
                      pps.executeUpdate();
                      
-                pps=cone.prepareStatement("UPDATE productos,detalle_facturacion SET stock= (existencia-" + tablaProductos.getItems().get(i).getCantidad()  + ") "
-                                            + "WHERE productos.idProducto=? and detalle_facturacion.idFacturacion=?");
-                pps.setString(1, String.valueOf(tablaProductos.getItems().get(i).getCodigo()));
-                pps.setString(2, txtFactura.getText());
-                pps.executeUpdate();
-                System.out.println(pps);
+               PreparedStatement p1=cone.prepareStatement("UPDATE productos,detalle_facturacion SET stock= (stock-" + tablaProductos.getItems().get(i).getCantidad()  + ") "
+                                            + " WHERE productos.idProducto=? and detalle_facturacion.idFacturacion=?");
+                p1.setString(1, String.valueOf(tablaProductos.getItems().get(i).getCodigo()));
+                p1.setString(2, txtFactura.getText());
+                p1.executeUpdate();
+                System.out.println(p1);
                 }
                 
                 Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
@@ -505,6 +508,12 @@ public class VistaFacturacionController implements Initializable {
                      pps.setString(2, String.valueOf(tablaProductos.getItems().get(i).getCodigo()));
                      pps.setString(3, String.valueOf(tablaProductos.getItems().get(i).getCantidad()));
                      pps.executeUpdate();
+                     
+                     PreparedStatement p1=cone.prepareStatement("UPDATE productos,detalle_facturacion SET stock= (stock-" + tablaProductos.getItems().get(i).getCantidad()  + ") "
+                                            + " WHERE productos.idProducto=? and detalle_facturacion.idFacturacion=?");
+                                p1.setString(1, String.valueOf(tablaProductos.getItems().get(i).getCodigo()));
+                                p1.setString(2, txtFactura.getText());
+                                p1.executeUpdate();
                 }
                 
                 for(int i=0;i<tablaServicios.getItems().size();i++){
@@ -612,8 +621,12 @@ public class VistaFacturacionController implements Initializable {
         int conNeto = Integer.parseInt(txtConNeto.getText());
          Double precio = Double.parseDouble(txtprecioProd.getText());
         int cantidad = Integer.parseInt(txtcantidad.getText());
+        double subtotal=0;
         
-        ProductoC pro= new ProductoC(codigo,nombre,precio,conNeto,cantidad);
+        subtotal+= (cantidad*precio);
+        
+
+        ProductoC pro= new ProductoC(codigo,nombre,precio,conNeto,cantidad, subtotal);
        // Productos prod = new Productos(codigo,nombre,precio,conNeto,cantidad);
         
         listadetalle.add(pro);
@@ -622,7 +635,23 @@ public class VistaFacturacionController implements Initializable {
         
         
     }
-
+    /*
+    public double calcularP(){
+          
+          double subtotal=0;
+          for(int i=0;i<tablaProductos.getItems().size();i++){
+              int cantidad=tablaProductos.getItems().get(i).getCantidad();
+              double precio=tablaProductos.getItems().get(i).getPrecio();
+              tablaProductos.setItems(listadetalle);
+              subtotal+=precio*cantidad;
+          
+         
+             
+         }
+        return(subtotal);
+        
+    }
+*/
     @FXML
     private void añadirServicio(ActionEvent event) {
        int codigo = Integer.parseInt(txtcodigoS.getText());
@@ -630,7 +659,10 @@ public class VistaFacturacionController implements Initializable {
        Double precio= Double.parseDouble(txtprecioS.getText());
        int cantidad = Integer.parseInt(txtcantidadS.getText());
        
-       Servicios serv= new Servicios(codigo,servicio,precio,cantidad);
+       double subtotal=0;      
+       subtotal+= (cantidad*precio);
+       
+       Servicios serv= new Servicios(codigo,servicio,precio,cantidad, subtotal);
        
        servicios.add(serv);
        tablaServicios.setItems(servicios);
@@ -712,6 +744,10 @@ public class VistaFacturacionController implements Initializable {
         } catch (JRException ex) {
             Logger.getLogger(VistaFacturacionController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @FXML
+    private void AgregarDetalle(ActionEvent event) {
     }
 
 

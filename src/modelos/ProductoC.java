@@ -15,13 +15,15 @@ public class ProductoC {
     double precio;
     int contNeto;
     int cantidad;
+    double subtotal;
 
-    public ProductoC(int codigo, String producto, double precio, int contNeto, int cantidad) {
+    public ProductoC(int codigo, String producto, double precio, int contNeto, int cantidad, double subtotal) {
         this.codigo = codigo;
         this.producto = producto;
         this.precio = precio;
         this.contNeto = contNeto;
         this.cantidad = cantidad;
+        this.subtotal=subtotal;
     }
 
     public int getCodigo() {
@@ -42,6 +44,10 @@ public class ProductoC {
 
     public int getCantidad() {
         return cantidad;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
     }
     
     

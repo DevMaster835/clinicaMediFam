@@ -103,7 +103,7 @@
                               <TableColumn fx:id="colPrecio" prefWidth="63.0" text="Precio" />
                               <TableColumn fx:id="colConNeto" prefWidth="102.0" text="Contenido Neto" />
                               <TableColumn fx:id="colCantidad" prefWidth="67.0" text="Cantidad" />
-                              <TableColumn prefWidth="92.0" text="Subtotal" />
+                              <TableColumn fx:id="colSubtotal" prefWidth="92.0" text="Subtotal" />
                            </columns>
                         </TableView>
                         <Pane layoutX="44.0" layoutY="33.0" prefHeight="153.0" prefWidth="620.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos">
