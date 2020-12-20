@@ -48,11 +48,12 @@ and open the template in the editor.
 }
 
 .btn-guardar{
-    -fx-background-color: #8390a0;
+    -fx-background-color:  #63738a;
     -fx-background-image: url("../imagenes/iconos/guardar.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: 23px;
     -fx-background-position: 8px, center; 
+    -fx-image-color: white;
 }
 
 .closebutton{
