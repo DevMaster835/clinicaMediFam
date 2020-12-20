@@ -22,7 +22,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="656.0" prefWidth="997.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaEmpleadosController">
    <children>
-      <VBox prefHeight="42.0" prefWidth="998.0" style="-fx-background-color: #30ACE2;">
+      <VBox prefHeight="42.0" prefWidth="998.0" style="-fx-background-color: #223f54;">
          <children>
             <Label contentDisplay="CENTER" text="Empleados" textFill="WHITE">
                <font>
@@ -81,11 +81,6 @@
                               </RadioButton>
                            </children>
                         </HBox>
-                        <Button fx:id="btnGuardar" alignment="BOTTOM_CENTER" layoutX="608.0" layoutY="313.0" mnemonicParsing="false" onAction="#guardarEmpleados" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773; -fx-background-radius: 7px;" text="Guardar" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
                         <Button fx:id="btnEliminar" alignment="BOTTOM_CENTER" layoutX="608.0" layoutY="384.0" mnemonicParsing="false" onAction="#eliminarEmpleados" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Eliminar" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
@@ -111,6 +106,11 @@
                               <PasswordField fx:id="txtcontraseña" layoutX="15.0" layoutY="95.0" prefHeight="27.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                            </children>
                         </Pane>
+                        <Button fx:id="btnGuardar" alignment="CENTER_RIGHT" layoutX="574.0" layoutY="306.0" mnemonicParsing="false" onAction="#guardarEmpleados" prefHeight="35.0" prefWidth="96.0" styleClass="btn-guardar" stylesheets="@../css/estilos.css" text="Guardar" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
             </content>

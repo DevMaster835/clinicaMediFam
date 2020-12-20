@@ -47,6 +47,14 @@ and open the template in the editor.
     -fx-font-size: 12px;
 }
 
+.btn-guardar{
+    -fx-background-color: #8390a0;
+    -fx-background-image: url("../imagenes/iconos/guardar.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 23px;
+    -fx-background-position: 8px, center; 
+}
+
 .closebutton{
   -fx-background-color: #bd0a2c;
   -fx-background-radius: 16.4, 15;
