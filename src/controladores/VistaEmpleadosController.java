@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -673,8 +674,38 @@ public class VistaEmpleadosController implements Initializable {
         btnGuardar.setDisable(false);
         btnActualizar.setDisable(true);
         btnEliminar.setDisable(true);
-
+  
+    }
+    
+    public void GenerateUserName(){
+        //String text1 = txtNombreEmp.getText() + txtApellidoEmp.getText();
+        String text= (txtNombreEmp.getText().concat(txtApellidoEmp.getText()));
+        //String text1=txtNombreEmp.getText().chars()
         
+        /*for (int x=0; x < text.length(); x++) {
+            if (text.charAt(x) != ' '){
+                text1 += text.charAt(x);
+            }              
+        }*/
+        
+        Random rand = new Random();
+        int rand_int = rand.nextInt(99);
+        
+      /* if(!txtNombreEmp.getText().isEmpty() && !txtApellidoEmp.getText().isEmpty()){
+        if(existeUsuario()){    
+            txtusuario.setText(text1.toLowerCase() + rand_int);
+            System.out.println(text1.toLowerCase() + rand_int);
+        }else{
+             txtusuario.setText(text1.toLowerCase());
+        }
+        }else{
+            txtusuario.setText("");
+        }  */
+    }
+    
+    @FXML
+    void txtUserName(KeyEvent event) {
+        GenerateUserName();
     }
 
     //METODOS GUARDAR
@@ -966,7 +997,7 @@ public class VistaEmpleadosController implements Initializable {
     @FXML
     private void txtNombreEmpKeyTyped(KeyEvent event) {
         char car = event.getCharacter().charAt(0);
-
+        GenerateUserName();
         if (!Character.isAlphabetic(car)&& !Character.isSpaceChar(car) && car > '\b') {
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
@@ -976,7 +1007,7 @@ public class VistaEmpleadosController implements Initializable {
     @FXML
     private void txtidEmpKeyTyped(KeyEvent event) {
         char car = event.getCharacter().charAt(0);
-
+        
         if (!Character.isDigit(car) && car > '\b') {
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
@@ -986,8 +1017,7 @@ public class VistaEmpleadosController implements Initializable {
     @FXML
     private void txtApellidoEmpKeyTyped(KeyEvent event) {
         char car = event.getCharacter().charAt(0);
-        // KeyCode space= event.getCode().BACK_SPACE;
-
+        GenerateUserName();
         if (!Character.isAlphabetic(car) && !Character.isSpaceChar(car) && car > '\b') {
             event.consume();
 
@@ -1246,6 +1276,14 @@ public class VistaEmpleadosController implements Initializable {
         } else {
             Correos c = new Correos(idE, nombreE, correo, tipoC);
             listaCorreo.set(tablaCorreos.getSelectionModel().getSelectedIndex(), c);
+        }
+    }
+
+    @FXML
+    private void txtusuarioKeyTyped(KeyEvent event) {
+        char car = event.getCharacter().charAt(0);
+        if ((Character.isSpaceChar(car))) {
+            event.consume();         
         }
     }
 

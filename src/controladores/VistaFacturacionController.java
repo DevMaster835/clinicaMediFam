@@ -650,11 +650,34 @@ public class VistaFacturacionController implements Initializable {
             double subtotal=0;
         
             subtotal+= (cantidad*precio);
-
-            ProductoC pro= new ProductoC(codigo,nombre,precio,conNeto,cantidad, subtotal);       
-            listadetalle.add(pro);
-            tablaProductos.setItems(listadetalle);
-            limpiarProductos();
+            
+            try {
+                int existencia=0;
+                pps=cone.prepareStatement("SELECT idProducto, nombre, stock FROM productos WHERE idProducto=?");
+                pps.setString(1, txtcodigoProd.getText());
+                rs=pps.executeQuery();
+            
+            if(rs.next()){
+               existencia= Integer.parseInt(rs.getString("stock"));
+            }
+            if(existencia==0){
+                Alert alert= new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Error");
+                alert.setContentText("No hay existencia del producto: "+ txtproducto.getText());
+                alert.showAndWait();
+            }else{
+                ProductoC pro= new ProductoC(codigo,nombre,precio,conNeto,cantidad, subtotal);       
+                listadetalle.add(pro);
+                tablaProductos.setItems(listadetalle);
+                limpiarProductos();
+            }
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(VistaFacturacionController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
         }
         
     }

@@ -3,6 +3,9 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="noFactura" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT facturacion.idFacturacion, DATE_FORMAT(facturacion.fechaFactura,'%d/%m/%Y') as fecha, CONCAT(empleados.nombres, ' ', empleados.apellidos) as Emp, CONCAT(pacientes.nombres, ' ',pacientes.apellidos) as Pac, detalle_facturacion.idProducto, productos.nombre as prod, productos.idPrecioHis, detalle_facturacion.cantidad as cantidadP, (productos.idPrecioHis*detalle_facturacion.cantidad) as SubtotalP
 FROM facturacion
@@ -10,7 +13,7 @@ INNER JOIN empleados ON empleados.idEmpleado=facturacion.idEmpleado
 INNER JOIN pacientes ON pacientes.idPaciente=facturacion.idPaciente
 INNER JOIN detalle_facturacion ON detalle_facturacion.idFacturacion=facturacion.idFacturacion
 LEFT JOIN productos ON productos.idProducto=detalle_facturacion.idProducto
-WHERE facturacion.idFacturacion='15'
+WHERE facturacion.idFacturacion=$P!{noFactura}
 UNION
 SELECT facturacion.idFacturacion, facturacion.fechaFactura, CONCAT(empleados.nombres, ' ', empleados.apellidos) as Emp, CONCAT(pacientes.nombres, ' ',pacientes.apellidos) as Pac, detalle_servicios.idServicio, servicios.servicio, servicios.precio, detalle_servicios.cantidad, (servicios.precio*detalle_servicios.cantidad) as SubTotal
 FROM facturacion
@@ -18,7 +21,7 @@ INNER JOIN empleados ON empleados.idEmpleado=facturacion.idEmpleado
 INNER JOIN pacientes ON pacientes.idPaciente=facturacion.idPaciente
 INNER JOIN detalle_servicios ON detalle_servicios.idFacturacion=facturacion.idFacturacion
 LEFT JOIN servicios on servicios.idServicio=detalle_servicios.idServicio
-where facturacion.idFacturacion='15']]>
+where facturacion.idFacturacion=$P!{noFactura}]]>
 	</queryString>
 	<field name="idFacturacion" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -48,7 +51,7 @@ where facturacion.idFacturacion='15']]>
 				<text><![CDATA[CLINICA MEDICA MEDIFAM]]></text>
 			</staticText>
 			<image>
-				<reportElement x="117" y="25" width="70" height="65" uuid="c228292c-b48e-49a6-9d23-81995a71467f"/>
+				<reportElement x="158" y="25" width="70" height="65" uuid="c228292c-b48e-49a6-9d23-81995a71467f"/>
 				<imageExpression><![CDATA["C:\\Users\\José\\Documents\\NetBeansProjects\\sistemaDevMasters\\src\\imagenes\\logo.png"]]></imageExpression>
 			</image>
 			<staticText>
@@ -66,7 +69,7 @@ where facturacion.idFacturacion='15']]>
 				<text><![CDATA[Barrio Arriba, Comayagua, Honduras]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="347" y="96" width="67" height="19" uuid="7bc1bb81-b4f1-4ea9-9440-1fd26615f293"/>
+				<reportElement x="359" y="96" width="67" height="19" uuid="7bc1bb81-b4f1-4ea9-9440-1fd26615f293"/>
 				<textElement>
 					<font fontName="Segoe UI" size="12"/>
 				</textElement>

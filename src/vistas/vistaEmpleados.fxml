@@ -59,8 +59,8 @@
                         <Label layoutX="59.0" layoutY="243.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Nacionalidad:" />
                         <Label layoutX="360.0" layoutY="243.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Tipo Empleado:" />
                         <TextField fx:id="txtidEmpleado" layoutX="63.0" layoutY="47.0" onKeyTyped="#txtidEmpKeyTyped" styleClass="textboxs" stylesheets="@../css/estilos.css" />
-                        <TextField fx:id="txtNombreEmp" layoutX="63.0" layoutY="114.0" onKeyTyped="#txtNombreEmpKeyTyped" styleClass="textboxs" stylesheets="@../css/estilos.css" />
-                        <TextField fx:id="txtApellidoEmp" layoutX="363.0" layoutY="114.0" onKeyTyped="#txtApellidoEmpKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <TextField fx:id="txtNombreEmp" layoutX="63.0" layoutY="114.0" onKeyReleased="#txtUserName" onKeyTyped="#txtNombreEmpKeyTyped" styleClass="textboxs" stylesheets="@../css/estilos.css" />
+                        <TextField fx:id="txtApellidoEmp" layoutX="363.0" layoutY="114.0" onKeyReleased="#txtUserName" onKeyTyped="#txtApellidoEmpKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <TextArea fx:id="txtDireccionEmp" layoutX="61.0" layoutY="338.0" prefHeight="86.0" prefWidth="444.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <ComboBox fx:id="cmbTipoEmp" layoutX="360.0" layoutY="260.0" prefHeight="25.0" prefWidth="142.0" promptText="Seleccionar&#10;" styleClass="combo-box" stylesheets="@../css/estilos.css" />
                         <ComboBox fx:id="cmbNacionalidad" layoutX="57.0" layoutY="260.0" prefWidth="151.0" promptText="Seleccionar" styleClass="combo-box" stylesheets="@../css/estilos.css" />
@@ -97,7 +97,7 @@
                            <children>
                               <Label layoutX="14.0" layoutY="24.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Usuario:" />
                               <Label layoutX="14.0" layoutY="78.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Contraseña:" />
-                              <TextField fx:id="txtusuario" layoutX="14.0" layoutY="41.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <TextField fx:id="txtusuario" layoutX="14.0" layoutY="41.0" onKeyTyped="#txtusuarioKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
                               <PasswordField fx:id="txtcontraseña" layoutX="15.0" layoutY="95.0" prefHeight="27.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                            </children>
                         </Pane>
