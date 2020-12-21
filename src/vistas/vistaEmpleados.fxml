@@ -20,9 +20,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="656.0" prefWidth="997.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaEmpleadosController">
+<AnchorPane id="AnchorPane" prefHeight="656.0" prefWidth="947.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaEmpleadosController">
    <children>
-      <VBox prefHeight="42.0" prefWidth="998.0" style="-fx-background-color: #223f54;">
+      <VBox prefHeight="42.0" prefWidth="950.0" style="-fx-background-color: #223f54;">
          <children>
             <Label contentDisplay="CENTER" text="Empleados" textFill="WHITE">
                <font>
@@ -58,8 +58,8 @@
                         <Label layoutX="361.0" layoutY="173.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Fecha Nacimiento:" textAlignment="JUSTIFY" />
                         <Label layoutX="59.0" layoutY="243.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Nacionalidad:" />
                         <Label layoutX="360.0" layoutY="243.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Tipo Empleado:" />
-                        <TextField fx:id="txtidEmpleado" layoutX="63.0" layoutY="47.0" onKeyTyped="#txtidEmpKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <TextField fx:id="txtNombreEmp" layoutX="63.0" layoutY="114.0" onKeyTyped="#txtNombreEmpKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <TextField fx:id="txtidEmpleado" layoutX="63.0" layoutY="47.0" onKeyTyped="#txtidEmpKeyTyped" styleClass="textboxs" stylesheets="@../css/estilos.css" />
+                        <TextField fx:id="txtNombreEmp" layoutX="63.0" layoutY="114.0" onKeyTyped="#txtNombreEmpKeyTyped" styleClass="textboxs" stylesheets="@../css/estilos.css" />
                         <TextField fx:id="txtApellidoEmp" layoutX="363.0" layoutY="114.0" onKeyTyped="#txtApellidoEmpKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <TextArea fx:id="txtDireccionEmp" layoutX="61.0" layoutY="338.0" prefHeight="86.0" prefWidth="444.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <ComboBox fx:id="cmbTipoEmp" layoutX="360.0" layoutY="260.0" prefHeight="25.0" prefWidth="142.0" promptText="Seleccionar&#10;" styleClass="combo-box" stylesheets="@../css/estilos.css" />
@@ -81,21 +81,16 @@
                               </RadioButton>
                            </children>
                         </HBox>
-                        <Button fx:id="btnEliminar" alignment="BOTTOM_CENTER" layoutX="608.0" layoutY="384.0" mnemonicParsing="false" onAction="#eliminarEmpleados" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Eliminar" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnCancelar" alignment="BOTTOM_CENTER" layoutX="717.0" layoutY="384.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Cancelar" textFill="WHITE">
+                        <Button fx:id="btnEliminar" alignment="BOTTOM_CENTER" layoutX="748.0" layoutY="269.0" mnemonicParsing="false" onAction="#eliminarEmpleados" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Eliminar" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
                         <DatePicker fx:id="txtFechaNaci" layoutX="360.0" layoutY="190.0" prefHeight="27.0" prefWidth="151.0" styleClass="date-picker" />
                         <Label layoutX="62.0" layoutY="321.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Dirección:" />
-                        <Button fx:id="btnActualizar" alignment="BOTTOM_CENTER" layoutX="717.0" layoutY="313.0" mnemonicParsing="false" onAction="#actualizarEmpleado" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773; -fx-background-radius: 7px;" text="Actualizar" textFill="WHITE">
+                        <Button fx:id="btnActualizar" alignment="CENTER_RIGHT" layoutX="574.0" layoutY="351.0" mnemonicParsing="false" onAction="#actualizarEmpleado" prefHeight="35.0" prefWidth="97.0" styleClass="btn-actualizar" stylesheets="@../css/estilos.css" text="Actualizar" textFill="WHITE">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="13.0" />
                            </font>
                         </Button>
                         <Pane layoutX="588.0" layoutY="105.0" prefHeight="153.0" prefWidth="191.0" style="-fx-border-color: BLACK;">
@@ -109,6 +104,11 @@
                         <Button fx:id="btnGuardar" alignment="CENTER_RIGHT" layoutX="574.0" layoutY="306.0" mnemonicParsing="false" onAction="#guardarEmpleados" prefHeight="35.0" prefWidth="96.0" styleClass="btn-guardar" stylesheets="@../css/estilos.css" text="Guardar" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnCancelar" alignment="BOTTOM_CENTER" layoutX="759.0" layoutY="330.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Cancelar" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
                      </children>
@@ -146,7 +146,7 @@
                               </TableView>
                               <Button fx:id="btnAgregarCorreo" layoutX="25.0" layoutY="146.0" mnemonicParsing="false" onAction="#agregarCorreo" prefHeight="27.0" prefWidth="151.0" text="Agregar Correo" />
                               <Label layoutX="25.0" layoutY="31.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Correo:" />
-                              <TextField fx:id="txtCorreoEmp" layoutX="28.0" layoutY="53.0" style="-fx-background-radius: 11px;" styleClass="text-field" stylesheets="@../css/estilos.css" />
+                              <TextField fx:id="txtCorreoEmp" layoutX="28.0" layoutY="53.0" onKeyTyped="#txtcorreoKeyTyped" style="-fx-background-radius: 11px;" styleClass="text-field" stylesheets="@../css/estilos.css" />
                               <Label layoutX="25.0" layoutY="89.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Tipo Correo:" textAlignment="JUSTIFY" />
                               <ComboBox fx:id="cmbtipoCorreo" layoutX="25.0" layoutY="106.0" prefHeight="27.0" prefWidth="156.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
                               <Button fx:id="btnModificarCo" disable="true" layoutX="25.0" layoutY="182.0" mnemonicParsing="false" onAction="#modificarCorreo" prefHeight="25.0" prefWidth="152.0" text="Modificar Correo" />
@@ -203,17 +203,17 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Button fx:id="Close" layoutX="973.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="closebutton" stylesheets="@../css/estilos.css">
+      <Button fx:id="Close" layoutX="921.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="closebutton" stylesheets="@../css/estilos.css">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Button fx:id="Minimize" layoutX="945.0" layoutY="14.0" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="minimizebutton" stylesheets="@../css/estilos.css">
+      <Button fx:id="Minimize" layoutX="893.0" layoutY="14.0" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="minimizebutton" stylesheets="@../css/estilos.css">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Button fx:id="Return" alignment="BOTTOM_CENTER" layoutX="916.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReturnButton" prefHeight="15.0" prefWidth="15.0" styleClass="returnbutton" stylesheets="@../css/estilos.css" textFill="WHITE">
+      <Button fx:id="Return" alignment="BOTTOM_CENTER" layoutX="864.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReturnButton" prefHeight="15.0" prefWidth="15.0" styleClass="returnbutton" stylesheets="@../css/estilos.css" textFill="WHITE">
          <font>
             <Font name="System Bold" size="10.0" />
          </font>

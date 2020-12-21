@@ -7,7 +7,6 @@ package controladores;
 
 import Conexion.conexion;
 import com.mysql.jdbc.Connection;
-import static controladores.VistaPacientesController.isEmailValid;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -35,12 +34,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
@@ -49,7 +46,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javax.swing.JOptionPane;
 import modelos.Correos;
-import modelos.Pacientes;
 import modelos.Proveedores;
 import modelos.Telefonos;
 
@@ -548,6 +544,15 @@ public class VistaProveedoresController implements Initializable {
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
     }
+    
+    @FXML
+    private void txtcorreoKeyTyped(KeyEvent event) {
+        char car = event.getCharacter().charAt(0);
+        if ((Character.isSpaceChar(car) && car > '\b')) {
+            event.consume();
+            JOptionPane.showMessageDialog(null, "No se permiten espacios");
+        }
+    }
 
     @FXML
     private void agregarTelefono(ActionEvent event) {
@@ -914,5 +919,7 @@ public class VistaProveedoresController implements Initializable {
             listacorreo.set(tablaCorreos.getSelectionModel().getSelectedIndex(), c);
         }
     }
+
+    
     
 }

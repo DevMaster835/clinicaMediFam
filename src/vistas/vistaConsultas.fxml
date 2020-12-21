@@ -19,7 +19,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="715.0" prefWidth="968.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaConsultasController">
    <children>
-      <VBox prefHeight="42.0" prefWidth="977.0" style="-fx-background-color: #30ACE2;">
+      <VBox prefHeight="42.0" prefWidth="977.0" style="-fx-background-color: #223f54;">
          <children>
             <Label contentDisplay="CENTER" text="Consultas Medicas" textFill="WHITE">
                <font>
@@ -95,7 +95,7 @@
                               <Label layoutX="26.0" layoutY="171.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Fecha Cita:" />
                               <DatePicker fx:id="txtfechaCita" editable="false" layoutX="22.0" layoutY="188.0" prefHeight="27.0" prefWidth="127.0" styleClass="date-picker" />
                               <Label layoutX="219.0" layoutY="171.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Hora:" />
-                              <TextField fx:id="txthoraCita" layoutX="213.0" layoutY="188.0" prefHeight="27.0" prefWidth="88.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <TextField fx:id="txthoraCita" layoutX="213.0" layoutY="188.0" onKeyTyped="#txthoraKeyTyped" prefHeight="27.0" prefWidth="88.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                               <Label layoutX="24.0" layoutY="376.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Estado Consulta:" />
                               <ComboBox fx:id="cmbestadoC" layoutX="26.0" layoutY="393.0" prefHeight="25.0" prefWidth="127.0" styleClass="combo-box" stylesheets="@../css/estilos.css" />
                               <Label layoutX="26.0" layoutY="256.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Motivo:" />

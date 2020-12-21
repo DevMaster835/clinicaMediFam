@@ -14,6 +14,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -76,8 +77,6 @@ public class VistaFacturacionController implements Initializable {
     @FXML
     private TextField txtFactura;
     @FXML
-    private DatePicker txtfechaFactura;
-    @FXML
     private TextField txtcodigoProd;
     @FXML
     private TextField txtproducto;
@@ -118,18 +117,6 @@ public class VistaFacturacionController implements Initializable {
     private TableColumn<?, ?> colConNeto;
     @FXML
     private TableColumn<?, ?> colCantidad;
-    @FXML
-    private TextField txtcodigoProd1;
-    @FXML
-    private TextField txtproducto1;
-    @FXML
-    private Button btnbuscarProd1;
-    @FXML
-    private TextField txtprecioProd1;
-    @FXML
-    private Button btnAñadir1;
-    @FXML
-    private Button btnAñadirProd1;
     @FXML
     private Button btnAñadirServ;
     @FXML
@@ -185,6 +172,8 @@ public class VistaFacturacionController implements Initializable {
     String idEmpl= VistaLoginController.idEmp;
     @FXML
     private TableColumn<?, ?> colSubtotal;
+    @FXML
+    private TextField txtFecha;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -198,6 +187,7 @@ public class VistaFacturacionController implements Initializable {
        
        txtempleado.setText(VistaLoginController.nombresEmp + " " + VistaLoginController.apellidosEmp);
        txtidEmp.setText(idEmpl);
+       txtFecha.setText(mostrarFecha());
 
     }   
     
@@ -267,6 +257,25 @@ public class VistaFacturacionController implements Initializable {
         txtprecioS.setText("");
         txtcantidadS.setText("");
     }
+    
+    private String mostrarFecha(){
+        int dia,mes,año;
+        dia= Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        mes=Calendar.getInstance().get(Calendar.MONTH)+ 1;
+        año= Calendar.getInstance().get(Calendar.YEAR);
+        
+        return dia + "-" + mes + "-" + año ;
+    }
+    
+    private String fecha(){
+        int dia,mes,año;
+        dia= Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        mes=Calendar.getInstance().get(Calendar.MONTH)+ 1;
+        año= Calendar.getInstance().get(Calendar.YEAR);
+        
+        return año + "-" + mes + "-" + dia ;
+    }
+    
     
     @FXML
     private void exitButtonOnAction(ActionEvent event){
@@ -406,7 +415,7 @@ public class VistaFacturacionController implements Initializable {
     private void guardarFactura(ActionEvent event) {
       //  if (txtFactura.getText().isEmpty() ){
       //     JOptionPane.showMessageDialog(null, "El campo 'Factura No' está vacío, por favor ingrese el número de factura.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
-       if(txtfechaFactura.getValue() == null ){
+       if(txtFecha.getText().isEmpty()){
            JOptionPane.showMessageDialog(null, "El campo 'Fecha' está vacío, por favor seleccione la fecha.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
        }else if(txtidEmp.getText().isEmpty()){
            JOptionPane.showMessageDialog(null, "El campo 'Identidad' está vacío, por favor ingrese la identidad del empleado.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
@@ -435,7 +444,8 @@ public class VistaFacturacionController implements Initializable {
 
             case "Productos":{
                 pps=cone.prepareStatement("INSERT INTO facturacion(fechaFactura, idEmpleado, idPaciente) VALUES(?,?,?)");
-                pps.setString(1, txtfechaFactura.getValue().toString());
+                //pps.setString(1, txtfechaFactura.getValue().toString());
+                pps.setString(1, fecha());
                 pps.setString(2, idEmpl);
                 pps.setString(3, txtidPac.getText());
                 pps.executeUpdate();
@@ -470,7 +480,8 @@ public class VistaFacturacionController implements Initializable {
                 break;
             case "Servicios":{
                 pps=cone.prepareStatement("INSERT INTO facturacion(fechaFactura, idEmpleado, idPaciente) VALUES(?,?,?)");
-                pps.setString(1, txtfechaFactura.getValue().toString());
+                //pps.setString(1, txtfechaFactura.getValue().toString());
+                pps.setString(1, fecha());
                 pps.setString(2, idEmpl);
                 pps.setString(3, txtidPac.getText());
                 pps.executeUpdate();
@@ -497,7 +508,8 @@ public class VistaFacturacionController implements Initializable {
                 break;
             case "Producto-Servicio":{
                 pps=cone.prepareStatement("INSERT INTO facturacion(fechaFactura, idEmpleado, idPaciente) VALUES(?,?,?)");
-                pps.setString(1, txtfechaFactura.getValue().toString());
+                //pps.setString(1, txtfechaFactura.getValue().toString());
+                pps.setString(1, fecha());
                 pps.setString(2, idEmpl);
                 pps.setString(3, txtidPac.getText());
                 pps.executeUpdate();
@@ -567,7 +579,7 @@ public class VistaFacturacionController implements Initializable {
     private void txtidEmpKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car>'\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -587,7 +599,7 @@ public class VistaFacturacionController implements Initializable {
     private void txtcodProdKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car>'\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -597,7 +609,7 @@ public class VistaFacturacionController implements Initializable {
     private void txtcantidadKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car>'\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -607,7 +619,7 @@ public class VistaFacturacionController implements Initializable {
     private void txtidPacKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car>'\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -616,57 +628,63 @@ public class VistaFacturacionController implements Initializable {
     @FXML
     private void añadirProducto(ActionEvent event) {
         
-        int codigo = Integer.parseInt(txtcodigoProd.getText());
-        String nombre = txtproducto.getText();      
-        int conNeto = Integer.parseInt(txtConNeto.getText());
-         Double precio = Double.parseDouble(txtprecioProd.getText());
-        int cantidad = Integer.parseInt(txtcantidad.getText());
-        double subtotal=0;
         
-        subtotal+= (cantidad*precio);
+        if(txtcodigoProd.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El código del producto no puede ir vacío", "¡Error!", JOptionPane.ERROR_MESSAGE);
+            txtcodigoProd.requestFocus();          
+        }else if(txtproducto.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El nombre del producto no puede ir vacío", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if(txtConNeto.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El contenido neto no puede ir vacío", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if(txtprecioProd.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El precio del producto no puede ir vacío", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if(txtcantidad.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "La cantidad no puede ir vacía", "¡Error!", JOptionPane.ERROR_MESSAGE);
+            txtcantidad.requestFocus();
+        }else{
+            int codigo = Integer.parseInt(txtcodigoProd.getText());
+            String nombre = txtproducto.getText();      
+            int conNeto = Integer.parseInt(txtConNeto.getText());
+            Double precio = Double.parseDouble(txtprecioProd.getText());
+            int cantidad = Integer.parseInt(txtcantidad.getText());
+            double subtotal=0;
         
+            subtotal+= (cantidad*precio);
 
-        ProductoC pro= new ProductoC(codigo,nombre,precio,conNeto,cantidad, subtotal);
-       // Productos prod = new Productos(codigo,nombre,precio,conNeto,cantidad);
-        
-        listadetalle.add(pro);
-        tablaProductos.setItems(listadetalle);
-        limpiarProductos();
-        
+            ProductoC pro= new ProductoC(codigo,nombre,precio,conNeto,cantidad, subtotal);       
+            listadetalle.add(pro);
+            tablaProductos.setItems(listadetalle);
+            limpiarProductos();
+        }
         
     }
-    /*
-    public double calcularP(){
-          
-          double subtotal=0;
-          for(int i=0;i<tablaProductos.getItems().size();i++){
-              int cantidad=tablaProductos.getItems().get(i).getCantidad();
-              double precio=tablaProductos.getItems().get(i).getPrecio();
-              tablaProductos.setItems(listadetalle);
-              subtotal+=precio*cantidad;
-          
-         
-             
-         }
-        return(subtotal);
-        
-    }
-*/
+
     @FXML
     private void añadirServicio(ActionEvent event) {
-       int codigo = Integer.parseInt(txtcodigoS.getText());
-       String servicio= txtservicio.getText();
-       Double precio= Double.parseDouble(txtprecioS.getText());
-       int cantidad = Integer.parseInt(txtcantidadS.getText());
+        if(txtcodigoS.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El código del servicio no puede ir vacío", "¡Error!", JOptionPane.ERROR_MESSAGE);
+            txtcodigoS.requestFocus();
+        }else if(txtservicio.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El nombre del servicio no puede ir vacío", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if(txtprecioS.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "El precio del servicio no puede ir vacío", "¡Error!", JOptionPane.ERROR_MESSAGE);
+        }else if(txtcantidadS.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "La cantidad no puede ir vacía", "¡Error!", JOptionPane.ERROR_MESSAGE);
+            txtcantidadS.requestFocus();
+        }else{
+            int codigo = Integer.parseInt(txtcodigoS.getText());
+            String servicio= txtservicio.getText();
+            Double precio= Double.parseDouble(txtprecioS.getText());
+            int cantidad = Integer.parseInt(txtcantidadS.getText());      
+            double subtotal=0;      
+            subtotal+= (cantidad*precio);
        
-       double subtotal=0;      
-       subtotal+= (cantidad*precio);
+            Servicios serv= new Servicios(codigo,servicio,precio,cantidad, subtotal);
        
-       Servicios serv= new Servicios(codigo,servicio,precio,cantidad, subtotal);
-       
-       servicios.add(serv);
-       tablaServicios.setItems(servicios);
-       limpiarServicios();
+            servicios.add(serv);
+            tablaServicios.setItems(servicios);
+            limpiarServicios();
+        }    
     }
 
     @FXML
@@ -745,15 +763,29 @@ public class VistaFacturacionController implements Initializable {
             Logger.getLogger(VistaFacturacionController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    @FXML
-    private void AgregarDetalle(ActionEvent event) {
-    }
-
-
-
-
     
+    public void imprimirFactura3(){
+        try {
+            JasperReport reporte =null;
+            String path="src//reportes//facturaProdServicio.jasper";
+            
+            Map parametro= new HashMap();
+            parametro.put("noFactura", txtFactura.getText());
+            
+            reporte= (JasperReport) JRLoader.loadObjectFromFile(path);
+            
+            JasperPrint jprint= JasperFillManager.fillReport(reporte, parametro, cone);
+            
+            JasperViewer view = new JasperViewer(jprint, false);
+            
+            view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            
+            view.setVisible(true);
+            
+        } catch (JRException ex) {
+            Logger.getLogger(VistaFacturacionController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 
 }

@@ -723,6 +723,19 @@ public class VistaPacientesController implements Initializable {
             lbTelefono.setVisible(false);
         }
     }
+    
+    @FXML
+    private void txtcorreoKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if((Character.isSpaceChar(car) && car>'\b')){
+            event.consume();
+            lbCorreo.setVisible(true);
+            lbCorreo.setText("No se permiten espacios");
+        }else{
+            lbCorreo.setVisible(false);
+        }
+    }
 
     @FXML
     private void txtpesoKeyTyped(KeyEvent event) {
@@ -1195,6 +1208,8 @@ public class VistaPacientesController implements Initializable {
         tblPacientes.setItems(sortedData);
         
     }
+
+    
     
         
         

@@ -17,7 +17,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="593.0" prefWidth="859.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaProveedoresController">
    <children>
-      <VBox layoutX="-14.0" layoutY="-1.0" prefHeight="42.0" prefWidth="893.0" style="-fx-background-color: #30ACE2;">
+      <VBox layoutX="-14.0" layoutY="-1.0" prefHeight="42.0" prefWidth="893.0" style="-fx-background-color: #223f54;">
          <children>
             <Label contentDisplay="CENTER" text="Proveedores" textFill="WHITE">
                <font>
@@ -104,7 +104,7 @@
                               </TableView>
                               <Button fx:id="btnAgregarCorreo" layoutX="25.0" layoutY="91.0" mnemonicParsing="false" onAction="#agregarCorreo" prefHeight="27.0" prefWidth="151.0" text="Agregar Correo" />
                               <Label layoutX="25.0" layoutY="30.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Correo:" />
-                              <TextField fx:id="txtcorreoProv" layoutX="25.0" layoutY="49.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <TextField fx:id="txtcorreoProv" layoutX="25.0" layoutY="49.0" onKeyTyped="#txtcorreoKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
                               <Button fx:id="btnModificarCorreo" alignment="TOP_CENTER" disable="true" layoutX="25.0" layoutY="131.0" mnemonicParsing="false" onAction="#modificarCorreo" prefHeight="25.0" prefWidth="153.0" text="Modificar Correo" />
                            </children>
                         </Pane>

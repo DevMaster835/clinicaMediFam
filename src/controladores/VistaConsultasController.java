@@ -481,7 +481,7 @@ public class VistaConsultasController implements Initializable {
     private void txtConsultaKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car > '\b' ){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -491,7 +491,7 @@ public class VistaConsultasController implements Initializable {
     private void txtidPacKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car > '\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -501,7 +501,7 @@ public class VistaConsultasController implements Initializable {
     private void txtidEmpKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car > '\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
@@ -547,6 +547,10 @@ public class VistaConsultasController implements Initializable {
     @FXML
     private void imprimirConsultas(ActionEvent event) {
         imprimirConsulta();
+    }
+
+    @FXML
+    private void txthoraKeyTyped(KeyEvent event) {
     }
 
     

@@ -14,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="684.0" prefWidth="959.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaHistorialController">
    <children>
-      <VBox prefHeight="42.0" prefWidth="963.0" style="-fx-background-color: #30ACE2;">
+      <VBox prefHeight="42.0" prefWidth="963.0" style="-fx-background-color: #223f54;">
          <children>
             <Label contentDisplay="CENTER" text="Historial Medico" textFill="WHITE">
                <font>
@@ -29,9 +29,9 @@
       <Label layoutX="127.0" layoutY="146.0" text="N° Historial:" />
       <Label layoutX="358.0" layoutY="196.0" text="Fecha:" />
       <Label layoutX="127.0" layoutY="196.0" text="N° Consulta:" />
-      <TextField fx:id="txtnoHistorial" layoutX="196.0" layoutY="142.0" onKeyTyped="#txtHistorialKeyTyped" prefHeight="25.0" prefWidth="93.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-      <TextField fx:id="txtnoConsulta" layoutX="196.0" layoutY="192.0" onKeyTyped="#txtConsultaKeyTyped" prefHeight="27.0" prefWidth="117.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-      <DatePicker fx:id="txtfecha" layoutX="405.0" layoutY="192.0" prefHeight="25.0" prefWidth="128.0" styleClass="textos" />
+      <TextField fx:id="txtnoHistorial" layoutX="196.0" layoutY="142.0" onKeyTyped="#txtHistorialKeyTyped" prefHeight="25.0" prefWidth="93.0" stylesheets="@../css/estilos.css" />
+      <TextField fx:id="txtnoConsulta" layoutX="196.0" layoutY="192.0" onKeyTyped="#txtConsultaKeyTyped" prefHeight="27.0" prefWidth="117.0" stylesheets="@../css/estilos.css" />
+      <DatePicker fx:id="txtfecha" editable="false" layoutX="405.0" layoutY="192.0" prefHeight="25.0" prefWidth="128.0" styleClass="textos" />
       <Label layoutX="404.0" layoutY="83.0" text="HISTORIAL MEDICO DE LOS PACIENTES">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -45,15 +45,15 @@
                </font>
             </Label>
             <Label layoutX="20.0" layoutY="54.0" text="Paciente:" />
-            <TextField fx:id="txtPaciente" layoutX="73.0" layoutY="49.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <TextField fx:id="txtPaciente" layoutX="73.0" layoutY="49.0" stylesheets="@../css/estilos.css" />
             <Label layoutX="19.0" layoutY="93.0" text="Edad:" />
-            <TextField fx:id="txtedad" layoutX="73.0" layoutY="88.0" prefHeight="25.0" prefWidth="48.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <TextField fx:id="txtedad" layoutX="73.0" layoutY="88.0" prefHeight="25.0" prefWidth="48.0" stylesheets="@../css/estilos.css" />
             <Label layoutX="19.0" layoutY="136.0" text="Peso:" />
-            <TextField fx:id="txtpeso" layoutX="73.0" layoutY="131.0" prefHeight="25.0" prefWidth="48.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <TextField fx:id="txtpeso" layoutX="73.0" layoutY="131.0" prefHeight="25.0" prefWidth="48.0" stylesheets="@../css/estilos.css" />
             <Label layoutX="150.0" layoutY="135.0" text="Altura:" />
-            <TextField fx:id="txtaltura" layoutX="195.0" layoutY="131.0" prefHeight="25.0" prefWidth="48.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <TextField fx:id="txtaltura" layoutX="195.0" layoutY="131.0" prefHeight="25.0" prefWidth="48.0" stylesheets="@../css/estilos.css" />
             <Label layoutX="18.0" layoutY="170.0" text="Tipo &#10;Sangre:" textAlignment="JUSTIFY" />
-            <TextField fx:id="txttipoSangre" layoutX="72.0" layoutY="174.0" prefHeight="27.0" prefWidth="48.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <TextField fx:id="txttipoSangre" layoutX="72.0" layoutY="174.0" prefHeight="27.0" prefWidth="48.0" stylesheets="@../css/estilos.css" />
          </children>
       </Pane>
       <Pane layoutX="508.0" layoutY="251.0" prefHeight="225.0" prefWidth="290.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos" stylesheets="@../css/estilos.css">
@@ -67,14 +67,14 @@
             <Label layoutX="25.0" layoutY="93.0" text="Presion &#10;Arterial:" textAlignment="JUSTIFY" />
             <Label layoutX="25.0" layoutY="146.0" text="Pulso:" />
             <Label layoutX="24.0" layoutY="187.0" text="Respiracion:" />
-            <TextField fx:id="txtTemperatura" layoutX="104.0" layoutY="54.0" onKeyTyped="#txtTempKeyTyped" prefHeight="25.0" prefWidth="66.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-            <TextField fx:id="txtpresion" layoutX="104.0" layoutY="98.0" onKeyTyped="#txtpresionKeyTyped" prefHeight="25.0" prefWidth="66.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-            <TextField fx:id="txtpulso" layoutX="104.0" layoutY="142.0" onKeyTyped="#txtpulsoKeyTyped" prefHeight="25.0" prefWidth="66.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-            <TextField fx:id="txtrespiracion" layoutX="104.0" layoutY="183.0" onKeyTyped="#txtrespKeyTyped" prefHeight="25.0" prefWidth="66.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <TextField fx:id="txtTemperatura" layoutX="104.0" layoutY="54.0" onKeyTyped="#txtTempKeyTyped" prefHeight="25.0" prefWidth="66.0" stylesheets="@../css/estilos.css" />
+            <TextField fx:id="txtpresion" layoutX="104.0" layoutY="98.0" onKeyTyped="#txtpresionKeyTyped" prefHeight="25.0" prefWidth="66.0" stylesheets="@../css/estilos.css" />
+            <TextField fx:id="txtpulso" layoutX="104.0" layoutY="142.0" onKeyTyped="#txtpulsoKeyTyped" prefHeight="25.0" prefWidth="66.0" stylesheets="@../css/estilos.css" />
+            <TextField fx:id="txtrespiracion" layoutX="104.0" layoutY="183.0" onKeyTyped="#txtrespKeyTyped" prefHeight="25.0" prefWidth="66.0" stylesheets="@../css/estilos.css" />
          </children>
       </Pane>
       <Label layoutX="599.0" layoutY="196.0" text="Medico:" />
-      <TextField fx:id="txtmedico" layoutX="656.0" layoutY="192.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <TextField fx:id="txtmedico" layoutX="656.0" layoutY="192.0" stylesheets="@../css/estilos.css" />
       <Pane layoutX="125.0" layoutY="501.0" prefHeight="159.0" prefWidth="676.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos" stylesheets="@../css/estilos.css">
          <children>
             <Label layoutX="49.0" layoutY="14.0" text="ANANMESIS">

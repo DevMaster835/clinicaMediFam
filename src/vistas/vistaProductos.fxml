@@ -16,7 +16,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="510.0" prefWidth="888.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaProductosController">
    <children>
-      <VBox prefHeight="42.0" prefWidth="894.0" style="-fx-background-color: #30ACE2;">
+      <VBox prefHeight="42.0" prefWidth="894.0" style="-fx-background-color: #223f54;">
          <children>
             <Label contentDisplay="CENTER" text="Productos" textFill="WHITE">
                <font>
@@ -47,11 +47,11 @@
                         <Label layoutX="291.0" layoutY="195.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Existencia:" />
                         <Label layoutX="42.0" layoutY="195.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Fecha Vencimiento:" textAlignment="JUSTIFY" />
                         <Label layoutX="285.0" layoutY="116.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Contenido Neto:" textAlignment="JUSTIFY" />
-                        <TextField fx:id="txtcodigoProd" layoutX="40.0" layoutY="61.0" onKeyTyped="#txtCodigoKeyTyped" prefHeight="27.0" prefWidth="118.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <TextField fx:id="txtnombreProd" layoutX="42.0" layoutY="133.0" onKeyTyped="#txtNombreKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <TextField fx:id="txtPrecio" layoutX="40.0" layoutY="283.0" onKeyTyped="#txtPrecioKeyTyped" prefHeight="27.0" prefWidth="64.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <TextField fx:id="txtExistencia" layoutX="285.0" layoutY="212.0" onKeyTyped="#txtExistenciaKeyTyped" prefHeight="27.0" prefWidth="120.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-                        <TextField fx:id="txtconNeto" layoutX="285.0" layoutY="133.0" onKeyTyped="#txtConetidoKeyTyped" prefHeight="27.0" prefWidth="115.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <TextField fx:id="txtcodigoProd" layoutX="40.0" layoutY="61.0" onKeyTyped="#txtCodigoKeyTyped" prefHeight="27.0" prefWidth="118.0" stylesheets="@../css/estilos.css" />
+                        <TextField fx:id="txtnombreProd" layoutX="42.0" layoutY="133.0" onKeyTyped="#txtNombreKeyTyped" stylesheets="@../css/estilos.css" />
+                        <TextField fx:id="txtPrecio" layoutX="40.0" layoutY="283.0" onKeyTyped="#txtPrecioKeyTyped" prefHeight="27.0" prefWidth="64.0" stylesheets="@../css/estilos.css" />
+                        <TextField fx:id="txtExistencia" layoutX="285.0" layoutY="212.0" onKeyTyped="#txtExistenciaKeyTyped" prefHeight="27.0" prefWidth="120.0" stylesheets="@../css/estilos.css" />
+                        <TextField fx:id="txtconNeto" layoutX="285.0" layoutY="133.0" onKeyTyped="#txtConetidoKeyTyped" prefHeight="27.0" prefWidth="115.0" stylesheets="@../css/estilos.css" />
                         <Button fx:id="btnEliminar" alignment="BOTTOM_CENTER" disable="true" layoutX="649.0" layoutY="195.0" mnemonicParsing="false" onAction="#eliminarProductos" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Eliminar" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
@@ -67,7 +67,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <DatePicker fx:id="txtfechaVen" layoutX="42.0" layoutY="212.0" prefHeight="27.0" prefWidth="155.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <DatePicker fx:id="txtfechaVen" editable="false" layoutX="42.0" layoutY="212.0" prefHeight="27.0" prefWidth="155.0" />
                         <Button fx:id="btnActualizar" alignment="BOTTOM_CENTER" disable="true" layoutX="649.0" layoutY="106.0" mnemonicParsing="false" onAction="#actualizarProductos" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773; -fx-background-radius: 7px;" text="Actualizar" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />

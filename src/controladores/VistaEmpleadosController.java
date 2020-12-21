@@ -967,7 +967,7 @@ public class VistaEmpleadosController implements Initializable {
     private void txtNombreEmpKeyTyped(KeyEvent event) {
         char car = event.getCharacter().charAt(0);
 
-        if (!Character.isAlphabetic(car) && car > '\b') {
+        if (!Character.isAlphabetic(car)&& !Character.isSpaceChar(car) && car > '\b') {
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
         }
@@ -1003,6 +1003,15 @@ public class VistaEmpleadosController implements Initializable {
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }
 
+    }
+    
+    @FXML
+    private void txtcorreoKeyTyped(KeyEvent event) {
+        char car = event.getCharacter().charAt(0);
+        if ((Character.isSpaceChar(car) && car > '\b')) {
+            event.consume();
+            JOptionPane.showMessageDialog(null, "No se permiten espacios");
+        }
     }
 
     @FXML
@@ -1239,5 +1248,7 @@ public class VistaEmpleadosController implements Initializable {
             listaCorreo.set(tablaCorreos.getSelectionModel().getSelectedIndex(), c);
         }
     }
+
+    
 
 }

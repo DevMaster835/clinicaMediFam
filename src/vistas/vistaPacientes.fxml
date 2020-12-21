@@ -22,7 +22,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="656.0" prefWidth="997.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaPacientesController">
    <children>
-      <VBox prefHeight="42.0" prefWidth="997.0" style="-fx-background-color: #30ACE2;">
+      <VBox prefHeight="42.0" prefWidth="997.0" style="-fx-background-color: #223f54;">
          <children>
             <Label contentDisplay="CENTER" prefHeight="42.0" prefWidth="152.0" text="Pacientes" textFill="WHITE">
                <font>
@@ -158,11 +158,11 @@
                                     <TableColumn fx:id="colTipoC" prefWidth="74.0" text="Tipo Correo" />
                                  </columns>
                               </TableView>
-                              <Button fx:id="btnAgregarCorreo" layoutX="25.0" layoutY="143.0" mnemonicParsing="false" onAction="#agregarCorreo" prefHeight="27.0" prefWidth="151.0" text="Agregar Correo" />
+                              <Button fx:id="btnAgregarCorreo" layoutX="25.0" layoutY="148.0" mnemonicParsing="false" onAction="#agregarCorreo" prefHeight="27.0" prefWidth="151.0" text="Agregar Correo" />
                               <Label layoutX="25.0" layoutY="31.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Correo:" />
-                              <Label layoutX="25.0" layoutY="89.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Tipo Correo:" textAlignment="JUSTIFY" />
-                              <TextField fx:id="txtCorreoPaciente" layoutX="25.0" layoutY="48.0" styleClass="textos" stylesheets="@../css/estilos.css" />
-                              <ComboBox fx:id="cmbCorreo" layoutX="26.0" layoutY="106.0" prefWidth="150.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Label layoutX="26.0" layoutY="92.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Tipo Correo:" textAlignment="JUSTIFY" />
+                              <TextField fx:id="txtCorreoPaciente" layoutX="25.0" layoutY="48.0" onKeyTyped="#txtcorreoKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <ComboBox fx:id="cmbCorreo" layoutX="27.0" layoutY="109.0" prefWidth="150.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
                               <Label fx:id="lbCorreo" layoutX="26.0" layoutY="75.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
                                  <font>
                                     <Font name="System Bold" size="12.0" />

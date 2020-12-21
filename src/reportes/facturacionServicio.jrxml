@@ -2,36 +2,40 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturacionServicio" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="743e6aff-734f-4aa3-bb59-c855aadc955c">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="82"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="noFactura" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT facturacion.idFacturacion, facturacion.fechaFactura, empleados.nombres AS nombreE, empleados.apellidos as apellidoE, pacientes.nombres as nombreP, pacientes.apellidos as apellidoP, detalle_servicios.idServicio as idS, servicios.servicio as Servicio, servicios.precio as Precio, detalle_servicios.cantidad, (servicios.precio*detalle_servicios.cantidad) as Subtotal FROM facturacion,empleados,pacientes, servicios,detalle_servicios WHERE facturacion.idEmpleado=empleados.idEmpleado and facturacion.idPaciente=pacientes.idPaciente and detalle_servicios.idServicio=servicios.idServicio and facturacion.idFacturacion=detalle_servicios.idFacturacion and facturacion.idFacturacion=$P!{noFactura}]]>
+		<![CDATA[SELECT facturacion.idFacturacion, DATE_FORMAT(facturacion.fechaFactura,'%d/%m/%Y') as fecha, CONCAT(empleados.nombres, ' ', empleados.apellidos) as Emp, CONCAT(pacientes.nombres, ' ',pacientes.apellidos) as Pac, detalle_servicios.idServicio, servicios.servicio, servicios.precio, detalle_servicios.cantidad, (servicios.precio*detalle_servicios.cantidad) as SubTotal
+FROM facturacion
+INNER JOIN empleados ON empleados.idEmpleado=facturacion.idEmpleado
+INNER JOIN pacientes ON pacientes.idPaciente=facturacion.idPaciente
+INNER JOIN detalle_servicios ON detalle_servicios.idFacturacion=facturacion.idFacturacion
+LEFT JOIN servicios on servicios.idServicio=detalle_servicios.idServicio
+where facturacion.idFacturacion=$P!{noFactura}]]>
 	</queryString>
 	<field name="idFacturacion" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="fechaFactura" class="java.sql.Date">
+	<field name="fecha" class="java.lang.String"/>
+	<field name="Emp" class="java.lang.String"/>
+	<field name="Pac" class="java.lang.String"/>
+	<field name="idServicio" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="nombreE" class="java.lang.String"/>
-	<field name="apellidoE" class="java.lang.String"/>
-	<field name="nombreP" class="java.lang.String"/>
-	<field name="apellidoP" class="java.lang.String"/>
-	<field name="idS" class="java.lang.Integer"/>
-	<field name="Servicio" class="java.lang.String">
+	<field name="servicio" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Precio" class="java.math.BigDecimal">
+	<field name="precio" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="cantidad" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Subtotal" class="java.math.BigDecimal"/>
+	<field name="SubTotal" class="java.math.BigDecimal"/>
 	<variable name="total" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{Subtotal}]]></variableExpression>
+		<variableExpression><![CDATA[$F{SubTotal}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -39,200 +43,186 @@
 	<title>
 		<band height="124" splitType="Stretch">
 			<staticText>
-				<reportElement x="279" y="62" width="214" height="20" uuid="1101762f-224a-4688-9155-cf21bb3974b4"/>
+				<reportElement x="226" y="18" width="357" height="32" uuid="31e52434-1582-41a3-ad1e-7d2ce3dd4657"/>
 				<textElement>
-					<font size="12"/>
+					<font fontName="Segoe UI" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLINICA MEDICA MEDIFAM]]></text>
+			</staticText>
+			<image>
+				<reportElement x="147" y="18" width="70" height="65" uuid="11a0d434-6159-41ea-9b89-4f6f3476b284"/>
+				<imageExpression><![CDATA["C:\\Users\\José\\Documents\\NetBeansProjects\\sistemaDevMasters\\src\\imagenes\\logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="282" y="70" width="214" height="20" uuid="a2d82213-2da8-4004-87b9-9b5feec8f0a0"/>
+				<textElement>
+					<font fontName="Segoe UI" size="12"/>
 				</textElement>
 				<text><![CDATA[Barrio Arriba, Comayagua, Honduras]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="223" y="10" width="327" height="32" uuid="0c37fda6-1fc2-473b-a16c-8c758e1a9633"/>
+				<reportElement x="309" y="50" width="162" height="20" uuid="de66c427-e89c-41a3-a930-41d5bcb02a5d"/>
 				<textElement>
-					<font fontName="Franklin Gothic Book" size="26" isBold="true"/>
-				</textElement>
-				<text><![CDATA[CLINICA MEDICA MEDIFAM]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="306" y="42" width="162" height="20" uuid="17b6a661-0031-4fba-b1d8-5d24f0185768"/>
-				<textElement>
-					<font fontName="Franklin Gothic Demi" size="14"/>
+					<font fontName="Segoe UI" size="14"/>
 				</textElement>
 				<text><![CDATA[¡Cuidando de tu familia!]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="347" y="82" width="67" height="19" uuid="2971e89e-bb4c-4535-a1c2-a01687179510"/>
+				<reportElement x="337" y="89" width="67" height="19" uuid="de9defc7-d768-4ce3-8310-81431ad7fc63"/>
 				<textElement>
-					<font size="12"/>
+					<font fontName="Segoe UI" size="12"/>
 				</textElement>
 				<text><![CDATA[2772-8974]]></text>
 			</staticText>
-			<image>
-				<reportElement x="131" y="10" width="88" height="72" uuid="055e4481-5d3b-4ed4-aae2-6eade8df5a3f"/>
-				<imageExpression><![CDATA["C:\\Users\\José\\Documents\\NetBeansProjects\\sistemaDevMasters\\src\\imagenes\\logo.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="155" splitType="Stretch">
-			<textField>
-				<reportElement x="170" y="25" width="109" height="20" uuid="4987ac25-7072-4876-8964-6d0f10a326e5"/>
-				<textElement>
-					<font size="13"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{idFacturacion}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="72" y="25" width="88" height="20" uuid="1bd77af0-1429-4904-9c96-72396f00b526"/>
 				<textElement>
-					<font size="13" isBold="true"/>
+					<font fontName="Segoe UI" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Factura No:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="603" y="25" width="100" height="20" uuid="f3c2bfd7-d596-47d6-98b2-73c6ac6fe50d"/>
-				<textElement>
-					<font size="13"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{fechaFactura}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="483" y="25" width="105" height="20" uuid="2c0fcbe3-99c4-4a00-8703-0bb027b48d57"/>
 				<textElement>
-					<font size="13" isBold="true"/>
+					<font fontName="Segoe UI" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha Emisión:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="164" y="70" width="88" height="20" uuid="111b8779-a1cd-4e4b-bed8-37da5a3f2d88"/>
-				<textElement>
-					<font size="13"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{nombreP}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="251" y="70" width="100" height="20" uuid="70806922-0049-4021-8722-587eae36da76"/>
-				<textElement>
-					<font size="13"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{apellidoP}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="72" y="70" width="67" height="20" uuid="35ebc828-56a2-42dd-89ca-1a9537ed164b"/>
+				<reportElement x="72" y="113" width="67" height="20" uuid="35ebc828-56a2-42dd-89ca-1a9537ed164b"/>
 				<textElement>
-					<font size="13" isBold="true"/>
+					<font fontName="Segoe UI" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Paciente:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="72" y="108" width="67" height="20" uuid="4ed37d54-3654-4e04-a5f9-6715269da221"/>
+				<reportElement x="72" y="70" width="67" height="20" uuid="4ed37d54-3654-4e04-a5f9-6715269da221"/>
 				<textElement>
-					<font size="13" isBold="true"/>
+					<font fontName="Segoe UI" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cajero:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="164" y="108" width="88" height="20" uuid="8103f3c6-85d7-4462-8b6d-fdefced9ec4b"/>
+				<reportElement x="160" y="25" width="100" height="20" uuid="74f1f830-36c1-48ff-ae90-c2c4e76b1e25"/>
 				<textElement>
-					<font size="13"/>
+					<font fontName="Segoe UI" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nombreE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{idFacturacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="251" y="108" width="100" height="20" uuid="5bc5e951-d328-4ff3-b5d6-fd717a268f88"/>
+				<reportElement x="139" y="70" width="143" height="20" uuid="c607faaa-ab77-4cd6-ae6c-3c83bfcd7637"/>
 				<textElement>
-					<font size="13"/>
+					<font fontName="Segoe UI" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{apellidoE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Emp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="139" y="113" width="143" height="20" uuid="006cfdeb-d5a2-483e-b358-2b6938c6f7fd"/>
+				<textElement>
+					<font fontName="Segoe UI" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Pac}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="588" y="25" width="100" height="20" uuid="a6e06435-1e98-48ea-a240-1e15c9d1e4b0"/>
+				<textElement>
+					<font fontName="Segoe UI" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="24" splitType="Stretch">
 			<staticText>
-				<reportElement x="68" y="2" width="49" height="20" uuid="795019ed-8e27-4f13-8f86-f921bdc5a3de"/>
+				<reportElement x="72" y="2" width="49" height="20" uuid="795019ed-8e27-4f13-8f86-f921bdc5a3de"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font fontName="Segoe UI" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Código:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="216" y="2" width="68" height="20" uuid="d99fbecf-067c-4bca-9ef6-8baf54d7123e"/>
+				<reportElement x="216" y="2" width="93" height="20" uuid="d99fbecf-067c-4bca-9ef6-8baf54d7123e"/>
 				<textElement>
-					<font size="13" isBold="true"/>
+					<font fontName="Segoe UI" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Servicio]]></text>
+				<text><![CDATA[Descripción]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="488" y="0" width="64" height="20" uuid="f5193316-4d27-414d-be98-52a03c0b0142"/>
+				<reportElement x="478" y="0" width="64" height="20" uuid="f5193316-4d27-414d-be98-52a03c0b0142"/>
 				<textElement>
-					<font size="13" isBold="true"/>
+					<font fontName="Segoe UI" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cantidad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="609" y="0" width="100" height="20" uuid="5ab19e5b-3006-4575-b1ba-1b2cd05d7a10"/>
+				<reportElement x="605" y="0" width="100" height="20" uuid="5ab19e5b-3006-4575-b1ba-1b2cd05d7a10"/>
 				<textElement>
-					<font size="13" isBold="true"/>
+					<font fontName="Segoe UI" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Subtotal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="350" y="2" width="100" height="20" uuid="156dbc6f-4738-4350-8e0e-05cb8bcdf408"/>
+				<reportElement x="359" y="2" width="100" height="20" uuid="156dbc6f-4738-4350-8e0e-05cb8bcdf408"/>
 				<textElement>
-					<font size="13" isBold="true"/>
+					<font fontName="Segoe UI" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Precio]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="39" splitType="Stretch">
+		<band height="31" splitType="Stretch">
 			<textField>
-				<reportElement x="68" y="10" width="77" height="20" uuid="65f64c91-2f9a-455f-af14-da00b4e58f21"/>
+				<reportElement x="72" y="5" width="100" height="20" uuid="cc845520-da75-498a-a1b8-e0a214440941"/>
 				<textElement>
-					<font size="13"/>
+					<font fontName="Segoe UI" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{idS}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{idServicio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="216" y="10" width="90" height="20" uuid="7b568c34-385f-462e-b47c-cee11e226645"/>
+				<reportElement x="216" y="5" width="109" height="20" uuid="88d55d0d-b480-4c44-b64c-044c51669b54"/>
 				<textElement>
-					<font size="13"/>
+					<font fontName="Segoe UI" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{Servicio}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{servicio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="486" y="13" width="98" height="20" uuid="7a471ce7-5f16-4832-861f-6989bd738e32"/>
-				<textElement textAlignment="Justified">
-					<font size="13"/>
+				<reportElement x="366" y="5" width="100" height="20" uuid="00046256-a0c9-4f65-9d39-3d96c190590b"/>
+				<textElement>
+					<font fontName="Segoe UI" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="494" y="5" width="100" height="20" uuid="b7579456-28d6-41a4-a0ff-510141dbb03a"/>
+				<textElement>
+					<font fontName="Segoe UI" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="616" y="11" width="100" height="20" uuid="b274ad3e-430b-428b-a78c-265630e40976"/>
+				<reportElement x="619" y="5" width="100" height="20" uuid="c36b5b27-c76d-41d9-8424-6321633cfae1"/>
 				<textElement>
-					<font size="13"/>
+					<font fontName="Segoe UI" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{Subtotal}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="353" y="11" width="100" height="20" uuid="65024fcb-6483-4769-adf0-409b7383604b"/>
-				<textElement textAlignment="Justified">
-					<font size="13"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{Precio}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{SubTotal}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="341" y="10" width="11" height="20" uuid="5d3bda83-033d-4921-9ac2-6cb5a3bf2ab4"/>
-				<textElement textAlignment="Justified">
-					<font size="14" isBold="false"/>
+				<reportElement x="612" y="5" width="9" height="19" uuid="f59eee3e-6c36-41aa-93eb-2bb4e3620a3e"/>
+				<textElement>
+					<font fontName="Segoe UI" size="14" isBold="false"/>
 				</textElement>
 				<text><![CDATA[L.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="606" y="10" width="11" height="20" uuid="e7aa0ed2-ccf2-46a6-bb8d-2e75b697b221"/>
-				<textElement textAlignment="Justified">
-					<font size="14" isBold="false"/>
+				<reportElement x="357" y="5" width="9" height="19" uuid="b67c46e8-5f04-46fa-8cab-2f13275ea883"/>
+				<textElement>
+					<font fontName="Segoe UI" size="14" isBold="false"/>
 				</textElement>
 				<text><![CDATA[L.]]></text>
 			</staticText>
@@ -241,41 +231,41 @@
 	<columnFooter>
 		<band height="45" splitType="Stretch">
 			<staticText>
-				<reportElement x="493" y="15" width="100" height="20" uuid="967cf2ba-d83c-4202-b3ad-396eac171528"/>
+				<reportElement x="496" y="15" width="100" height="20" uuid="967cf2ba-d83c-4202-b3ad-396eac171528"/>
 				<textElement>
-					<font size="15" isBold="true"/>
+					<font fontName="Segoe UI" size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total a Pagar:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="625" y="15" width="100" height="20" uuid="061c3c0a-556e-4bd8-ba63-b9beea27bf18"/>
-				<textElement>
-					<font size="14" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="612" y="15" width="11" height="20" uuid="b335f3fc-205d-42c9-b134-ac472feec0ce"/>
+				<reportElement x="610" y="15" width="9" height="19" uuid="a8866a82-ac2f-469a-b4c1-7066dc668c17"/>
 				<textElement>
-					<font size="14" isBold="true"/>
+					<font fontName="Segoe UI" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[L.]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="621" y="15" width="100" height="20" uuid="77d28cbf-933c-49e9-8170-7620ff0a9cb6"/>
+				<textElement>
+					<font fontName="Segoe UI" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
 			<textField>
-				<reportElement x="619" y="17" width="80" height="20" uuid="3ddfacd6-ac95-4126-b178-146fd311b4c3"/>
+				<reportElement x="614" y="17" width="82" height="20" uuid="3ddfacd6-ac95-4126-b178-146fd311b4c3"/>
 				<textElement textAlignment="Right">
-					<font size="13"/>
+					<font fontName="Segoe UI" size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement x="699" y="17" width="40" height="20" uuid="06776a95-81af-4d47-9322-6fa759e9a3a5"/>
 				<textElement>
-					<font size="13"/>
+					<font fontName="Segoe UI" size="13"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>

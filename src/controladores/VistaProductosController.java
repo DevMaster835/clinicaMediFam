@@ -426,7 +426,7 @@ public class VistaProductosController implements Initializable {
     private void txtPrecioKeyTyped(KeyEvent event) {
         char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car) && car>'.' && car > '\b'){
+        if(!Character.isDigit(car) && car > '\b'){
             event.consume();
             JOptionPane.showMessageDialog(null, "Sólo se permiten números");
         }

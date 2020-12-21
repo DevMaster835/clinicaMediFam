@@ -43,8 +43,10 @@ and open the template in the editor.
 }
 
 .textboxs{
-    -fx-font-family: 'Franklin Gothic Book';
-    -fx-font-size: 12px;
+    -fx-font: 13px "Segoe UI";
+    -fx-background-color:  #DEDEDE;
+    -fx-border-color: black;
+    -fx-border-radius: 2px;
 }
 
 .btn-guardar{
@@ -54,6 +56,11 @@ and open the template in the editor.
     -fx-background-size: 23px;
     -fx-background-position: 8px, center; 
     -fx-image-color: white;
+}
+
+.btn-actualizar{
+    -fx-background-color:  #63738a;
+    
 }
 
 .closebutton{
@@ -95,17 +102,7 @@ and open the template in the editor.
   -fx-content: "Return";
 }
 
-.text-field {
-       -fx-background-color: #a9a9a9 , white , white;
-       -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
-}
 
-.text-field:focused {
-       -fx-background-color: #DAA520 , white , white;
-       -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
-       -fx-border-color:#DAA520;
-       -fx-border-radius: 11px 11px 11px 11px;
-}
 
 .date-picker > .arrow-button > * {
     -fx-opacity: 0; /* Set the node in the button to be visible */
