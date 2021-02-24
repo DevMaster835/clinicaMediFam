@@ -14,17 +14,19 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="656.0" prefWidth="947.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaEmpleadosController">
+<AnchorPane id="AnchorPane" prefHeight="682.0" prefWidth="950.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaEmpleadosController">
    <children>
       <VBox prefHeight="42.0" prefWidth="950.0" style="-fx-background-color: #223f54;">
          <children>
-            <Label contentDisplay="CENTER" text="Empleados" textFill="WHITE">
+            <Label contentDisplay="CENTER" text="EMPLEADOS" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -34,37 +36,54 @@
             </Label>
          </children>
       </VBox>
-      <Label layoutX="394.0" layoutY="73.0" text="DATOS PERSONALES DEL EMPLEADO">
+      <Button fx:id="Close" layoutX="921.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="closebutton" stylesheets="@../css/estilos.css">
          <font>
-            <Font name="System Bold" size="15.0" />
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="Minimize" layoutX="893.0" layoutY="14.0" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="minimizebutton" stylesheets="@../css/estilos.css">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="Return" alignment="BOTTOM_CENTER" layoutX="864.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReturnButton" prefHeight="15.0" prefWidth="15.0" styleClass="returnbutton" stylesheets="@../css/estilos.css" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Button>
+      <Label layoutX="372.0" layoutY="71.0" text="DATOS PERSONALES DEL EMPLEADO">
+         <font>
+            <Font size="18.0" />
          </font>
       </Label>
-      <TabPane layoutX="49.0" layoutY="107.0" prefHeight="537.0" prefWidth="857.0" style="-fx-background-color: #F3F3F3;" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="DATOS GENERALES">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="472.0" prefWidth="778.0">
+      <TabPane layoutX="38.0" layoutY="116.0" prefHeight="488.0" prefWidth="874.0" style="-fx-background-color: #F3F3F3;" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="DATOS GENERALES">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="444.0" prefWidth="874.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
                      <children>
                         <Label layoutX="63.0" layoutY="30.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Identidad:">
                            <font>
                               <Font name="Britannic Bold" size="12.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <Label layoutX="64.0" layoutY="97.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Nombres:">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="11.5" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <Label layoutX="363.0" layoutY="97.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Apellidos:" />
                         <Label layoutX="61.0" layoutY="173.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Género:" />
                         <Label layoutX="361.0" layoutY="173.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Fecha Nacimiento:" textAlignment="JUSTIFY" />
                         <Label layoutX="59.0" layoutY="243.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Nacionalidad:" />
                         <Label layoutX="360.0" layoutY="243.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Tipo Empleado:" />
-                        <TextField fx:id="txtidEmpleado" layoutX="63.0" layoutY="47.0" onKeyTyped="#txtidEmpKeyTyped" styleClass="textboxs" stylesheets="@../css/estilos.css" />
-                        <TextField fx:id="txtNombreEmp" layoutX="63.0" layoutY="114.0" onKeyReleased="#txtUserName" onKeyTyped="#txtNombreEmpKeyTyped" styleClass="textboxs" stylesheets="@../css/estilos.css" />
-                        <TextField fx:id="txtApellidoEmp" layoutX="363.0" layoutY="114.0" onKeyReleased="#txtUserName" onKeyTyped="#txtApellidoEmpKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <TextField fx:id="txtidEmpleado" layoutX="63.0" layoutY="47.0" onKeyTyped="#txtidEmpKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <TextField fx:id="txtNombreEmp" layoutX="63.0" layoutY="114.0" onKeyTyped="#txtNombreEmpKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
+                        <TextField fx:id="txtApellidoEmp" layoutX="363.0" layoutY="114.0" onKeyTyped="#txtApellidoEmpKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <TextArea fx:id="txtDireccionEmp" layoutX="61.0" layoutY="338.0" prefHeight="86.0" prefWidth="444.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                         <ComboBox fx:id="cmbTipoEmp" layoutX="360.0" layoutY="260.0" prefHeight="25.0" prefWidth="142.0" promptText="Seleccionar&#10;" styleClass="combo-box" stylesheets="@../css/estilos.css" />
                         <ComboBox fx:id="cmbNacionalidad" layoutX="57.0" layoutY="260.0" prefWidth="151.0" promptText="Seleccionar" styleClass="combo-box" stylesheets="@../css/estilos.css" />
-                        <HBox layoutX="61.0" layoutY="190.0" prefHeight="27.0" prefWidth="173.0" styleClass="textos" stylesheets="@../css/estilos.css">
+                        <HBox layoutX="61.0" layoutY="190.0" prefHeight="27.0" prefWidth="173.0" styleClass="textos" stylesheets="@../../../../clinicaMediFam-masteayayayayar/clinicaMediFam-master/src/css/estilos.css">
                            <children>
                               <RadioButton fx:id="rdbM" mnemonicParsing="false" text="Masculino">
                                  <toggleGroup>
@@ -81,62 +100,62 @@
                               </RadioButton>
                            </children>
                         </HBox>
-                        <Button fx:id="btnEliminar" alignment="BOTTOM_CENTER" layoutX="748.0" layoutY="269.0" mnemonicParsing="false" onAction="#eliminarEmpleados" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Eliminar" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                        <DatePicker fx:id="txtFechaNaci" layoutX="360.0" layoutY="190.0" prefHeight="27.0" prefWidth="151.0" styleClass="date-picker" />
+                        <DatePicker fx:id="txtFechaNaci" layoutX="360.0" layoutY="190.0" prefHeight="27.0" prefWidth="151.0" styleClass="date-picker" stylesheets="@../css/estilos.css" />
                         <Label layoutX="62.0" layoutY="321.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Dirección:" />
-                        <Button fx:id="btnActualizar" alignment="CENTER_RIGHT" layoutX="574.0" layoutY="351.0" mnemonicParsing="false" onAction="#actualizarEmpleado" prefHeight="35.0" prefWidth="97.0" styleClass="btn-actualizar" stylesheets="@../css/estilos.css" text="Actualizar" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Button>
-                        <Pane layoutX="588.0" layoutY="105.0" prefHeight="153.0" prefWidth="191.0" style="-fx-border-color: BLACK;">
+                        <Pane layoutX="588.0" layoutY="105.0" prefHeight="153.0" prefWidth="191.0" styleClass="contenedor" stylesheets="@../../../../clinicaMediFam-masteayayayayar/clinicaMediFam-master/src/css/estilos.css">
                            <children>
                               <Label layoutX="14.0" layoutY="24.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Usuario:" />
                               <Label layoutX="14.0" layoutY="78.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Contraseña:" />
-                              <TextField fx:id="txtusuario" layoutX="14.0" layoutY="41.0" onKeyTyped="#txtusuarioKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <TextField fx:id="txtusuario" editable="false" layoutX="14.0" layoutY="41.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                               <PasswordField fx:id="txtcontraseña" layoutX="15.0" layoutY="95.0" prefHeight="27.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                            </children>
                         </Pane>
-                        <Button fx:id="btnGuardar" alignment="CENTER_RIGHT" layoutX="574.0" layoutY="306.0" mnemonicParsing="false" onAction="#guardarEmpleados" prefHeight="35.0" prefWidth="96.0" styleClass="btn-guardar" stylesheets="@../css/estilos.css" text="Guardar" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnCancelar" alignment="BOTTOM_CENTER" layoutX="759.0" layoutY="330.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Cancelar" textFill="WHITE">
+                        <Label fx:id="lbid" layoutX="63.0" layoutY="75.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
-                        </Button>
+                        </Label>
+                        <Label fx:id="lbNombre" layoutX="63.0" layoutY="141.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lbApellido" layoutX="364.0" layoutY="140.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
-            </content>
-          </Tab>
-            <Tab text="INFORMACIÓN CONTACTO">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               </content>
+            </Tab>
+            <Tab text="INFORMACION CONTACTO">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="493.0" prefWidth="874.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
                      <children>
-                        <Pane layoutX="35.0" layoutY="69.0" prefHeight="174.0" prefWidth="706.0" style="-fx-border-color: black; -fx-border-radius: 3px;">
+                        <Pane layoutX="68.0" layoutY="22.0" prefHeight="174.0" prefWidth="706.0" styleClass="contenedor" stylesheets="@../../../../clinicaMediFam-masteayayayayar/clinicaMediFam-master/src/css/estilos.css">
                            <children>
                               <Label layoutX="25.0" layoutY="24.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Teléfono:" />
-                              <TextField fx:id="txtTelEmp" layoutX="25.0" layoutY="41.0" onKeyTyped="#txtTelefonoKeyTyped" style="-fx-background-radius: 11px;" styleClass="text-field" stylesheets="@../css/estilos.css" />
-                              <TableView fx:id="tablaTelefonos" editable="true" layoutX="248.0" layoutY="41.0" prefHeight="114.0" prefWidth="399.0" stylesheets="@../css/estilos.css">
-                                <columns>
-                                  <TableColumn fx:id="idTel" prefWidth="98.0" text="ID" />
-                                  <TableColumn fx:id="colEmpTel" prefWidth="192.0" text="Empleado" />
+                              <TextField fx:id="txtTelEmp" layoutX="25.0" layoutY="41.0" onKeyTyped="#txtTelefonoKeyTyped" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <TableView fx:id="tablaTelefonos" editable="true" layoutX="248.0" layoutY="41.0" prefHeight="114.0" prefWidth="399.0" stylesheets="@../../../../clinicaMediFam-masteayayayayar/clinicaMediFam-master/src/css/estilos.css">
+                                 <columns>
+                                    <TableColumn fx:id="idTel" prefWidth="98.0" text="ID" />
+                                    <TableColumn fx:id="colEmpTel" prefWidth="192.0" text="Empleado" />
                                     <TableColumn fx:id="colTel" prefWidth="108.0" text="Teléfono" />
-                                </columns>
+                                 </columns>
                               </TableView>
-                              <Button fx:id="btnAgregarTelefono" layoutX="22.0" layoutY="75.0" mnemonicParsing="false" onAction="#agregarTelefono" prefHeight="27.0" prefWidth="151.0" text="Agregar Teléfono" />
-                              <Button fx:id="btnModificarTel" disable="true" layoutX="22.0" layoutY="112.0" mnemonicParsing="false" onAction="#modificarTelefono" prefHeight="25.0" prefWidth="153.0" text="Modificar Teléfono" />
+                              <Button fx:id="btnAgregarTelefono" layoutX="22.0" layoutY="102.0" mnemonicParsing="false" onAction="#agregarTelefono" prefHeight="27.0" prefWidth="151.0" styleClass="btn-flats" stylesheets="@../css/estilos.css" text="Agregar Teléfono" />
+                              <Button fx:id="btnModificarTel" disable="true" layoutX="22.0" layoutY="139.0" mnemonicParsing="false" onAction="#modificarTelefono" prefHeight="25.0" prefWidth="153.0" styleClass="btn-flats" stylesheets="@../css/estilos.css" text="Modificar Teléfono" />
+                              <Label fx:id="lbTelefono" layoutX="26.0" layoutY="68.0" prefHeight="17.0" prefWidth="148.0" text="Label" textFill="RED">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </Pane>
-                        <Pane layoutX="35.0" layoutY="263.0" prefHeight="233.0" prefWidth="706.0" style="-fx-border-color: black; -fx-border-radius: 3px;">
+                        <Pane layoutX="68.0" layoutY="216.0" prefHeight="247.0" prefWidth="706.0" styleClass="contenedor" stylesheets="@../../../../clinicaMediFam-masteayayayayar/clinicaMediFam-master/src/css/estilos.css">
                            <children>
-                              <TableView fx:id="tablaCorreos" editable="true" layoutX="198.0" layoutY="38.0" prefHeight="114.0" prefWidth="491.0" stylesheets="@../css/estilos.css">
+                              <TableView fx:id="tablaCorreos" editable="true" layoutX="198.0" layoutY="38.0" prefHeight="114.0" prefWidth="491.0" stylesheets="@../../../../clinicaMediFam-masteayayayayar/clinicaMediFam-master/src/css/estilos.css">
                                  <columns>
                                     <TableColumn fx:id="idCorreo" prefWidth="98.0" text="ID" />
                                     <TableColumn fx:id="colEmpCo" prefWidth="173.0" text="Empleado" />
@@ -144,40 +163,34 @@
                                     <TableColumn fx:id="colTipoC" prefWidth="74.0" text="Tipo Correo" />
                                  </columns>
                               </TableView>
-                              <Button fx:id="btnAgregarCorreo" layoutX="25.0" layoutY="146.0" mnemonicParsing="false" onAction="#agregarCorreo" prefHeight="27.0" prefWidth="151.0" text="Agregar Correo" />
+                              <Button fx:id="btnAgregarCorreo" layoutX="25.0" layoutY="159.0" mnemonicParsing="false" onAction="#agregarCorreo" prefHeight="27.0" prefWidth="151.0" styleClass="btn-flats" stylesheets="@../css/estilos.css" text="Agregar Correo" />
                               <Label layoutX="25.0" layoutY="31.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Correo:" />
-                              <TextField fx:id="txtCorreoEmp" layoutX="28.0" layoutY="53.0" onKeyTyped="#txtcorreoKeyTyped" style="-fx-background-radius: 11px;" styleClass="text-field" stylesheets="@../css/estilos.css" />
-                              <Label layoutX="25.0" layoutY="89.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Tipo Correo:" textAlignment="JUSTIFY" />
-                              <ComboBox fx:id="cmbtipoCorreo" layoutX="25.0" layoutY="106.0" prefHeight="27.0" prefWidth="156.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
-                              <Button fx:id="btnModificarCo" disable="true" layoutX="25.0" layoutY="182.0" mnemonicParsing="false" onAction="#modificarCorreo" prefHeight="25.0" prefWidth="152.0" text="Modificar Correo" />
+                              <TextField fx:id="txtCorreoEmp" layoutX="28.0" layoutY="53.0" style="-fx-background-radius: 11px;" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Label layoutX="25.0" layoutY="102.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Tipo Correo:" textAlignment="JUSTIFY" />
+                              <ComboBox fx:id="cmbtipoCorreo" layoutX="25.0" layoutY="119.0" prefHeight="27.0" prefWidth="156.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Button fx:id="btnModificarCo" disable="true" layoutX="25.0" layoutY="195.0" mnemonicParsing="false" onAction="#modificarCorreo" prefHeight="25.0" prefWidth="152.0" styleClass="btn-flats" stylesheets="@../css/estilos.css" text="Modificar Correo" />
+                              <Label fx:id="lbCorreo" layoutX="29.0" layoutY="80.0" prefHeight="17.0" prefWidth="146.0" text="Label" textFill="RED">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </Pane>
                      </children>
                   </AnchorPane>
-              </content>
+               </content>
             </Tab>
-          <Tab text="BUSQUEDA">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="472.0" prefWidth="821.0">
+            <Tab text="BUSQUEDA">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="472.0" prefWidth="821.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
                      <children>
-                        <HBox layoutX="36.0" layoutY="24.0" prefHeight="54.0" prefWidth="297.0" style="-fx-background-color: white; -fx-border-color: black;" stylesheets="@../css/estilos.css">
+                        <HBox layoutX="23.0" layoutY="24.0" prefHeight="54.0" prefWidth="297.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
                            <children>
-                              <RadioButton fx:id="rdbId" mnemonicParsing="false" text="Identidad">
-                                 <padding>
-                                    <Insets left="6.0" top="3.0" />
-                                 </padding>
-                                 <toggleGroup>
-                                    <ToggleGroup fx:id="grupoBusqueda" />
-                                 </toggleGroup>
-                              </RadioButton>
-                              <RadioButton fx:id="rdbNom" mnemonicParsing="false" text="Nombre" toggleGroup="$grupoBusqueda">
-                                 <padding>
-                                    <Insets left="8.0" right="6.0" top="3.0" />
-                                 </padding>
+                              <Label styleClass="labels" stylesheets="@../css/estilos.css" text="Busqueda:">
                                  <HBox.margin>
-                                    <Insets left="-80.0" top="25.0" />
+                                    <Insets left="6.0" top="17.0" />
                                  </HBox.margin>
-                              </RadioButton>
+                              </Label>
                               <TextField fx:id="txtBuscar" onKeyTyped="#buscarEmpleado" styleClass="textos" stylesheets="@../css/estilos.css">
                                  <HBox.margin>
                                     <Insets left="20.0" top="15.0" />
@@ -185,38 +198,48 @@
                               </TextField>
                            </children>
                         </HBox>
-                        <TableView fx:id="tblEmpleados" focusTraversable="false" layoutX="29.0" layoutY="95.0" prefHeight="342.0" prefWidth="820.0" stylesheets="@../css/estilos.css">
-                          <columns>
-                            <TableColumn fx:id="id" editable="false" prefWidth="93.0" text="Identidad" />
-                            <TableColumn fx:id="nombre" minWidth="0.0" prefWidth="78.0" text="Nombres" />
+                        <TableView fx:id="tblEmpleados" focusTraversable="false" layoutX="23.0" layoutY="95.0" prefHeight="342.0" prefWidth="834.0" stylesheets="@../../../../clinicaMediFam-masteayayayayar/clinicaMediFam-master/src/css/estilos.css">
+                           <columns>
+                              <TableColumn fx:id="id" editable="false" prefWidth="93.0" text="Identidad" />
+                              <TableColumn fx:id="nombre" minWidth="0.0" prefWidth="78.0" text="Nombres" />
                               <TableColumn fx:id="apellidos" prefWidth="78.0" text="Apellidos" />
                               <TableColumn fx:id="fechaNac" prefWidth="134.0" text="Fecha Nacimiento" />
-                              <TableColumn fx:id="genero" prefWidth="78.0" text="Genero" />
+                              <TableColumn fx:id="genero" prefWidth="78.0" text="Género" />
                               <TableColumn fx:id="colNacionalidad" prefWidth="102.0" text="Nacionalidad" />
-                              <TableColumn fx:id="colDireccion" prefWidth="145.0" text="Direccion" />
+                              <TableColumn fx:id="colDireccion" prefWidth="145.0" text="Dirección" />
                               <TableColumn fx:id="colTipoEmp" prefWidth="134.0" text="Tipo Empleado" />
-                          </columns>
+                           </columns>
                         </TableView>
                      </children>
                   </AnchorPane>
-            </content>
-          </Tab>
-        </tabs>
+               </content>
+            </Tab>
+         </tabs>
       </TabPane>
-      <Button fx:id="Close" layoutX="921.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="closebutton" stylesheets="@../css/estilos.css">
+      <Button fx:id="btnGuardar" alignment="CENTER_RIGHT" layoutX="495.0" layoutY="625.0" mnemonicParsing="false" onAction="#guardarEmpleados" prefHeight="35.0" prefWidth="96.0" styleClass="btn-guardar" stylesheets="@../css/estilos.css" text="Guardar" textFill="WHITE">
          <font>
-            <Font size="10.0" />
+            <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="Minimize" layoutX="893.0" layoutY="14.0" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="minimizebutton" stylesheets="@../css/estilos.css">
+      <Button fx:id="btnActualizar" alignment="CENTER_RIGHT" layoutX="604.0" layoutY="625.0" mnemonicParsing="false" onAction="#actualizarEmpleado" prefHeight="35.0" prefWidth="96.0" styleClass="btn-actualizar" stylesheets="@../css/estilos.css" text="Actualizar" textFill="WHITE">
          <font>
-            <Font size="10.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="Return" alignment="BOTTOM_CENTER" layoutX="864.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReturnButton" prefHeight="15.0" prefWidth="15.0" styleClass="returnbutton" stylesheets="@../css/estilos.css" textFill="WHITE">
+      <Button fx:id="btnEliminar" alignment="CENTER_RIGHT" layoutX="710.0" layoutY="625.0" mnemonicParsing="false" onAction="#eliminarEmpleados" prefHeight="35.0" prefWidth="96.0" styleClass="btn-eliminar" stylesheets="@../css/estilos.css" text="Eliminar" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="10.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </Button>
+      <Button fx:id="btnCancelar" alignment="CENTER_RIGHT" layoutX="816.0" layoutY="625.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="35.0" prefWidth="96.0" styleClass="btn-cancelar" stylesheets="@../css/estilos.css" text="Cancelar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="51.0" fitWidth="51.0" layoutX="313.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/logo-clinica2.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

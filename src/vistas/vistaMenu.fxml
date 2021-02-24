@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -9,18 +10,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="492.0" prefWidth="980.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaMenuController">
+<AnchorPane id="AnchorPane" prefHeight="563.0" prefWidth="1063.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaMenuController">
    <children>
-      <Button alignment="BOTTOM_CENTER" layoutX="109.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnPacientes" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" styleClass="btn-pacientes" stylesheets="@../css/estilos.css" text="PACIENTES" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Button>
-      <VBox layoutY="-7.0" prefHeight="42.0" prefWidth="980.0" style="-fx-background-color: #223f54;">
+      <VBox layoutY="-7.0" prefHeight="45.0" prefWidth="1063.0" style="-fx-background-color: #223f54;">
          <children>
-            <Label contentDisplay="CENTER" text="Menú" textFill="WHITE">
+            <Label contentDisplay="CENTER" text="MENU" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font size="28.0" />
                </font>
                <padding>
                   <Insets left="25.0" right="15.0" top="7.0" />
@@ -28,90 +24,111 @@
             </Label>
          </children>
       </VBox>
-      <Label layoutX="389.0" layoutY="65.0" text="CLINICA MEDICA MEDIFAM">
+      <Button fx:id="Minimize" layoutX="1011.0" layoutY="10.0" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="minimizebutton" stylesheets="@../css/estilos.css">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font size="10.0" />
          </font>
-      </Label>
-      <Label layoutX="432.0" layoutY="92.0" text="¡Cuidando de tu familia!">
+      </Button>
+      <Button fx:id="Close" layoutX="1038.0" layoutY="10.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="closebutton" stylesheets="@../css/estilos.css">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" layoutX="85.0" layoutY="185.0" mnemonicParsing="false" onAction="#btnPacientes" prefHeight="160.0" prefWidth="149.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/estilos.css" text="PACIENTES">
          <font>
             <Font size="14.0" />
          </font>
+         <styleClass>
+            <String fx:value="btn-pacient" />
+            <String fx:value="btn-pasarm" />
+         </styleClass>
+      </Button>
+      <Label layoutX="360.0" layoutY="75.0" text="CLINICA MEDICA MEDIFAM">
+         <font>
+            <Font size="30.0" />
+         </font>
       </Label>
-      <Button alignment="BOTTOM_CENTER" layoutX="290.0" layoutY="136.0" mnemonicParsing="false" onAction="#btnEmpleados" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="EMPLEADOS" textFill="WHITE">
+      <Label layoutX="461.0" layoutY="113.0" text="¡Cuidando de tu familia!">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font size="18.0" />
          </font>
+      </Label>
+      <Button alignment="BOTTOM_CENTER" layoutX="266.0" layoutY="185.0" mnemonicParsing="false" onAction="#btnEmpleados" prefHeight="160.0" prefWidth="149.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/estilos.css" text="EMPLEADOS">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btn-emple" />
+            <String fx:value="btn-pasarm" />
+         </styleClass>
       </Button>
-      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="318.0" layoutY="143.0">
+      <Button alignment="BOTTOM_CENTER" layoutX="444.0" layoutY="184.0" mnemonicParsing="false" onAction="#btnMedicos" prefHeight="160.0" prefWidth="149.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/estilos.css" text="MEDICOS">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btn-medi" />
+            <String fx:value="btn-pasarm" />
+         </styleClass>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" layoutX="325.0" layoutY="373.0" mnemonicParsing="false" onAction="#btnFacturacion" prefHeight="160.0" prefWidth="149.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/estilos.css" text="FACTURACION">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btn-factur" />
+            <String fx:value="btn-pasarm" />
+         </styleClass>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" layoutX="792.0" layoutY="185.0" mnemonicParsing="false" onAction="#btnProveedores" prefHeight="160.0" prefWidth="149.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/estilos.css" text="PROVEEDORES">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btn-provee" />
+            <String fx:value="btn-pasarm" />
+         </styleClass>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" layoutX="610.0" layoutY="184.0" mnemonicParsing="false" onAction="#btnProductos" prefHeight="160.0" prefWidth="149.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/estilos.css" text="PRODUCTOS">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btn-produc" />
+            <String fx:value="btn-pasarm" />
+         </styleClass>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" layoutX="506.0" layoutY="373.0" mnemonicParsing="false" onAction="#btnConsultas" prefHeight="160.0" prefWidth="149.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/estilos.css" text="CONSULTA MEDICAS">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btn-consultam" />
+            <String fx:value="btn-pasarm" />
+         </styleClass>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" layoutX="694.0" layoutY="373.0" mnemonicParsing="false" onAction="#btnHistorial" prefHeight="160.0" prefWidth="149.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/estilos.css" text="HISTORIAL MEDICO">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btn-histom" />
+            <String fx:value="btn-pasarm" />
+         </styleClass>
+      </Button>
+      <ImageView fitHeight="93.0" fitWidth="104.0" layoutX="261.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../imagenes/empleados.png" />
+            <Image url="@../imagenes/logo-clinica2.png" />
          </image>
       </ImageView>
-      <Button alignment="BOTTOM_CENTER" layoutX="475.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnMedicos" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="MEDICOS" textFill="WHITE">
+      <Button alignment="BOTTOM_CENTER" layoutX="126.0" layoutY="373.0" mnemonicParsing="false" onAction="#btnCompras" prefHeight="160.0" prefWidth="149.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/estilos.css" text="COMPRAS">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font size="14.0" />
          </font>
+         <styleClass>
+            <String fx:value="btn-comprarr" />
+            <String fx:value="btn-pasarm" />
+         </styleClass>
       </Button>
-      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="503.0" layoutY="145.0">
-         <image>
-            <Image url="@../imagenes/doctor.png" />
-         </image>
-      </ImageView>
-      <Button alignment="BOTTOM_CENTER" layoutX="663.0" layoutY="139.0" mnemonicParsing="false" onAction="#btnFacturacion" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="Facturación" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Button>
-      <Button alignment="BOTTOM_CENTER" layoutX="109.0" layoutY="324.0" mnemonicParsing="false" onAction="#btnProveedores" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" styleClass="btn-proveedores" stylesheets="@../css/estilos.css" text="PROVEEDORES" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Button>
-      <Button alignment="BOTTOM_CENTER" layoutX="290.0" layoutY="324.0" mnemonicParsing="false" onAction="#btnProductos" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="PRODUCTOS" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="318.0" layoutY="332.0">
-         <image>
-            <Image url="@../imagenes/medicamentos.png" />
-         </image>
-      </ImageView>
-      <Button alignment="BOTTOM_CENTER" layoutX="475.0" layoutY="324.0" mnemonicParsing="false" onAction="#btnConsultas" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="CONSULTA MEDICAS" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="503.0" layoutY="332.0">
-         <image>
-            <Image url="@../imagenes/cita.png" />
-         </image>
-      </ImageView>
-      <Button alignment="BOTTOM_CENTER" layoutX="663.0" layoutY="324.0" mnemonicParsing="false" onAction="#btnHistorial" prefHeight="122.0" prefWidth="149.0" style="-fx-background-color: #9AC6C9;" text="HISTORIAL MEDICO" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="93.0" fitWidth="93.0" layoutX="691.0" layoutY="332.0">
-         <image>
-            <Image url="@../imagenes/historial-medico.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="Minimize" layoutX="928.0" layoutY="10.0" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="minimizebutton" stylesheets="@../css/estilos.css">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Button>
-      <Button fx:id="Close" layoutX="955.0" layoutY="9.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="closebutton" stylesheets="@../css/estilos.css">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="93.0" fitWidth="117.0" layoutX="679.0" layoutY="147.0">
-         <image>
-            <Image url="@../imagenes/factura.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

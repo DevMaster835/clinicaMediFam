@@ -16,11 +16,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="608.0" prefWidth="1046.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaFacturacionController">
+<AnchorPane id="AnchorPane" minHeight="0.0" minWidth="832.0" prefHeight="693.0" prefWidth="832.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaFacturacionController">
    <children>
-      <VBox prefHeight="42.0" prefWidth="1049.0" style="-fx-background-color: #223f54;">
+      <VBox minWidth="832.0" prefHeight="42.0" prefWidth="832.0" style="-fx-background-color: #223f54;">
          <children>
-            <Label contentDisplay="CENTER" prefHeight="42.0" prefWidth="184.0" text="Facturacion" textFill="WHITE">
+            <Label contentDisplay="CENTER" prefHeight="42.0" prefWidth="227.0" text="FACTURACION" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -30,61 +30,76 @@
             </Label>
          </children>
       </VBox>
-      <Label layoutX="404.0" layoutY="83.0" text="DATOS DE LA FACTURA">
+      <Button fx:id="Close" layoutX="790.0" layoutY="11.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="closebutton" stylesheets="@../css/estilos.css">
          <font>
-            <Font name="System Bold" size="15.0" />
+            <Font size="10.0" />
          </font>
-      </Label>
-      <ImageView fitHeight="61.0" fitWidth="69.0" layoutX="616.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../imagenes/logo-de-medifan.png" />
-         </image>
-      </ImageView>
-      <TabPane layoutX="84.0" layoutY="117.0" prefHeight="460.0" prefWidth="775.0" tabClosingPolicy="UNAVAILABLE">
+      </Button>
+      <Button fx:id="Minimize" layoutX="762.0" layoutY="11.0" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="minimizebutton" stylesheets="@../css/estilos.css">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="Return" alignment="BOTTOM_CENTER" layoutX="733.0" layoutY="11.0" mnemonicParsing="false" onAction="#ReturnButton" prefHeight="15.0" prefWidth="15.0" styleClass="returnbutton" stylesheets="@../css/estilos.css" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Button>
+      <TabPane layoutX="89.0" layoutY="127.0" prefHeight="490.0" prefWidth="698.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab fx:id="paneDatos" text="DATOS GENERALES">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="490.0" prefWidth="824.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="490.0" prefWidth="824.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
                      <children>
-                        <Pane layoutX="45.0" layoutY="308.0" prefHeight="90.0" prefWidth="586.0" style="-fx-border-color: BLACK;">
+                        <Pane layoutX="50.0" layoutY="308.0" prefHeight="119.0" prefWidth="586.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
                            <children>
-                              <Label layoutX="234.0" layoutY="8.0" text="DATOS DEL EMPLEADO">
+                              <Label layoutX="198.0" layoutY="14.0" text="DATOS DEL EMPLEADO">
                                  <font>
-                                    <Font name="System Bold" size="13.0" />
+                                    <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="33.0" layoutY="31.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Identidad:" />
-                              <Label layoutX="321.0" layoutY="31.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Empleado:" />
-                              <TextField fx:id="txtidEmp" layoutX="33.0" layoutY="51.0" onKeyTyped="#txtidEmpKeyTyped" prefHeight="25.0" prefWidth="132.0" styleClass="textos" />
-                              <TextField fx:id="txtempleado" editable="false" layoutX="321.0" layoutY="51.0" prefHeight="25.0" prefWidth="206.0" styleClass="textos" />
+                              <Label layoutX="33.0" layoutY="42.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Identidad:" />
+                              <Label layoutX="321.0" layoutY="42.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Empleado:" />
+                              <TextField fx:id="txtidEmp" layoutX="33.0" layoutY="62.0" onKeyTyped="#txtidEmpKeyTyped" prefHeight="25.0" prefWidth="132.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <TextField fx:id="txtempleado" editable="false" layoutX="321.0" layoutY="62.0" prefHeight="25.0" prefWidth="206.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Label fx:id="lbidemp" layoutX="34.0" layoutY="90.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </Pane>
-                        <Pane layoutX="44.0" layoutY="137.0" prefHeight="157.0" prefWidth="589.0" style="-fx-border-color: BLACK;">
+                        <Pane layoutX="49.0" layoutY="137.0" prefHeight="157.0" prefWidth="589.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
                            <children>
-                              <Label layoutX="224.0" layoutY="7.0" text="DATOS DEL PACIENTE">
+                              <Label layoutX="198.0" layoutY="5.0" text="DATOS DEL PACIENTE">
                                  <font>
-                                    <Font name="System Bold" size="13.0" />
+                                    <Font size="13.0" />
                                  </font>
                               </Label>
                               <Label layoutX="26.0" layoutY="29.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Identidad:" />
                               <Label layoutX="307.0" layoutY="29.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Paciente:" />
-                              <TextField fx:id="txtidPac" layoutX="26.0" layoutY="48.0" onKeyTyped="#txtidPacKeyTyped" prefHeight="25.0" prefWidth="132.0" styleClass="textos" />
-                              <TextField fx:id="txtpaciente" editable="false" layoutX="307.0" layoutY="48.0" prefHeight="25.0" prefWidth="206.0" styleClass="textos" />
-                              <Button fx:id="btnbuscarPac" layoutX="173.0" layoutY="48.0" mnemonicParsing="false" onAction="#buscarPaciente" text="Buscar" />
+                              <TextField fx:id="txtidPac" layoutX="26.0" layoutY="48.0" onKeyTyped="#txtidPacKeyTyped" prefHeight="25.0" prefWidth="132.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <TextField fx:id="txtpaciente" editable="false" layoutX="307.0" layoutY="48.0" prefHeight="25.0" prefWidth="206.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Button fx:id="btnbuscarPac" alignment="CENTER_RIGHT" layoutX="173.0" layoutY="48.0" mnemonicParsing="false" onAction="#buscarPaciente" prefHeight="25.0" prefWidth="75.0" styleClass="btn-buscar" stylesheets="@../css/estilos.css" text="Buscar" textFill="WHITE" />
                               <Label layoutX="26.0" layoutY="99.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Teléfono:" />
-                              <TextField fx:id="txtTelPac" editable="false" layoutX="26.0" layoutY="116.0" prefHeight="25.0" prefWidth="168.0" />
+                              <TextField fx:id="txtTelPac" editable="false" layoutX="26.0" layoutY="116.0" prefHeight="25.0" prefWidth="168.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                               <Label layoutX="307.0" layoutY="99.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Correo:" />
-                              <TextField fx:id="txtcorreoPac" editable="false" layoutX="307.0" layoutY="116.0" prefHeight="25.0" prefWidth="208.0" />
+                              <TextField fx:id="txtcorreoPac" editable="false" layoutX="307.0" layoutY="116.0" prefHeight="25.0" prefWidth="208.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Label fx:id="lbidpac" layoutX="27.0" layoutY="76.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </Pane>
-                        <Pane layoutX="42.0" layoutY="20.0" prefHeight="97.0" prefWidth="592.0" style="-fx-border-color: BLACK;">
+                        <Pane layoutX="47.0" layoutY="20.0" prefHeight="97.0" prefWidth="592.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
                            <children>
                               <Label layoutX="22.0" layoutY="18.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Factura No:" />
-                              <TextField fx:id="txtFactura" editable="false" layoutX="110.0" layoutY="13.0" onKeyTyped="#txtFacturaKeyTyped" prefHeight="27.0" prefWidth="107.0" styleClass="textos" stylesheets="@../../../../../Desktop/sistemaDevMasterscopia/sistemaDevMasters/sistemaDevMasters/src/css/estilos.css" />
-                              <Label layoutX="345.0" layoutY="18.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Fecha de Emisión:" />
+                              <TextField fx:id="txtFactura" editable="false" layoutX="110.0" layoutY="13.0" onKeyTyped="#txtFacturaKeyTyped" prefHeight="27.0" prefWidth="107.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Label layoutX="263.0" layoutY="18.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Fecha de Emisión:" />
                               <Label layoutX="25.0" layoutY="63.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Conceptos a Facturar:" />
-                              <ComboBox fx:id="cmbConceptos" layoutX="182.0" layoutY="59.0" onAction="#seleccionar" prefHeight="25.0" prefWidth="146.0" promptText="Seleccionar" />
-                              <TextField fx:id="txtFecha" editable="false" layoutX="478.0" layoutY="14.0" prefHeight="25.0" prefWidth="93.0" />
+                              <ComboBox fx:id="cmbConceptos" layoutX="160.0" layoutY="59.0" onAction="#seleccionar" prefHeight="25.0" prefWidth="146.0" promptText="Seleccionar" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <TextField fx:id="txtFecha" editable="false" layoutX="389.0" layoutY="13.0" onKeyTyped="#txtFacturaKeyTyped" prefHeight="27.0" prefWidth="128.0" styleClass="textos" stylesheets="@../css/estilos.css" />
                            </children>
                         </Pane>
                      </children>
@@ -93,11 +108,11 @@
             </Tab>
             <Tab fx:id="paneProducto" text="PRODUCTOS">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="439.0" prefWidth="808.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="439.0" prefWidth="808.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
                      <children>
-                        <TableView fx:id="tablaProductos" layoutX="44.0" layoutY="201.0" prefHeight="146.0" prefWidth="624.0" stylesheets="@../css/estilos.css">
+                        <TableView fx:id="tablaProductos" layoutX="44.0" layoutY="221.0" prefHeight="146.0" prefWidth="624.0" stylesheets="@../css/estilos.css">
                            <columns>
-                              <TableColumn fx:id="colCodigo" prefWidth="96.0" text="Codigo" />
+                              <TableColumn fx:id="colCodigo" prefWidth="96.0" text="Código" />
                               <TableColumn fx:id="colNombre" prefWidth="203.0" text="Producto" />
                               <TableColumn fx:id="colPrecio" prefWidth="63.0" text="Precio" />
                               <TableColumn fx:id="colConNeto" prefWidth="102.0" text="Contenido Neto" />
@@ -105,30 +120,40 @@
                               <TableColumn fx:id="colSubtotal" prefWidth="92.0" text="Subtotal" />
                            </columns>
                         </TableView>
-                        <Pane layoutX="44.0" layoutY="35.0" prefHeight="153.0" prefWidth="620.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos">
+                        <Pane layoutX="44.0" layoutY="42.0" prefHeight="172.0" prefWidth="620.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
                            <children>
                               <Label layoutX="247.0" layoutY="6.0" text="DATOS DEL PRODUCTO">
                                  <font>
-                                    <Font name="System Bold" size="13.0" />
+                                    <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="24.0" layoutY="36.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Codigo:" />
+                              <Label layoutX="24.0" layoutY="36.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Código:" />
                               <Label layoutX="262.0" layoutY="36.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Producto:" />
-                              <TextField fx:id="txtcodigoProd" layoutX="23.0" layoutY="53.0" onKeyTyped="#txtcodProdKeyTyped" prefHeight="25.0" prefWidth="108.0" styleClass="textos" />
-                              <TextField fx:id="txtproducto" editable="false" layoutX="259.0" layoutY="53.0" prefHeight="25.0" prefWidth="134.0" styleClass="textos" />
-                              <Button fx:id="btnbuscarProd" layoutX="135.0" layoutY="53.0" mnemonicParsing="false" onAction="#buscarProducto" text="Buscar" />
+                              <TextField fx:id="txtcodigoProd" layoutX="23.0" layoutY="53.0" onKeyTyped="#txtcodProdKeyTyped" prefHeight="25.0" prefWidth="108.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <TextField fx:id="txtproducto" editable="false" layoutX="259.0" layoutY="53.0" prefHeight="25.0" prefWidth="134.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Button fx:id="btnbuscarProd" alignment="CENTER_RIGHT" layoutX="135.0" layoutY="53.0" mnemonicParsing="false" onAction="#buscarProducto" prefHeight="25.0" prefWidth="76.0" styleClass="btn-buscar" stylesheets="@../css/estilos.css" text="Buscar" textFill="WHITE" />
                               <Label layoutX="459.0" layoutY="36.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Contenido Neto:" />
-                              <Label layoutX="26.0" layoutY="91.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Precio:" />
-                              <Label layoutX="87.0" layoutY="111.0" text="Lps.">
+                              <Label layoutX="26.0" layoutY="101.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Precio:" />
+                              <Label layoutX="87.0" layoutY="121.0" text="Lps.">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txtprecioProd" editable="false" layoutX="26.0" layoutY="108.0" prefHeight="25.0" prefWidth="61.0" styleClass="textos" />
-                              <Label layoutX="259.0" layoutY="91.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Cantidad:" />
-                              <TextField fx:id="txtcantidad" layoutX="259.0" layoutY="108.0" onKeyTyped="#txtcantidadKeyTyped" prefHeight="25.0" prefWidth="64.0" styleClass="textos" />
-                              <TextField fx:id="txtConNeto" editable="false" layoutX="459.0" layoutY="53.0" prefHeight="25.0" prefWidth="53.0" />
-                              <Button fx:id="btnAñadirProd" layoutX="544.0" layoutY="108.0" mnemonicParsing="false" onAction="#añadirProducto" text="Añadir" />
+                              <TextField fx:id="txtprecioProd" editable="false" layoutX="26.0" layoutY="118.0" prefHeight="25.0" prefWidth="61.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Label layoutX="259.0" layoutY="101.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Cantidad:" />
+                              <TextField fx:id="txtcantidad" layoutX="258.0" layoutY="118.0" onKeyTyped="#txtcantidadKeyTyped" prefHeight="25.0" prefWidth="64.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <TextField fx:id="txtConNeto" editable="false" layoutX="459.0" layoutY="53.0" prefHeight="27.0" prefWidth="96.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Button fx:id="btnAñadirProd" alignment="CENTER_RIGHT" layoutX="517.0" layoutY="119.0" mnemonicParsing="false" onAction="#añadirProducto" prefHeight="25.0" prefWidth="76.0" styleClass="btn-agregar" stylesheets="@../css/estilos.css" text="Añadir" textFill="WHITE" />
+                              <Label fx:id="lbcodprod" layoutX="24.0" layoutY="80.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lbcantidad" layoutX="259.0" layoutY="146.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </Pane>
                      </children>
@@ -136,72 +161,77 @@
                </content>
             </Tab>
             <Tab fx:id="paneServicio" text="SERVICIOS">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
                      <children>
-                        <Pane layoutX="31.0" layoutY="42.0" prefHeight="154.0" prefWidth="559.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos">
+                        <Pane layoutX="65.0" layoutY="42.0" prefHeight="165.0" prefWidth="559.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
                            <children>
                               <Label layoutX="217.0" layoutY="9.0" text="DATOS DEL SERVICIO">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="24.0" layoutY="29.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Codigo:" />
+                              <Label layoutX="24.0" layoutY="29.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Código:" />
                               <Label layoutX="26.0" layoutY="88.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Servicio:" />
-                              <TextField fx:id="txtcodigoS" layoutX="23.0" layoutY="46.0" onKeyTyped="#txtcodProdKeyTyped" prefHeight="25.0" prefWidth="108.0" styleClass="textos" />
-                              <TextField fx:id="txtservicio" editable="false" layoutX="23.0" layoutY="105.0" prefHeight="25.0" prefWidth="168.0" styleClass="textos" />
-                              <Button fx:id="btnBuscarServ" layoutX="135.0" layoutY="46.0" mnemonicParsing="false" onAction="#buscarServicio" text="Buscar" />
-                              <Label layoutX="248.0" layoutY="88.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Precio:" />
-                              <Label layoutX="303.0" layoutY="108.0" text="Lps.">
+                              <TextField fx:id="txtcodigoS" layoutX="23.0" layoutY="46.0" onKeyTyped="#txtcodProdKeyTyped" prefHeight="25.0" prefWidth="108.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <TextField fx:id="txtservicio" editable="false" layoutX="23.0" layoutY="105.0" prefHeight="25.0" prefWidth="168.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Button fx:id="btnBuscarServ" alignment="CENTER_RIGHT" layoutX="135.0" layoutY="46.0" mnemonicParsing="false" onAction="#buscarServicio" prefHeight="25.0" prefWidth="76.0" styleClass="btn-buscar" stylesheets="@../css/estilos.css" text="Buscar" textFill="WHITE" />
+                              <Label layoutX="248.0" layoutY="83.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Precio:" />
+                              <Label layoutX="303.0" layoutY="103.0" text="Lps.">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txtprecioS" editable="false" layoutX="242.0" layoutY="105.0" prefHeight="25.0" prefWidth="61.0" styleClass="textos" />
-                              <Button fx:id="btnAñadirServ" layoutX="494.0" layoutY="115.0" mnemonicParsing="false" onAction="#añadirServicio" text="Añadir" />
-                              <Label layoutX="373.0" layoutY="88.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Cantidad:" />
-                              <TextField fx:id="txtcantidadS" layoutX="373.0" layoutY="105.0" onKeyTyped="#txtcantidadKeyTyped" prefHeight="25.0" prefWidth="75.0" styleClass="textos" />
+                              <TextField fx:id="txtprecioS" editable="false" layoutX="242.0" layoutY="100.0" prefHeight="25.0" prefWidth="61.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Button fx:id="btnAñadirServ" alignment="CENTER_RIGHT" layoutX="469.0" layoutY="100.0" mnemonicParsing="false" onAction="#añadirServicio" prefHeight="25.0" prefWidth="76.0" styleClass="btn-agregar" stylesheets="@../css/estilos.css" text="Añadir" textFill="WHITE" />
+                              <Label layoutX="373.0" layoutY="83.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Cantidad:" />
+                              <TextField fx:id="txtcantidadS" layoutX="373.0" layoutY="100.0" onKeyTyped="#txtcantidadKeyTyped" prefHeight="25.0" prefWidth="75.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+                              <Label fx:id="lbcodservicio" layoutX="23.0" layoutY="73.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lbcantidad1" layoutX="374.0" layoutY="129.0" prefHeight="17.0" prefWidth="134.0" text="Label" textFill="RED">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </Pane>
-                        <TableView fx:id="tablaServicios" layoutX="31.0" layoutY="210.0" prefHeight="159.0" prefWidth="559.0" stylesheets="@../css/estilos.css">
-                          <columns>
-                            <TableColumn fx:id="colCodServ" prefWidth="109.0" text="Código" />
-                            <TableColumn fx:id="colServicio" prefWidth="190.0" text="Servicio" />
+                        <TableView fx:id="tablaServicios" layoutX="65.0" layoutY="218.0" prefHeight="181.0" prefWidth="559.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
+                           <columns>
+                              <TableColumn fx:id="colCodServ" prefWidth="109.0" text="Código" />
+                              <TableColumn fx:id="colServicio" prefWidth="190.0" text="Servicio" />
                               <TableColumn fx:id="colPrecioS" prefWidth="89.0" text="Precio" />
                               <TableColumn fx:id="colCantidadS" prefWidth="72.0" text="Cantidad" />
                               <TableColumn fx:id="colSubTotalS" prefWidth="98.0" text="Subtotal" />
-                          </columns>
+                           </columns>
                         </TableView>
                      </children>
                   </AnchorPane>
-              </content>
+               </content>
             </Tab>
          </tabs>
       </TabPane>
-      <Button fx:id="Close" layoutX="1025.0" layoutY="11.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="closebutton" stylesheets="@../css/estilos.css">
+      <Label layoutX="350.0" layoutY="76.0" text="DATOS DE LA FACTURA">
          <font>
-            <Font size="10.0" />
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnGuardar" alignment="CENTER_RIGHT" layoutX="583.0" layoutY="636.0" mnemonicParsing="false" onAction="#guardarFactura" prefHeight="35.0" prefWidth="96.0" styleClass="btn-guardar" stylesheets="@../css/estilos.css" text="Guardar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="Minimize" layoutX="997.0" layoutY="11.0" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="minimizebutton" stylesheets="@../css/estilos.css">
+      <Button fx:id="btnCancelar" alignment="CENTER_RIGHT" layoutX="692.0" layoutY="636.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="35.0" prefWidth="96.0" styleClass="btn-cancelar" stylesheets="@../css/estilos.css" text="Cancelar" textFill="WHITE">
          <font>
-            <Font size="10.0" />
+            <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="Return" alignment="BOTTOM_CENTER" layoutX="968.0" layoutY="11.0" mnemonicParsing="false" onAction="#ReturnButton" prefHeight="15.0" prefWidth="15.0" styleClass="returnbutton" stylesheets="@../css/estilos.css" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="10.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnGuardar" alignment="BOTTOM_CENTER" layoutX="915.0" layoutY="191.0" mnemonicParsing="false" onAction="#guardarFactura" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773; -fx-background-radius: 7px;" text="Guardar" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnCancelar" alignment="BOTTOM_CENTER" layoutX="915.0" layoutY="282.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Cancelar" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
+      <ImageView fitHeight="51.0" fitWidth="51.0" layoutX="300.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/logo-clinica2.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -49,10 +49,6 @@ where facturacion.idFacturacion=$P!{noFactura}]]>
 				</textElement>
 				<text><![CDATA[CLINICA MEDICA MEDIFAM]]></text>
 			</staticText>
-			<image>
-				<reportElement x="147" y="18" width="70" height="65" uuid="11a0d434-6159-41ea-9b89-4f6f3476b284"/>
-				<imageExpression><![CDATA["C:\\Users\\José\\Documents\\NetBeansProjects\\sistemaDevMasters\\src\\imagenes\\logo.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="282" y="70" width="214" height="20" uuid="a2d82213-2da8-4004-87b9-9b5feec8f0a0"/>
 				<textElement>
@@ -74,6 +70,10 @@ where facturacion.idFacturacion=$P!{noFactura}]]>
 				</textElement>
 				<text><![CDATA[2772-8974]]></text>
 			</staticText>
+			<image>
+				<reportElement x="146" y="18" width="80" height="82" uuid="976cfdd4-e108-48c2-947a-2a0a1fe25b0f"/>
+				<imageExpression><![CDATA["C:\\Users\\José\\Documents\\NetBeansProjects\\sistemaDevMasters\\src\\imagenes\\logo-clinica.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

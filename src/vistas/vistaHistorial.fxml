@@ -7,16 +7,18 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="684.0" prefWidth="959.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaHistorialController">
+<AnchorPane id="AnchorPane" minWidth="900.0" prefHeight="724.0" prefWidth="900.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaHistorialController">
    <children>
-      <VBox prefHeight="42.0" prefWidth="963.0" style="-fx-background-color: #223f54;">
+      <VBox prefHeight="42.0" prefWidth="900.0" style="-fx-background-color: #223f54;">
          <children>
-            <Label contentDisplay="CENTER" text="Historial Medico" textFill="WHITE">
+            <Label contentDisplay="CENTER" text="HISTORIAL MEDICO" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -26,56 +28,91 @@
             </Label>
          </children>
       </VBox>
-      <Label layoutX="127.0" layoutY="146.0" text="N° Historial:" />
-      <Label layoutX="358.0" layoutY="196.0" text="Fecha:" />
-      <Label layoutX="127.0" layoutY="196.0" text="N° Consulta:" />
-      <TextField fx:id="txtnoHistorial" layoutX="196.0" layoutY="142.0" onKeyTyped="#txtHistorialKeyTyped" prefHeight="25.0" prefWidth="93.0" stylesheets="@../css/estilos.css" />
-      <TextField fx:id="txtnoConsulta" layoutX="196.0" layoutY="192.0" onKeyTyped="#txtConsultaKeyTyped" prefHeight="27.0" prefWidth="117.0" stylesheets="@../css/estilos.css" />
-      <DatePicker fx:id="txtfecha" editable="false" layoutX="405.0" layoutY="192.0" prefHeight="25.0" prefWidth="128.0" styleClass="textos" />
-      <Label layoutX="404.0" layoutY="83.0" text="HISTORIAL MEDICO DE LOS PACIENTES">
+      <Button fx:id="Close" layoutX="875.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="closebutton" stylesheets="@../css/estilos.css">
          <font>
-            <Font name="System Bold" size="15.0" />
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="Minimize" layoutX="847.0" layoutY="14.0" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="minimizebutton" stylesheets="@../css/estilos.css">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="Return" alignment="BOTTOM_CENTER" layoutX="818.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReturnButton" prefHeight="15.0" prefWidth="15.0" styleClass="returnbutton" stylesheets="@../css/estilos.css" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Button>
+      <Label layoutX="336.0" layoutY="75.0" text="HISTORIAL MEDICO DE LOS PACIENTES">
+         <font>
+            <Font size="18.0" />
          </font>
       </Label>
-      <Pane layoutX="127.0" layoutY="251.0" prefHeight="225.0" prefWidth="290.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos" stylesheets="@../css/estilos.css">
+      <Label layoutX="137.0" layoutY="143.0" styleClass="labels" stylesheets="@../css/estilos.css" text="N° Historial:" />
+      <Label layoutX="432.0" layoutY="193.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Fecha:" />
+      <Label layoutX="137.0" layoutY="193.0" styleClass="labels" stylesheets="@../css/estilos.css" text="N° Consulta:" />
+      <TextField fx:id="txtnoHistorial" layoutX="212.0" layoutY="139.0" onKeyTyped="#txtHistorialKeyTyped" prefHeight="25.0" prefWidth="93.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <TextField fx:id="txtnoConsulta" layoutX="211.0" layoutY="189.0" onKeyTyped="#txtConsultaKeyTyped" prefHeight="27.0" prefWidth="107.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <DatePicker fx:id="txtfecha" layoutX="479.0" layoutY="189.0" prefHeight="25.0" prefWidth="128.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <Pane layoutX="137.0" layoutY="237.0" prefHeight="236.0" prefWidth="331.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
          <children>
             <Label layoutX="83.0" layoutY="14.0" text="DATOS DEL PACIENTE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="20.0" layoutY="54.0" text="Paciente:" />
-            <TextField fx:id="txtPaciente" layoutX="73.0" layoutY="49.0" stylesheets="@../css/estilos.css" />
-            <Label layoutX="19.0" layoutY="93.0" text="Edad:" />
-            <TextField fx:id="txtedad" layoutX="73.0" layoutY="88.0" prefHeight="25.0" prefWidth="48.0" stylesheets="@../css/estilos.css" />
-            <Label layoutX="19.0" layoutY="136.0" text="Peso:" />
-            <TextField fx:id="txtpeso" layoutX="73.0" layoutY="131.0" prefHeight="25.0" prefWidth="48.0" stylesheets="@../css/estilos.css" />
-            <Label layoutX="150.0" layoutY="135.0" text="Altura:" />
-            <TextField fx:id="txtaltura" layoutX="195.0" layoutY="131.0" prefHeight="25.0" prefWidth="48.0" stylesheets="@../css/estilos.css" />
-            <Label layoutX="18.0" layoutY="170.0" text="Tipo &#10;Sangre:" textAlignment="JUSTIFY" />
-            <TextField fx:id="txttipoSangre" layoutX="72.0" layoutY="174.0" prefHeight="27.0" prefWidth="48.0" stylesheets="@../css/estilos.css" />
+            <Label layoutX="20.0" layoutY="54.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Paciente:" />
+            <TextField fx:id="txtPaciente" layoutX="78.0" layoutY="49.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <Label layoutX="19.0" layoutY="93.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Edad:" />
+            <TextField fx:id="txtedad" layoutX="79.0" layoutY="88.0" prefHeight="25.0" prefWidth="48.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <Label layoutX="19.0" layoutY="136.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Peso (lbs):" />
+            <TextField fx:id="txtpeso" layoutX="80.0" layoutY="131.0" prefHeight="25.0" prefWidth="48.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <Label layoutX="150.0" layoutY="135.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Altura (cm):" />
+            <TextField fx:id="txtaltura" layoutX="218.0" layoutY="131.0" prefHeight="25.0" prefWidth="48.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <Label layoutX="18.0" layoutY="170.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Tipo &#10;Sangre:" textAlignment="JUSTIFY" />
+            <TextField fx:id="txttipoSangre" layoutX="79.0" layoutY="174.0" prefHeight="27.0" prefWidth="48.0" styleClass="textos" stylesheets="@../css/estilos.css" />
          </children>
       </Pane>
-      <Pane layoutX="508.0" layoutY="251.0" prefHeight="225.0" prefWidth="290.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos" stylesheets="@../css/estilos.css">
+      <Pane layoutX="493.0" layoutY="237.0" prefHeight="236.0" prefWidth="315.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
          <children>
             <Label layoutX="98.0" layoutY="14.0" text="SIGNOS VITALES">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="25.0" layoutY="58.0" text="Temperatura:" />
-            <Label layoutX="25.0" layoutY="93.0" text="Presion &#10;Arterial:" textAlignment="JUSTIFY" />
-            <Label layoutX="25.0" layoutY="146.0" text="Pulso:" />
-            <Label layoutX="24.0" layoutY="187.0" text="Respiracion:" />
-            <TextField fx:id="txtTemperatura" layoutX="104.0" layoutY="54.0" onKeyTyped="#txtTempKeyTyped" prefHeight="25.0" prefWidth="66.0" stylesheets="@../css/estilos.css" />
-            <TextField fx:id="txtpresion" layoutX="104.0" layoutY="98.0" onKeyTyped="#txtpresionKeyTyped" prefHeight="25.0" prefWidth="66.0" stylesheets="@../css/estilos.css" />
-            <TextField fx:id="txtpulso" layoutX="104.0" layoutY="142.0" onKeyTyped="#txtpulsoKeyTyped" prefHeight="25.0" prefWidth="66.0" stylesheets="@../css/estilos.css" />
-            <TextField fx:id="txtrespiracion" layoutX="104.0" layoutY="183.0" onKeyTyped="#txtrespKeyTyped" prefHeight="25.0" prefWidth="66.0" stylesheets="@../css/estilos.css" />
+            <Label layoutX="25.0" layoutY="58.0" styleClass="labels" text="Temperatura:" />
+            <Label layoutX="25.0" layoutY="93.0" styleClass="labels" text="Presión &#10;Arterial:" textAlignment="JUSTIFY" />
+            <Label layoutX="25.0" layoutY="146.0" styleClass="labels" text="Pulso:" />
+            <Label layoutX="24.0" layoutY="187.0" styleClass="labels" text="Respiración:" />
+            <TextField fx:id="txtTemperatura" layoutX="104.0" layoutY="54.0" onKeyTyped="#txtTempKeyTyped" prefHeight="25.0" prefWidth="66.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <TextField fx:id="txtpresion" layoutX="104.0" layoutY="98.0" onKeyTyped="#txtpresionKeyTyped" prefHeight="25.0" prefWidth="66.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <TextField fx:id="txtpulso" layoutX="104.0" layoutY="142.0" onKeyTyped="#txtpulsoKeyTyped" prefHeight="25.0" prefWidth="66.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <TextField fx:id="txtrespiracion" layoutX="104.0" layoutY="183.0" onKeyTyped="#txtrespKeyTyped" prefHeight="25.0" prefWidth="66.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+            <Label fx:id="lbtemp" layoutX="105.0" layoutY="81.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbpresion" layoutX="105.0" layoutY="125.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbpulso" layoutX="105.0" layoutY="169.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbresp" layoutX="106.0" layoutY="207.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
-      <Label layoutX="599.0" layoutY="196.0" text="Medico:" />
-      <TextField fx:id="txtmedico" layoutX="656.0" layoutY="192.0" stylesheets="@../css/estilos.css" />
-      <Pane layoutX="125.0" layoutY="501.0" prefHeight="159.0" prefWidth="676.0" style="-fx-border-color: BLACK; -fx-background-color: #F3F3F3;" styleClass="textos" stylesheets="@../css/estilos.css">
+      <Label layoutX="642.0" layoutY="193.0" styleClass="labels" stylesheets="@../css/estilos.css" text="Médico:" />
+      <TextField fx:id="txtmedico" layoutX="697.0" layoutY="189.0" prefHeight="27.0" prefWidth="107.0" styleClass="textos" stylesheets="@../css/estilos.css" />
+      <Pane layoutX="137.0" layoutY="485.0" prefHeight="159.0" prefWidth="675.0" styleClass="contenedor" stylesheets="@../css/estilos.css">
          <children>
             <Label layoutX="49.0" layoutY="14.0" text="ANANMESIS">
                <font>
@@ -92,36 +129,36 @@
             <TextArea fx:id="txttratamiento" layoutX="355.0" layoutY="42.0" prefHeight="96.0" prefWidth="300.0" styleClass="textos" stylesheets="@../css/estilos.css" />
          </children>
       </Pane>
-      <Button id="btn-buscar" fx:id="btnbConsulta" layoutX="289.0" layoutY="192.0" mnemonicParsing="false" onAction="#buscarConsulta" prefHeight="27.0" prefWidth="31.0" stylesheets="@../css/estilos.css" />
-      <Button fx:id="btnGuardar" alignment="BOTTOM_CENTER" layoutX="848.0" layoutY="281.0" mnemonicParsing="false" onAction="#crearHistorial" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773; -fx-background-radius: 7px;" text="Agregar" textFill="WHITE">
+      <Button fx:id="btnbConsulta" alignment="CENTER_RIGHT" layoutX="322.0" layoutY="190.0" mnemonicParsing="false" onAction="#buscarConsulta" prefHeight="25.0" prefWidth="75.0" styleClass="btn-buscar" stylesheets="@../css/estilos.css" text="Buscar" textFill="WHITE" />
+      <Button fx:id="btnGuardar" alignment="CENTER_RIGHT" layoutX="503.0" layoutY="662.0" mnemonicParsing="false" onAction="#crearHistorial" prefHeight="35.0" prefWidth="96.0" styleClass="btn-guardar" stylesheets="@../css/estilos.css" text="Guardar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnCancelar" alignment="CENTER_RIGHT" layoutX="716.0" layoutY="662.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="35.0" prefWidth="96.0" styleClass="btn-cancelar" stylesheets="@../css/estilos.css" text="Cancelar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnEliminar" alignment="CENTER_RIGHT" layoutX="608.0" layoutY="662.0" mnemonicParsing="false" onAction="#eliminarHistorial" prefHeight="35.0" prefWidth="96.0" styleClass="btn-eliminar" stylesheets="@../css/estilos.css" text="Eliminar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Label fx:id="lbhistorial" layoutX="212.0" layoutY="166.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
-      </Button>
-      <Button fx:id="btnCancelar" alignment="BOTTOM_CENTER" layoutX="848.0" layoutY="471.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Cancelar" textFill="WHITE">
+      </Label>
+      <Label fx:id="lbconsulta" layoutX="212.0" layoutY="216.0" prefHeight="17.0" prefWidth="152.0" text="Label" textFill="RED">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
-      </Button>
-      <Button fx:id="btnEliminar" alignment="BOTTOM_CENTER" layoutX="848.0" layoutY="374.0" mnemonicParsing="false" onAction="#eliminarHistorial" prefHeight="61.0" prefWidth="75.0" style="-fx-background-color: #016773;" text="Eliminar" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="Close" layoutX="939.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="closebutton" stylesheets="@../css/estilos.css">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Button>
-      <Button fx:id="Minimize" layoutX="911.0" layoutY="14.0" mnemonicParsing="false" onAction="#minimizeButtonOnAction" prefHeight="15.0" prefWidth="15.0" styleClass="minimizebutton" stylesheets="@../css/estilos.css">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Button>
-      <Button fx:id="Return" alignment="BOTTOM_CENTER" layoutX="882.0" layoutY="14.0" mnemonicParsing="false" onAction="#ReturnButton" prefHeight="15.0" prefWidth="15.0" styleClass="returnbutton" stylesheets="@../css/estilos.css" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="10.0" />
-         </font>
-      </Button>
+      </Label>
+      <ImageView fitHeight="51.0" fitWidth="51.0" layoutX="282.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/logo-clinica2.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

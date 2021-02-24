@@ -34,6 +34,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -140,10 +141,22 @@ public class VistaProveedoresController implements Initializable {
      */
     
     ObservableList<Correos> listaCorreo;
+    @FXML
+    private Label lbid;
+    @FXML
+    private Label lbrtn;
+    @FXML
+    private Label lbNombre;
+    @FXML
+    private Label lbContacto;
+    @FXML
+    private Label lbTelefono;
+    @FXML
+    private Label lbCorreo;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+        inicializarAlertas();
         tablaProveedores();
         tablasContacto();
         seleccionar();
@@ -158,6 +171,15 @@ public class VistaProveedoresController implements Initializable {
         
         Tooltip tooltipReturn = new Tooltip("Return");
         Return.setTooltip(tooltipReturn);
+    }
+    
+    public void inicializarAlertas(){
+        lbid.setVisible(false);
+        lbrtn.setVisible(false);
+        lbNombre.setVisible(false);
+        lbContacto.setVisible(false);
+        lbTelefono.setVisible(false);
+        lbCorreo.setVisible(false);
     }
     
     @FXML
@@ -501,7 +523,10 @@ public class VistaProveedoresController implements Initializable {
         
         if(!Character.isDigit(car) && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbid.setVisible(true);
+            lbid.setText("Sólo se permiten números");
+        }else{
+            lbid.setVisible(false);
         }
     }
 
@@ -511,7 +536,10 @@ public class VistaProveedoresController implements Initializable {
         
         if(!Character.isDigit(car) && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+           lbrtn.setVisible(true);
+            lbrtn.setText("Sólo se permiten números");
+        }else{
+            lbrtn.setVisible(false);
         }
     }
 
@@ -521,7 +549,10 @@ public class VistaProveedoresController implements Initializable {
         
         if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car) && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
+            lbNombre.setVisible(true);
+            lbNombre.setText("Sólo se permiten letras");
+        }else{
+            lbNombre.setVisible(false);
         }
     }
 
@@ -530,8 +561,10 @@ public class VistaProveedoresController implements Initializable {
         char car= event.getCharacter().charAt(0);
         
         if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car) && car > '\b'){
-            event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
+            lbContacto.setVisible(true);
+            lbContacto.setText("Sólo se permiten letras");
+        }else{
+            lbContacto.setVisible(false);
         }
     }
 
@@ -541,7 +574,10 @@ public class VistaProveedoresController implements Initializable {
         
         if(!Character.isDigit(car) && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbTelefono.setVisible(true);
+            lbTelefono.setText("Sólo se permiten números");
+        }else{
+            lbTelefono.setVisible(false);
         }
     }
     
@@ -550,7 +586,10 @@ public class VistaProveedoresController implements Initializable {
         char car = event.getCharacter().charAt(0);
         if ((Character.isSpaceChar(car) && car > '\b')) {
             event.consume();
-            JOptionPane.showMessageDialog(null, "No se permiten espacios");
+           lbCorreo.setVisible(true);
+            lbCorreo.setText("No se permiten espacios");
+        }else{
+            lbCorreo.setVisible(false);
         }
     }
 

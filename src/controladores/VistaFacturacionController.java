@@ -10,7 +10,6 @@ import Conexion.conexion;
 import com.mysql.jdbc.Connection;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +19,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,7 +34,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -174,10 +178,23 @@ public class VistaFacturacionController implements Initializable {
     private TableColumn<?, ?> colSubtotal;
     @FXML
     private TextField txtFecha;
+    @FXML
+    private Label lbidemp;
+    @FXML
+    private Label lbidpac;
+    @FXML
+    private Label lbcodprod;
+    @FXML
+    private Label lbcantidad;
+    @FXML
+    private Label lbcodservicio;
+    @FXML
+    private Label lbcantidad1;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+       inicializarAlertas();
        
        comboFactura();
        paneProducto.setDisable(true);
@@ -188,8 +205,37 @@ public class VistaFacturacionController implements Initializable {
        txtempleado.setText(VistaLoginController.nombresEmp + " " + VistaLoginController.apellidosEmp);
        txtidEmp.setText(idEmpl);
        txtFecha.setText(mostrarFecha());
+       seleccionarProducto();
+       seleccionarServicio();
+       
+        seleccionarProducto();
+        final ContextMenu contextMenu = new ContextMenu();
+        MenuItem menuItem1 = new MenuItem("Eliminar");
+        menuItem1.setOnAction((event) -> {
+            eliminarProducto();
+            
+        });
+        contextMenu.getItems().addAll(menuItem1);
+        tablaProductos.setContextMenu(contextMenu);
+        
+        final ContextMenu contextMenu1 = new ContextMenu();
+        MenuItem menuItem12 = new MenuItem("Eliminar");
+        menuItem12.setOnAction((event) -> {
+            eliminarServicio();
+        });
+        contextMenu1.getItems().addAll(menuItem12);
+        tablaServicios.setContextMenu(contextMenu1);
 
-    }   
+    } 
+    
+    public void inicializarAlertas(){
+        lbidpac.setVisible(false);
+        lbidemp.setVisible(false);
+        lbcodprod.setVisible(false);
+        lbcantidad.setVisible(false);
+        lbcodservicio.setVisible(false);
+        lbcantidad1.setVisible(false);
+    }
     
     public void tablaProducto(){
         listadetalle=FXCollections.observableArrayList();
@@ -215,6 +261,55 @@ public class VistaFacturacionController implements Initializable {
         cmbConceptos.setItems(items);
         
         
+    }
+    
+    public void seleccionarProducto() {
+        tablaProductos.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<ProductoC>() {
+            @Override
+            public void changed(ObservableValue<? extends ProductoC> arg0,
+                    ProductoC valorAnterior, ProductoC valorSeleccionado) {
+
+                if (valorSeleccionado != null) {
+                    txtcodigoProd.setText(String.valueOf(valorSeleccionado.getCodigo()));
+                    txtprecioProd.setText(String.valueOf(valorSeleccionado.getPrecio()));
+                    txtproducto.setText(String.valueOf(valorSeleccionado.getProducto()));
+                    txtcantidad.setText(String.valueOf(valorSeleccionado.getCantidad()));
+                    txtConNeto.setText(String.valueOf(valorSeleccionado.getContNeto()));
+                }
+            }
+        }
+        );
+    }
+    
+    @FXML
+    private void eliminarProducto(){
+        tablaProductos.getItems().removeAll(tablaProductos.getSelectionModel().getSelectedItem());
+        limpiarProductos();
+    }
+    
+    public void seleccionarServicio() {
+        tablaServicios.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Servicios>() {
+            @Override
+            public void changed(ObservableValue<? extends Servicios> arg0,
+                    Servicios valorAnterior, Servicios valorSeleccionado) {
+
+                if (valorSeleccionado != null) {
+                    txtcodigoS.setText(String.valueOf(valorSeleccionado.getId()));
+                    txtservicio.setText(String.valueOf(valorSeleccionado.getServicio()));
+                    txtprecioS.setText(String.valueOf(valorSeleccionado.getPrecio()));
+                    txtcantidadS.setText(String.valueOf(valorSeleccionado.getCantidad()));
+                }
+            }
+        }
+        );
+    }
+    
+    @FXML
+    private void eliminarServicio(){
+        tablaServicios.getItems().removeAll(tablaServicios.getSelectionModel().getSelectedItem());
+        limpiarServicios();
     }
     
 
@@ -413,8 +508,6 @@ public class VistaFacturacionController implements Initializable {
    
     @FXML
     private void guardarFactura(ActionEvent event) {
-      //  if (txtFactura.getText().isEmpty() ){
-      //     JOptionPane.showMessageDialog(null, "El campo 'Factura No' está vacío, por favor ingrese el número de factura.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
        if(txtFecha.getText().isEmpty()){
            JOptionPane.showMessageDialog(null, "El campo 'Fecha' está vacío, por favor seleccione la fecha.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
        }else if(txtidEmp.getText().isEmpty()){
@@ -425,23 +518,14 @@ public class VistaFacturacionController implements Initializable {
            JOptionPane.showMessageDialog(null, "El campo 'Identidad' está vacío, por favor ingrese la identidad del paciente.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
        }else if(txtpaciente.getText().isEmpty()){
            JOptionPane.showMessageDialog(null, "El campo 'Paciente' está vacío, por favor ingrese el nombre del paciente.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
-      // }else if(txtcodigoProd.getText().isEmpty()){
-       //    JOptionPane.showMessageDialog(null, "El campo 'Código' está vacío, por favor ingrese el código del producto.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
-      // }else if(txtproducto.getText().isEmpty()){
-      //     JOptionPane.showMessageDialog(null, "El campo 'Producto' está vacío, por favor ingrese el nombre del producto.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
-      // }else if(txtContNeto.getText().isEmpty()){   
-       //    JOptionPane.showMessageDialog(null, "El campo 'Contenido Neto' está vacío, por favor ingrese el contenido neto del producto.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
-      // }else if(txtprecioProd.getText().isEmpty()){
-       //    JOptionPane.showMessageDialog(null, "El campo 'Precio' está vacío, por favor ingrese el precio.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
-      // }else if(txtcantidad.getText().isEmpty()){
-       //    JOptionPane.showMessageDialog(null, "El campo 'Cantidad' está vacío, por favor ingrese el precio.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
        }else{
   
         try {           
            noFactura();
            String valor = cmbConceptos.getSelectionModel().getSelectedItem();
            switch (valor) {
-
+         
+       
             case "Productos":{
                 pps=cone.prepareStatement("INSERT INTO facturacion(fechaFactura, idEmpleado, idPaciente) VALUES(?,?,?)");
                 //pps.setString(1, txtfechaFactura.getValue().toString());
@@ -475,7 +559,7 @@ public class VistaFacturacionController implements Initializable {
                 limpiarDatos();
                 limpiarProductos();
                 tablaProductos.getItems().clear();
-                
+             
             }
                 break;
             case "Servicios":{
@@ -542,8 +626,7 @@ public class VistaFacturacionController implements Initializable {
                 alert.setContentText("La Factura se ha guardado exitosamente");
                 alert.showAndWait();
                 
-                imprimirFactura1();
-                imprimirFactura2();
+                imprimirFactura3();
                 
                 limpiarDatos();
                 limpiarProductos();
@@ -581,7 +664,10 @@ public class VistaFacturacionController implements Initializable {
         
         if(!Character.isDigit(car) && car>'\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbidemp.setVisible(true);
+            lbidemp.setText("Sólo se permiten números");
+        }else{
+            lbidemp.setVisible(false);
         }
     }
 
@@ -601,7 +687,10 @@ public class VistaFacturacionController implements Initializable {
         
         if(!Character.isDigit(car) && car>'\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbcodprod.setVisible(true);
+            lbcodprod.setText("Sólo se permiten números");
+        }else{
+            lbcodprod.setVisible(false);
         }
     }
 
@@ -611,7 +700,10 @@ public class VistaFacturacionController implements Initializable {
         
         if(!Character.isDigit(car) && car>'\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbcantidad.setVisible(true);
+            lbcantidad.setText("Sólo se permiten números");
+        }else{
+            lbcantidad.setVisible(false);
         }
     }
 
@@ -621,7 +713,36 @@ public class VistaFacturacionController implements Initializable {
         
         if(!Character.isDigit(car) && car>'\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbidpac.setVisible(true);
+            lbidpac.setText("Sólo se permiten números");
+        }else{
+            lbidpac.setVisible(false);
+        }
+    }
+    
+     @FXML
+    private void txtcodServKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car) && car>'\b'){
+            event.consume();
+            lbcodservicio.setVisible(true);
+            lbcodservicio.setText("Sólo se permiten números");
+        }else{
+            lbcodservicio.setVisible(false);
+        }
+    }
+
+    @FXML
+    private void txtcantKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car) && car>'\b'){
+            event.consume();
+            lbcantidad1.setVisible(true);
+            lbcantidad1.setText("Sólo se permiten números");
+        }else{
+            lbcantidad1.setVisible(false);
         }
     }
  
@@ -677,6 +798,8 @@ public class VistaFacturacionController implements Initializable {
                 Logger.getLogger(VistaFacturacionController.class.getName()).log(Level.SEVERE, null, ex);
             }
             
+            eliminarProducto();
+            limpiarProductos();
             
         }
         
@@ -707,7 +830,8 @@ public class VistaFacturacionController implements Initializable {
             servicios.add(serv);
             tablaServicios.setItems(servicios);
             limpiarServicios();
-        }    
+        } 
+            eliminarServicio();
     }
 
     @FXML
@@ -809,6 +933,8 @@ public class VistaFacturacionController implements Initializable {
             Logger.getLogger(VistaFacturacionController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+   
 
 
 }

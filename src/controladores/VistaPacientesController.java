@@ -37,6 +37,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -51,6 +52,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
 import modelos.Correos;
@@ -227,6 +229,21 @@ public class VistaPacientesController implements Initializable {
         tablaContacto();
         seleccionarTelefono();
         seleccionarCorreo();
+        
+        Callback<DatePicker, DateCell> dayCellFactory = dp -> new DateCell()
+           {
+               @Override
+               public void updateItem(LocalDate item, boolean empty)
+               {
+                   super.updateItem(item, empty);
+
+                   if(item.isAfter(LocalDate.now()))
+                   {
+                       this.setDisable(true);
+                   }
+               }
+        };
+        txtFechaPac.setDayCellFactory(dayCellFactory);
     }
     public void tablaPacientes(){
         //LLENAR TABLA PACIENTES
@@ -716,7 +733,6 @@ public class VistaPacientesController implements Initializable {
         
         if(!Character.isDigit(car) && car>'\b'){
             event.consume();
-            //JOptionPane.showMessageDialog(null, "Sólo se permiten números");
             lbTelefono.setVisible(true);
             lbTelefono.setText("Sólo se permiten números");
         }else{

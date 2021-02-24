@@ -124,19 +124,28 @@ public class VistaMedicosController implements Initializable {
         cmbEspecialidad.setItems(comboEspecialidad);
         
     }
+    
+    public void limpiarDatos(){
+        txtidMedico.setText("");
+        txtMedico.setText("");
+        cmbEspecialidad.setValue(null);
+        txtlicencia.setText("");
+        txtexperiencia.setText("");
+        txtidMedico.requestFocus();
+    }
 
     @FXML
     private void guardarMedicos(ActionEvent event) {
         int especialidad= cmbEspecialidad.getSelectionModel().getSelectedIndex()+1;
         
         if(txtidMedico.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "El campo Identidad está vacío, por favor ingrese la identidad del médico.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El campo Identidad está vacío, por favor ingrese la identidad del médico.", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }else if(cmbEspecialidad.getValue()==null){
-            JOptionPane.showMessageDialog(null, "El campo especialidad está vacío, por favor ingrese la especialidad del médico.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El campo especialidad está vacío, por favor ingrese la especialidad del médico.", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }else if(txtlicencia.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "El campo licencia está vacío, por favor ingrese la licencia del médico.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El campo licencia está vacío, por favor ingrese la licencia del médico.", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }else if(txtexperiencia.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "El campo años de experiencia está vacío, por favor ingrese años de experiencia del médico.", "¡Error!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El campo años de experiencia está vacío, por favor ingrese años de experiencia del médico.", "¡Error!", JOptionPane.ERROR_MESSAGE);
         }else{
             
             try {
@@ -148,6 +157,7 @@ public class VistaMedicosController implements Initializable {
                 pps.executeUpdate();
                 
                 JOptionPane.showMessageDialog(null, "Se ha registrado los datos del Médico", "Datos guardados", JOptionPane.PLAIN_MESSAGE);
+                limpiarDatos();
             } catch (SQLException ex) {
                 Logger.getLogger(VistaMedicosController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -156,12 +166,13 @@ public class VistaMedicosController implements Initializable {
 
     @FXML
     private void cancelar(ActionEvent event) {
+        limpiarDatos();
     }
 
     @FXML
     private void buscarMedico(ActionEvent event) {
         try{
-           PreparedStatement pps=cone.prepareStatement("SELECT * FROM empleados where idEmpleado=?");
+           PreparedStatement pps=cone.prepareStatement("SELECT * FROM empleados where idEmpleado=? and tipoEmpleado=1");
             pps.setString(1, txtidMedico.getText());
            ResultSet rs=pps.executeQuery();
             

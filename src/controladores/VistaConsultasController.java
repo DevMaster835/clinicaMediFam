@@ -35,7 +35,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -46,6 +48,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import javax.swing.JOptionPane;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import modelos.Consultas;
@@ -141,10 +144,17 @@ public class VistaConsultasController implements Initializable {
     private Button btnActualizar;
     @FXML
     private Button btnImprimir;
+    @FXML
+    private Label lbid;
+    @FXML
+    private Label lbid1;
+    @FXML
+    private Label lbhora;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        inicializarAlertas();
         
         estadoConsulta=FXCollections.observableArrayList();
         EstadoConsulta.cmbEstado(cone, estadoConsulta);
@@ -162,8 +172,46 @@ public class VistaConsultasController implements Initializable {
         tablaConsultas();
         seleccionarConsulta();
         
+        Callback<DatePicker, DateCell> dayCellFactory = dp -> new DateCell()
+           {
+               @Override
+               public void updateItem(LocalDate item, boolean empty)
+               {
+                   super.updateItem(item, empty);
+
+                   if(item.isAfter(LocalDate.now()) || item.isBefore(LocalDate.now()))
+                   {
+                       this.setDisable(true);
+                       
+                   }
+               }
+        };
+        txtfechaCreacion.setDayCellFactory(dayCellFactory);
         
-    } 
+        Callback<DatePicker, DateCell> dayCellFactory1 = dp -> new DateCell()
+           {
+               @Override
+               public void updateItem(LocalDate item, boolean empty)
+               {
+                   super.updateItem(item, empty);
+
+                   if(item.isBefore(LocalDate.now()) || item.isAfter(LocalDate.now().plusMonths(6)))
+                   {
+                       this.setDisable(true);
+                   }
+               }
+        };
+        txtfechaCita.setDayCellFactory(dayCellFactory1);
+        
+        
+    }
+    
+    public void inicializarAlertas(){
+        lbhora.setVisible(false);
+        lbid.setVisible(false);
+        lbid1.setVisible(false);
+        
+    }
     
     @FXML
     private void exitButtonOnAction(ActionEvent event){
@@ -493,7 +541,10 @@ public class VistaConsultasController implements Initializable {
         
         if(!Character.isDigit(car) && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbid.setVisible(true);
+            lbid.setText("Sólo se permiten números");
+        }else{
+            lbid.setVisible(false);
         }
     }
 
@@ -503,8 +554,25 @@ public class VistaConsultasController implements Initializable {
         
         if(!Character.isDigit(car) && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbid1.setVisible(true);
+            lbid1.setText("Sólo se permiten números");
+        }else{
+            lbid1.setVisible(false);
         }
+    }
+    
+    @FXML
+    private void txthoraKeyTyped(KeyEvent event) {
+        char car= event.getCharacter().charAt(0);
+        
+        if(!Character.isDigit(car) && car > '\b' && car>':'){
+            event.consume();
+            lbhora.setVisible(true);
+            lbhora.setText("Sólo se permiten números");
+        }else{
+            lbhora.setVisible(false);
+        }
+        
     }
 
     @FXML
@@ -549,9 +617,7 @@ public class VistaConsultasController implements Initializable {
         imprimirConsulta();
     }
 
-    @FXML
-    private void txthoraKeyTyped(KeyEvent event) {
-    }
+    
 
     
     

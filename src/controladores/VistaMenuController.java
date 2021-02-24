@@ -66,7 +66,7 @@ public class VistaMenuController implements Initializable {
     private void btnPacientes(ActionEvent event) throws IOException {
                Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaPacientes.fxml"));
                 Stage stage = new Stage();
-                Scene scene = new Scene(root, 997, 656);
+                Scene scene = new Scene(root);
                 stage.setScene(scene);    
                 stage.setResizable(false);
                 stage.initStyle(StageStyle.UNDECORATED);
@@ -93,7 +93,7 @@ public class VistaMenuController implements Initializable {
     private void btnEmpleados(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaEmpleados.fxml"));
                 Stage stage = new Stage();
-                Scene scene = new Scene(root, 997, 656);
+                Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(false);
                 stage.initStyle(StageStyle.UNDECORATED);
@@ -129,7 +129,7 @@ public class VistaMenuController implements Initializable {
     private void btnMedicos(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaMedicos.fxml"));
                 Stage stage = new Stage();
-                Scene scene = new Scene(root, 997, 656);
+                Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(false);
                 stage.initStyle(StageStyle.UNDECORATED);
@@ -155,7 +155,7 @@ public class VistaMenuController implements Initializable {
     private void btnEnfermeras(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaEnfermeros.fxml"));
                 Stage stage = new Stage();
-                Scene scene = new Scene(root, 997, 656);
+                Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(false);
                 stage.initStyle(StageStyle.UNDECORATED);
@@ -186,7 +186,7 @@ public class VistaMenuController implements Initializable {
     private void btnProveedores(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaProveedores.fxml"));
                 Stage stage = new Stage();
-                Scene scene = new Scene(root, 909, 593);
+                Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(false);
                 stage.initStyle(StageStyle.UNDECORATED);
@@ -222,7 +222,7 @@ public class VistaMenuController implements Initializable {
     private void btnProductos(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaProductos.fxml"));
                 Stage stage = new Stage();
-                Scene scene = new Scene(root, 938, 587);
+                Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(false);
                 stage.initStyle(StageStyle.UNDECORATED);
@@ -258,7 +258,7 @@ public class VistaMenuController implements Initializable {
     private void btnConsultas(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaConsultas.fxml"));
                 Stage stage = new Stage();
-                Scene scene = new Scene(root, 1000, 700);
+                Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(false);
                 stage.initStyle(StageStyle.UNDECORATED);
@@ -294,7 +294,7 @@ public class VistaMenuController implements Initializable {
     private void btnHistorial(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaHistorial.fxml"));
                 Stage stage = new Stage();
-                Scene scene = new Scene(root, 997, 656);
+                Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(false);
                 stage.initStyle(StageStyle.UNDECORATED);
@@ -331,7 +331,7 @@ public class VistaMenuController implements Initializable {
     private void btnFacturacion(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaFacturacion.fxml"));
                 Stage stage = new Stage();
-                Scene scene = new Scene(root, 1046, 608);
+                Scene scene = new Scene(root);
                 stage.setScene(scene);    
                 stage.setResizable(false);
                 stage.initStyle(StageStyle.UNDECORATED);
@@ -352,6 +352,33 @@ public class VistaMenuController implements Initializable {
         });
                 stage.show();
                ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();   
+    }
+
+    @FXML
+    private void btnCompras(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/vistas/vistaCompras.fxml"));
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);    
+                stage.setResizable(false);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setResizable(false);
+                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stage.setX(event.getScreenX() - xOffset);
+                stage.setY(event.getScreenY() - yOffset);
+            }
+        });
+                stage.show();
+               ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();  
     }
     
 }

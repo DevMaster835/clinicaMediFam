@@ -34,7 +34,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -44,6 +46,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
 import modelos.Productos;
@@ -109,6 +112,16 @@ public class VistaProductosController implements Initializable {
     private TableColumn<?, ?> colContenido;
     @FXML
     private Button btnActualizar;
+    @FXML
+    private Label lbcodigo;
+    @FXML
+    private Label lbNombre;
+    @FXML
+    private Label lbContenido;
+    @FXML
+    private Label lbexistencia;
+    @FXML
+    private Label lbprecio;
 
     /**
      * Initializes the controller class.
@@ -116,7 +129,7 @@ public class VistaProductosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+        inicializarAlertas();
         formatoFecha();
         tablaProductos();
         seleccionar();
@@ -129,7 +142,30 @@ public class VistaProductosController implements Initializable {
         
         Tooltip tooltipReturn = new Tooltip("Return");
         Return.setTooltip(tooltipReturn);
-    } 
+        
+        Callback<DatePicker, DateCell> dayCellFactory1 = dp -> new DateCell()
+           {
+               @Override
+               public void updateItem(LocalDate item, boolean empty)
+               {
+                   super.updateItem(item, empty);
+
+                   if(item.isBefore(LocalDate.now()))
+                   {
+                       this.setDisable(true);
+                   }
+               }
+        };
+        txtfechaVen.setDayCellFactory(dayCellFactory1);
+    }
+    
+    public void inicializarAlertas(){
+        lbcodigo.setVisible(false);
+        lbNombre.setVisible(false);
+        lbContenido.setVisible(false);
+        lbexistencia.setVisible(false);
+        lbprecio.setVisible(false);
+    }
     
     @FXML
     private void exitButtonOnAction(ActionEvent event){
@@ -407,7 +443,10 @@ public class VistaProductosController implements Initializable {
         
         if(!Character.isDigit(car) && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbcodigo.setVisible(true);
+            lbcodigo.setText("Sólo se permiten números");
+        }else{
+            lbcodigo.setVisible(false);
         }
         
     }
@@ -418,7 +457,10 @@ public class VistaProductosController implements Initializable {
         
         if(!Character.isAlphabetic(car) && !Character.isSpaceChar(car) && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
+            lbNombre.setVisible(true);
+            lbNombre.setText("Sólo se permiten letras");
+        }else{
+            lbNombre.setVisible(false);
         }
     }
 
@@ -428,7 +470,10 @@ public class VistaProductosController implements Initializable {
         
         if(!Character.isDigit(car) && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbprecio.setVisible(true);
+            lbprecio.setText("Sólo se permiten números");
+        }else{
+            lbprecio.setVisible(false);
         }
     }
 
@@ -438,7 +483,10 @@ public class VistaProductosController implements Initializable {
         
         if(!Character.isDigit(car) && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbexistencia.setVisible(true);
+            lbexistencia.setText("Sólo se permiten números");
+        }else{
+            lbexistencia.setVisible(false);
         }
     }
 
@@ -448,7 +496,10 @@ public class VistaProductosController implements Initializable {
         
         if(!Character.isDigit(car) && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbContenido.setVisible(true);
+            lbContenido.setText("Sólo se permiten números");
+        }else{
+            lbContenido.setVisible(false);
         }
     }
 

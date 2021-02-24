@@ -11,20 +11,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="541.0" style="-fx-background-color: #8390a0;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaLoginController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="541.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.VistaLoginController">
    <children>
-      <Pane fx:id="panel1" prefHeight="400.0" prefWidth="240.0" style="-fx-background-color: #223f54;">
+      <Pane fx:id="panel1" prefHeight="400.0" prefWidth="240.0" style="-fx-background-color: #8390a0;">
          <children>
             <Label layoutX="13.0" layoutY="26.0" style="-fx-font-family: 'Overpass'; -fx-font-size: 24px; -fx-font-weight: 800;" text="CLINICA MEDIFAM" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <ImageView fitHeight="173.0" fitWidth="198.0" layoutX="29.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/logo-de-medifan.png" />
-               </image>
-            </ImageView>
             <Label layoutX="74.0" layoutY="372.0" text="devMasters 2020" textFill="#f5f5f5">
                <font>
                   <Font name="Franklin Gothic Medium" size="12.0" />
@@ -38,19 +33,6 @@
          </font>
       </Label>
       <TextField fx:id="txtUsuario" layoutX="322.0" layoutY="149.0" onKeyTyped="#txtUsuarioKeyTyped" promptText="Escriba su usuario" style="-fx-background-radius: 11px;" />
-      <Button fx:id="btnIniciar" defaultButton="true" layoutX="415.0" layoutY="309.0" mnemonicParsing="false" onAction="#iniciarSesion" style="-fx-background-color: green; -fx-background-radius: 10px; -fx-font-family: 'Overpass'; -fx-font-size: 13px; -fx-font-weight: 700;" text="Iniciar" textFill="WHITE">
-         <font>
-            <Font name="Franklin Gothic Demi" size="13.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </Button>
-      <Button fx:id="btnSalir" cancelButton="true" layoutX="328.0" layoutY="309.0" mnemonicParsing="false" onAction="#salirSistema" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: red; -fx-background-radius: 10px;" text="Salir" textFill="WHITE">
-         <font>
-            <Font name="Franklin Gothic Demi" size="13.0" />
-         </font>
-      </Button>
       <PasswordField fx:id="txtContra" layoutX="322.0" layoutY="234.0" onKeyTyped="#txtContraseñaKeyTyped" prefHeight="25.0" prefWidth="149.0" promptText="Escriba su contraseña" style="-fx-background-radius: 11px;" />
       <ImageView fitHeight="26.0" fitWidth="33.0" layoutX="296.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -62,5 +44,23 @@
             <Image url="@../../../../CLASES%20III%20PERIODO/INGENIERIA%20DEL%20SOFTWARE/II%20PARCIAL/forms/Menus/DevMaster/src/img/lock-solid-24.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="186.0" fitWidth="180.0" layoutX="40.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/logo-clinica2.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnIniciar" defaultButton="true" layoutX="416.0" layoutY="319.0" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="29.0" prefWidth="90.0" styleClass="btn-loginI" stylesheets="@../css/estilos.css" text="Iniciar" textFill="WHITE">
+         <font>
+            <Font name="Franklin Gothic Demi" size="13.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <Button fx:id="btnSalir" cancelButton="true" layoutX="302.0" layoutY="319.0" mnemonicParsing="false" onAction="#salirSistema" prefHeight="29.0" prefWidth="90.0" styleClass="btn-loginS" stylesheets="@../css/estilos.css" text="Salir" textFill="WHITE">
+         <font>
+            <Font name="Franklin Gothic Demi" size="13.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

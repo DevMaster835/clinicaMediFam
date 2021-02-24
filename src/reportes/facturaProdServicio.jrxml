@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturaProdServicio" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b581b7a2-7808-4355-bbca-892d4bb767fb">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="23"/>
 	<parameter name="noFactura" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -50,10 +50,6 @@ where facturacion.idFacturacion=$P!{noFactura}]]>
 				</textElement>
 				<text><![CDATA[CLINICA MEDICA MEDIFAM]]></text>
 			</staticText>
-			<image>
-				<reportElement x="158" y="25" width="70" height="65" uuid="c228292c-b48e-49a6-9d23-81995a71467f"/>
-				<imageExpression><![CDATA["C:\\Users\\José\\Documents\\NetBeansProjects\\sistemaDevMasters\\src\\imagenes\\logo.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="319" y="57" width="162" height="20" uuid="b8df4001-5f33-4c07-8bd6-c0cbac425580"/>
 				<textElement>
@@ -75,6 +71,10 @@ where facturacion.idFacturacion=$P!{noFactura}]]>
 				</textElement>
 				<text><![CDATA[2772-8974]]></text>
 			</staticText>
+			<image>
+				<reportElement x="152" y="14" width="80" height="82" uuid="624a10d7-5ad6-409c-a96c-df4f8f411db4"/>
+				<imageExpression><![CDATA["C:\\Users\\José\\Documents\\NetBeansProjects\\sistemaDevMasters\\src\\imagenes\\logo-clinica.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

@@ -54,10 +54,6 @@ WHERE consultas_medicas.noConsulta=$P!{noConsulta}]]>
 				</textElement>
 				<text><![CDATA[¡Cuidando de tu familia!]]></text>
 			</staticText>
-			<image>
-				<reportElement x="123" y="23" width="70" height="65" uuid="97f98573-f6b0-4571-b5ba-2c584d16c1b7"/>
-				<imageExpression><![CDATA["C:\\Users\\José\\Documents\\NetBeansProjects\\sistemaDevMasters\\src\\imagenes\\logo.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="366" y="95" width="67" height="19" uuid="463211cd-ef88-4951-8af4-905987777862"/>
 				<textElement>

@@ -26,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -95,6 +96,18 @@ public class VistaHistorialController implements Initializable {
 
      private double xOffset = 0; 
     private double yOffset = 0;
+    @FXML
+    private Label lbtemp;
+    @FXML
+    private Label lbpresion;
+    @FXML
+    private Label lbpulso;
+    @FXML
+    private Label lbresp;
+    @FXML
+    private Label lbhistorial;
+    @FXML
+    private Label lbconsulta;
     
 
     /**
@@ -103,7 +116,7 @@ public class VistaHistorialController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+        inicializarAlertas();
         Tooltip tooltipClose = new Tooltip("Close");
         Close.setTooltip(tooltipClose);
         
@@ -113,6 +126,16 @@ public class VistaHistorialController implements Initializable {
         Tooltip tooltipReturn = new Tooltip("Return");
         Return.setTooltip(tooltipReturn);
     } 
+    
+    public void inicializarAlertas(){
+        lbhistorial.setVisible(false);
+        lbconsulta.setVisible(false);
+        lbtemp.setVisible(false);
+        lbpresion.setVisible(false);
+        lbpulso.setVisible(false);
+        lbpulso.setVisible(false);
+        lbresp.setVisible(false);
+    }
     
     @FXML
     private void exitButtonOnAction(ActionEvent event){
@@ -252,9 +275,12 @@ public class VistaHistorialController implements Initializable {
     private void txtHistorialKeyTyped(KeyEvent event) {
          char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car >'\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbhistorial.setVisible(true);
+            lbhistorial.setText("Sólo se permiten números");
+        }else{
+            lbhistorial.setVisible(false);
         }
     }
 
@@ -262,9 +288,13 @@ public class VistaHistorialController implements Initializable {
     private void txtConsultaKeyTyped(KeyEvent event) {
          char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbconsulta.setVisible(true);
+            lbconsulta.setText("Sólo se permiten números");
+        }else{
+            lbconsulta.setVisible(false);
+        
         }
     }
 
@@ -272,9 +302,12 @@ public class VistaHistorialController implements Initializable {
     private void txtTempKeyTyped(KeyEvent event) {
          char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car) && car>'.'){
+        if(!Character.isDigit(car) && car>'.' && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbtemp.setVisible(true);
+            lbtemp.setText("Sólo se permiten números");
+        }else{
+            lbtemp.setVisible(false);
         }
     }
 
@@ -282,9 +315,12 @@ public class VistaHistorialController implements Initializable {
     private void txtpresionKeyTyped(KeyEvent event) {
          char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)&& car>'/'){
+        if(!Character.isDigit(car)&& car>'/' && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbpresion.setVisible(true);
+            lbpresion.setText("Sólo se permiten números");
+        }else{
+            lbpresion.setVisible(false);
         }
     }
 
@@ -294,7 +330,10 @@ public class VistaHistorialController implements Initializable {
         
         if(!Character.isDigit(car) && car>'.'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbpulso.setVisible(true);
+            lbpulso.setText("Sólo se permiten números");
+        }else{
+            lbpulso.setVisible(false);
         }
     }
 
@@ -302,9 +341,12 @@ public class VistaHistorialController implements Initializable {
     private void txtrespKeyTyped(KeyEvent event) {
          char car= event.getCharacter().charAt(0);
         
-        if(!Character.isDigit(car)){
+        if(!Character.isDigit(car) && car > '\b'){
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbresp.setVisible(true);
+            lbresp.setText("Sólo se permiten números");
+        }else{
+            lbresp.setVisible(false);
         }
     }
 

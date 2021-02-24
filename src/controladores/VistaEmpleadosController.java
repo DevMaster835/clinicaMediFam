@@ -39,7 +39,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -51,6 +55,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javax.swing.JOptionPane;
 import modelos.Correos;
@@ -111,12 +116,6 @@ public class VistaEmpleadosController implements Initializable {
     private ComboBox<tipoCorreoE> cmbtipoCorreo;
     @FXML
     private ComboBox<Nacionalidades> cmbNacionalidad;
-    @FXML
-    private RadioButton rdbId;
-    @FXML
-    private ToggleGroup grupoBusqueda;
-    @FXML
-    private RadioButton rdbNom;
     @FXML
     private TableView<Empleados> tblEmpleados;
     @FXML
@@ -182,6 +181,16 @@ public class VistaEmpleadosController implements Initializable {
     private Button btnModificarTel;
     @FXML
     private Button btnModificarCo;
+    @FXML
+    private Label lbid;
+    @FXML
+    private Label lbNombre;
+    @FXML
+    private Label lbApellido;
+    @FXML
+    private Label lbTelefono;
+    @FXML
+    private Label lbCorreo;
 
     /**
      * Initializes the controller class.
@@ -222,12 +231,52 @@ public class VistaEmpleadosController implements Initializable {
   
         btnActualizar.setDisable(true);
         btnEliminar.setDisable(true);
+        
+        inicializarAlertas();
+        
+        final ContextMenu contextMenu = new ContextMenu();
+        MenuItem menuItem1 = new MenuItem("Eliminar");
+        menuItem1.setOnAction((event) -> {
+            eliminarTelefono();
+        });
+        contextMenu.getItems().addAll(menuItem1);
+        tablaTelefonos.setContextMenu(contextMenu);
+        
+        final ContextMenu contextMenu1 = new ContextMenu();
+        MenuItem menuItem2 = new MenuItem("Eliminar");
+        menuItem1.setOnAction((event) -> {
+            eliminarCorreo();
+        });
+        contextMenu1.getItems().addAll(menuItem2);
+        tablaCorreos.setContextMenu(contextMenu1);
+        
+        Callback<DatePicker, DateCell> dayCellFactory = dp -> new DateCell()
+           {
+               @Override
+               public void updateItem(LocalDate item, boolean empty)
+               {
+                   super.updateItem(item, empty);
 
+                   if(item.isAfter(LocalDate.now().minusYears(18)))
+                   {
+                       this.setDisable(true);
+                   }
+               }
+        };
+         txtFechaNaci.setDayCellFactory(dayCellFactory);
     }
 
     public void start(Stage primaryStage) {
         //cargarCombobox();
          
+    }
+    
+    public void inicializarAlertas(){
+        lbid.setVisible(false);
+        lbNombre.setVisible(false);
+        lbApellido.setVisible(false);
+        lbTelefono.setVisible(false);
+        lbCorreo.setVisible(false);
     }
 
     @FXML
@@ -677,37 +726,50 @@ public class VistaEmpleadosController implements Initializable {
   
     }
     
-    public void GenerateUserName(){
-        //String text1 = txtNombreEmp.getText() + txtApellidoEmp.getText();
-        String text= (txtNombreEmp.getText().concat(txtApellidoEmp.getText()));
-        //String text1=txtNombreEmp.getText().chars()
-        
-        /*for (int x=0; x < text.length(); x++) {
-            if (text.charAt(x) != ' '){
-                text1 += text.charAt(x);
-            }              
-        }*/
-        
+    public void GenerateUserName() {
+        String name = txtNombreEmp.getText().replace(" ", "");
+        String apellido = txtApellidoEmp.getText().replace(" ", "");
+        String full = (name + "." + apellido);
+        String mmm = "";
+        System.out.println(name);
+        System.out.println(apellido);
+        int longitud = full.length();
+        if (longitud > 23) {
+            int x = longitud;
+            while (x > 23) {
+                mmm = full.substring(0, full.length() - 1);
+                x--;
+            }
+        } else {
+            mmm = full;
+        }
         Random rand = new Random();
         int rand_int = rand.nextInt(99);
-        
-      /* if(!txtNombreEmp.getText().isEmpty() && !txtApellidoEmp.getText().isEmpty()){
-        if(existeUsuario()){    
-            txtusuario.setText(text1.toLowerCase() + rand_int);
-            System.out.println(text1.toLowerCase() + rand_int);
-        }else{
-             txtusuario.setText(text1.toLowerCase());
-        }
-        }else{
+
+        if (!txtNombreEmp.getText().isEmpty() && !txtApellidoEmp.getText().isEmpty()) {
+            if (existeUsuario()) {
+                txtusuario.setText(mmm.toLowerCase() + rand_int);
+            } else {
+                txtusuario.setText(mmm.toLowerCase());
+            }
+        } else {
             txtusuario.setText("");
-        }  */
+        }
     }
     
     @FXML
     void txtUserName(KeyEvent event) {
         GenerateUserName();
     }
-
+    
+    @FXML
+    private void eliminarTelefono(){
+        tablaTelefonos.getItems().removeAll(tablaTelefonos.getSelectionModel().getSelectedItem());
+    }
+    @FXML
+    private void eliminarCorreo(){
+        tablaCorreos.getItems().removeAll(tablaCorreos.getSelectionModel().getSelectedItem());
+    }
     //METODOS GUARDAR
     @FXML
     private void guardarEmpleados(ActionEvent event) {
@@ -1000,8 +1062,12 @@ public class VistaEmpleadosController implements Initializable {
         GenerateUserName();
         if (!Character.isAlphabetic(car)&& !Character.isSpaceChar(car) && car > '\b') {
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
+            lbNombre.setVisible(true);
+            lbNombre.setText("Sólo se permiten letras");
+        }else{
+            lbNombre.setVisible(false);
         }
+        
     }
 
     @FXML
@@ -1010,7 +1076,10 @@ public class VistaEmpleadosController implements Initializable {
         
         if (!Character.isDigit(car) && car > '\b') {
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbid.setVisible(true);
+            lbid.setText("Sólo se permiten números");
+        }else{
+            lbid.setVisible(false);
         }
     }
 
@@ -1020,8 +1089,10 @@ public class VistaEmpleadosController implements Initializable {
         GenerateUserName();
         if (!Character.isAlphabetic(car) && !Character.isSpaceChar(car) && car > '\b') {
             event.consume();
-
-            JOptionPane.showMessageDialog(null, "Sólo se permiten letras");
+            lbApellido.setVisible(true);
+            lbApellido.setText("Sólo se permiten letras");
+        }else{
+            lbApellido.setVisible(false);
         }
     }
 
@@ -1030,7 +1101,10 @@ public class VistaEmpleadosController implements Initializable {
         char car = event.getCharacter().charAt(0);
         if ((!Character.isDigit(car)) && car > '\b') {
             event.consume();
-            JOptionPane.showMessageDialog(null, "Sólo se permiten números");
+            lbTelefono.setVisible(true);
+            lbTelefono.setText("Sólo se permiten números");
+        }else{
+            lbTelefono.setVisible(false);
         }
 
     }
@@ -1040,7 +1114,10 @@ public class VistaEmpleadosController implements Initializable {
         char car = event.getCharacter().charAt(0);
         if ((Character.isSpaceChar(car) && car > '\b')) {
             event.consume();
-            JOptionPane.showMessageDialog(null, "No se permiten espacios");
+            lbCorreo.setVisible(true);
+            lbCorreo.setText("No se permiten espacios");
+        }else{
+            lbCorreo.setVisible(false);
         }
     }
 

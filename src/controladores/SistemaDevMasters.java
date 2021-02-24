@@ -26,7 +26,7 @@ public class SistemaDevMasters extends Application {
     public void start(Stage primaryStage) {              
         try {
             FXMLLoader loader= new FXMLLoader();
-            loader.setLocation(SistemaDevMasters.class.getResource("/vistas/vistaEmpleados.fxml"));
+            loader.setLocation(SistemaDevMasters.class.getResource("/vistas/vistaMenu.fxml"));
             Pane ventana = (Pane) loader.load();    
             Scene scene= new Scene(ventana);
             primaryStage.setScene(scene);

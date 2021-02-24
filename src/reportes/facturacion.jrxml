@@ -64,10 +64,6 @@ WHERE facturacion.idFacturacion=$P!{noFactura}]]>
 	</background>
 	<title>
 		<band height="120" splitType="Stretch">
-			<image>
-				<reportElement x="151" y="18" width="70" height="65" uuid="0e8d9ed4-fd6d-4c83-bc62-8df6ffa89a90"/>
-				<imageExpression><![CDATA["C:\\Users\\José\\Documents\\NetBeansProjects\\sistemaDevMasters\\src\\imagenes\\logo.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="237" y="18" width="327" height="32" uuid="4263d488-bd88-491f-a71d-d5c0ebc42044"/>
 				<textElement>
@@ -96,6 +92,10 @@ WHERE facturacion.idFacturacion=$P!{noFactura}]]>
 				</textElement>
 				<text><![CDATA[2772-8974]]></text>
 			</staticText>
+			<image>
+				<reportElement x="157" y="20" width="80" height="82" uuid="2611d99a-a008-4bbc-8055-76ea87c4c404"/>
+				<imageExpression><![CDATA["C:\\Users\\José\\Documents\\NetBeansProjects\\sistemaDevMasters\\src\\imagenes\\logo-clinica.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
